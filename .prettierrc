@@ -6,5 +6,6 @@
   "arrowParens": "always",
   "endOfLine": "lf",
   "objectWrap": "preserve",
-  "proseWrap": "preserve"
+  "proseWrap": "preserve",
+  "singleQuote": true
 }
