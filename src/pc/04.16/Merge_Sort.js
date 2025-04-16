@@ -53,13 +53,22 @@ export default function mergeSort(arr) {
       }
       alternate++
     })
-    if (pendingArr.length) {
+    if (alternate % 2 === 0) {
       resArr.push(concatSortedArr(pendingArr, []))
     }
     return resArr
   }
+  if (!res.length) {
+    arr.slice(0)
+    return
+  }
+  if (res.length === 1) {
+    arr.splice(0, arr.length, res[0])
+    return
+  }
   while (res.length !== 1) {
     res = catArr(res)
   }
-  return res
+  arr.splice(0, arr.length, ...res[0])
+  return res[0]
 }
