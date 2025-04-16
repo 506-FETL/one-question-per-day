@@ -4,8 +4,8 @@ import mergeSort from './Merge_Sort'
 describe('4.16.default--手写归并排序', () => {
   it('应排序一个正整数数组', () => {
     const arr = [5, 2, 9, 1, 5, 6]
-    // mergeSort(arr)
-    // expect(arr).toEqual([1, 2, 5, 5, 6, 9])
+    mergeSort(arr)
+    expect(arr).toEqual([1, 2, 5, 5, 6, 9])
   })
   it('应排序包含负整数的数组', () => {
     const arr = [-3, -1, -7, -4, -5]
