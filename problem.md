@@ -1,71 +1,62 @@
-### 编程题目：将生成器函数转换为异步函数
+### 编程题目：实现一个简化版的 Vue 响应式系统
 
 #### 题目描述
 
-在 JavaScript 中，生成器函数可以通过 `yield` 暂停执行，并在后续调用 `next` 方法时继续执行。现在，请你实现一个函数 `generatorToAsync`，它可以将一个生成器函数转换为一个异步函数，使得生成器函数中的 `yield` 可以自动处理异步操作（如 `Promise`）。
+在 Vue 中，响应式系统是其最核心的特性之一。Vue 通过追踪数据的依赖，并在数据变更时通知更新，实现了组件的自动刷新。
+请你模拟实现 Vue 的响应式系统中的一个简化版本 —— reactive 和 effect
 
 具体要求如下：
 
-1. 输入是一个生成器函数 `func`。
-2. 输出是一个异步函数，调用该函数时会自动执行生成器函数，并依次处理 `yield` 返回的值。
-3. 如果 `yield` 返回的是一个 `Promise`，需要等待其完成后再继续执行生成器。
-4. 如果 `yield` 返回的是普通值，则直接继续执行生成器。
-5. 如果生成器函数执行过程中抛出错误，异步函数需要返回一个被拒绝的 `Promise`。
+1. 实现一个函数 reactive(obj)，将一个普通的对象变成响应式对象
+2. 实现一个函数 effect(fn)，接收一个回调函数 fn，当响应式对象中的属性发生改变时，自动重新执行 fn。
 
 #### 函数签名
 
 ```javascript
 /**
- * 将生成器函数转换为异步函数。
- *
- * @param {() => Generator<any, any, any>} func - 一个生成器函数。
- * @returns {Function} 一个返回 Promise 的异步函数。
- * @throws {TypeError} 如果传入的参数不是生成器函数。
+ * 创建响应式对象
+ * @param {Object} obj - 需要变成响应式的对象
+ * @returns {Proxy} 响应式对象
  */
-function generatorToAsync(func) {
-  // 请在此处实现
+function reactive(obj) {
+  // 实现内容
 }
+
+/**
+ * 注册副作用函数，当响应式数据变化时触发它
+ * @param {Function} fn - 依赖响应式数据的函数
+ */
+function effect(fn) {
+  // 实现内容
+}
+
 ```
 
 #### 示例
 
 ```javascript
-// 示例 1：处理异步操作
-function* generatorFunction() {
-  const value1 = yield Promise.resolve(1)
-  const value2 = yield Promise.resolve(value1 + 1)
-  return value2 + 1
-}
+const user = reactive({ name: 'Tom', age: 20 })
 
-const asyncFunction = generatorToAsync(generatorFunction)
-asyncFunction().then(console.log) // 输出 3
+effect(() => {
+  console.log('Name is', user.name)
+})
 
-// 示例 2：处理同步值
-function* generatorFunctionSync() {
-  const value1 = yield 1
-  const value2 = yield value1 + 1
-  return value2 + 1
-}
-
-const asyncFunctionSync = generatorToAsync(generatorFunctionSync)
-asyncFunctionSync().then(console.log) // 输出 3
-
-// 示例 3：处理错误
-function* generatorFunctionError() {
-  yield Promise.reject(new Error('Test error'))
-}
-
-const asyncFunctionError = generatorToAsync(generatorFunctionError)
-asyncFunctionError().catch((err) => console.error(err.message)) // 输出 "Test error"
+user.name = 'Jerry' 
+// 输出：Name is Jerry
 ```
 
 #### 提示
 
-1. 你可以通过调用生成器函数 `func()` 获取生成器对象。
-2. 使用生成器对象的 `next` 方法可以获取当前 `yield` 的值。
-3. 使用 `Promise` 来封装异步逻辑，确保返回值是一个 `Promise`。
+使用 Proxy 对对象进行代理，拦截 get 和 set。
+
+在 get 时记录依赖（即当前 effect 函数）。
+
+在 set 时触发依赖（即重新运行相关 effect 函数）。
+
+可以使用一个 Map（依赖桶）来存储对象属性和对应的 effect。
 
 #### 进阶
 
-- 考虑如何验证传入的 `func` 是否是一个生成器函数。
-- 优化代码结构，使其更易读和易维护。
+- 支持嵌套对象的响应式（state.nested.value = 1）
+- 支持清除副作用（例如 stop(effectFn)）
+- 支持多个 effect 并且能独立追踪不同属性

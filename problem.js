@@ -1,8 +1,16 @@
 /**
- * 将生成器函数转换为异步函数。
- *
- * @param {() => Generator<any, any, any>} func - 一个生成器函数。
- * @returns {Function} 一个返回 Promise 的异步函数。
- * @throws {TypeError} 如果传入的参数不是生成器函数。
+ * 创建响应式对象
+ * @param {Object} obj - 需要变成响应式的对象
+ * @returns {Proxy} 响应式对象
  */
-function generatorToAsync(func) {}
+function reactive(obj) {
+    // 实现内容
+  }
+  
+  /**
+   * 注册副作用函数，当响应式数据变化时触发它
+   * @param {Function} fn - 依赖响应式数据的函数
+   */
+  function effect(fn) {
+    // 实现内容
+  }
