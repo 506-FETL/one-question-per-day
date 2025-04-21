@@ -56,3 +56,12 @@ export function reactive(obj) {
     }
   });
 }
+
+const state = reactive({ count: 0 });
+
+effect(() => {
+  console.log('count changed to:', state.count);
+});
+
+state.count++; // 输出：count changed to: 1
+state.count++; // 输出：count changed to: 2
