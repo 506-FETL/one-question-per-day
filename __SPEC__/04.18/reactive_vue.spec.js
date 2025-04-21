@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest'
-import { reactive, effect } from './reactive_vue'
+import { describe, expect, it } from 'vitest'
+import { effect, reactive } from './reactive_vue'
 
 describe('Vue 简化响应式系统测试', () => {
   it('应在副作用中访问初始值', () => {
@@ -24,8 +24,12 @@ describe('Vue 简化响应式系统测试', () => {
   it('多个属性应独立触发各自的 effect', () => {
     const obj = reactive({ a: 1, b: 2 })
     let dummyA, dummyB
-    effect(() => { dummyA = obj.a })
-    effect(() => { dummyB = obj.b })
+    effect(() => {
+      dummyA = obj.a
+    })
+    effect(() => {
+      dummyB = obj.b
+    })
     obj.a = 100
     expect(dummyA).toBe(100)
     expect(dummyB).toBe(2)

@@ -47,14 +47,3 @@ export default function generatorToAsync(func) {
     })
   }
 }
-function* testG() {
-  // await被编译成了yield
-  const data = yield getData()
-  console.log('data: ', data)
-  const data2 = yield getData()
-  console.log('data2: ', data2)
-  return 'success'
-}
-const getData = () => new Promise((resolve) => setTimeout(() => resolve('data'), 1000))
-let test = generatorToAsync(testG)
-test().then((res) => console.log(res))
