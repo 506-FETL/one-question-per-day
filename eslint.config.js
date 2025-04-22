@@ -1,7 +1,7 @@
-import js from '@eslint/js';
-import pluginVue from 'eslint-plugin-vue';
-import { defineConfig } from 'eslint/config';
-import globals from 'globals';
+import js from '@eslint/js'
+import pluginVue from 'eslint-plugin-vue'
+import { defineConfig } from 'eslint/config'
+import globals from 'globals'
 
 export default defineConfig([
   {
@@ -10,8 +10,16 @@ export default defineConfig([
     extends: ['js/recommended'],
     rules: {
       'no-unused-vars': 'warn',
-      'no-console': 'warn',
+      'no-console': 'error',
       'no-undef': 'error',
+    },
+    settings: {
+      'import/resolver': {
+        alias: {
+          map: [['@', './__SPEC__']],
+          extensions: ['.js', 'mjs', 'cjs'],
+        },
+      },
     },
   },
   {
@@ -19,4 +27,4 @@ export default defineConfig([
     languageOptions: { globals: globals.browser },
   },
   pluginVue.configs['flat/essential'],
-]);
+])
