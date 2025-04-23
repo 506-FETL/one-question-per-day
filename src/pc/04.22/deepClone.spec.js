@@ -24,28 +24,28 @@ describe('deepClone function', () => {
     expect(clone).toEqual(arr)
   })
 
-  // it('应在处理Date对象时正常运行', () => {
-  //   const date = new Date()
-  //   const clone = deepClone(date)
-  //   expect(clone).not.toBe(date)
-  //   expect(clone.getTime()).toBe(date.getTime())
-  // })
+  it('应在处理Date对象时正常运行', () => {
+    const date = new Date()
+    const clone = deepClone(date)
+    expect(clone).not.toBe(date)
+    expect(clone.getTime()).toBe(date.getTime())
+  })
 
-  // it('应在处理RegExp对象时正常运行', () => {
-  //   const regex = /abc/gi
-  //   const clone = deepClone(regex)
-  //   expect(clone).not.toBe(regex)
-  //   expect(clone.source).toBe(regex.source)
-  //   expect(clone.flags).toBe(regex.flags)
-  // })
+  it('应在处理RegExp对象时正常运行', () => {
+    const regex = /abc/gi
+    const clone = deepClone(regex)
+    expect(clone).not.toBe(regex)
+    expect(clone.source).toBe(regex.source)
+    expect(clone.flags).toBe(regex.flags)
+  })
 
-  // it('应在处理Symbol时正常运行', () => {
-  //   const sym = Symbol('desc')
-  //   const obj = { [sym]: 'value' }
-  //   const clone = deepClone(obj)
-  //   expect(clone).not.toBe(obj)
-  //   expect(clone[sym]).toBe('value')
-  // })
+  it('应在处理Symbol时正常运行', () => {
+    const sym = Symbol('desc')
+    const obj = { [sym]: 'value' }
+    const clone = deepClone(obj)
+    expect(clone).not.toBe(obj)
+    expect(clone[sym]).toBe('value')
+  })
 
   it('应在处理循环引用时正常运行', () => {
     const obj = { name: 'Alice' }
@@ -58,9 +58,9 @@ describe('deepClone function', () => {
 
   it('应在处理复杂嵌套结构时正常运行', () => {
     const complexObj = {
-      // date: new Date(),
-      // regEx: /test/i,
-      // symbolKey: Symbol('key'),
+      date: new Date(),
+      regEx: /test/i,
+      symbolKey: Symbol('key'),
       nested: {
         arr: [1, 2, 3],
         map: new Map([
@@ -68,6 +68,15 @@ describe('deepClone function', () => {
           ['key2', 'value2'],
         ]),
         set: new Set([1, 2, 3]),
+        arrayWithObj: [
+          { ['1']: 'jack' },
+          2,
+          3,
+          { a: 1, b: 2, c: { d: /111/g, b: [1, 2, 3, Symbol(1)] } },
+        ],
+        [Symbol('symbol key')]: {
+          [Symbol('1')]: [1, 2, 3, {}],
+        },
       },
     }
 
@@ -99,22 +108,51 @@ describe('deepClone function', () => {
     // 原始对象应保持不变
     expect(objWithMethod.getValue()).toBe(42)
   })
+  it('应在对象包含方法时正常运行，并保持方法的以及方法的属性', () => {
+    const objWithMethod = {
+      value: 42,
+      getValue: function () {
+        return this.value
+      },
+    }
+    objWithMethod.getValue.a = objWithMethod
+    const clonedObjWithMethod = deepClone(objWithMethod)
 
-  // it('应确保深拷贝后的对象与原始对象不同，并且只包含原始对象上的key值', () => {
-  //   function Parent() {
-  //     this.a = 1
-  //   }
-  //   Parent.prototype.b = 2
+    // 检查克隆后的对象结构
+    expect(clonedObjWithMethod).not.toBe(objWithMethod)
+    expect(clonedObjWithMethod.getValue.a.value).toBe(42)
 
-  //   const obj = new Parent()
-  //   const symKey = Symbol('sym')
-  //   obj[symKey] = 'symbolValue'
+    // 检查克隆后的方法是否工作正常
+    expect(clonedObjWithMethod.getValue()).toBe(42)
 
-  //   const clone = deepClone(obj)
+    // 修改克隆对象的值并检查方法输出
+    clonedObjWithMethod.value = 100
+    expect(clonedObjWithMethod.getValue()).toBe(100)
 
-  //   expect(clone).not.toBe(obj)
-  //   expect(clone).toHaveProperty('a', 1)
-  //   expect(clone).not.toHaveProperty('b') // 原型上的属性不应被拷贝
-  //   expect(clone[symKey]).toBe('symbolValue') // 检查symbol键是否被正确拷贝
-  // })
+    // 原始对象应保持不变
+    expect(objWithMethod.getValue()).toBe(42)
+  })
+
+  it('应确保深拷贝后的对象与原始对象不同，并且只包含原始对象上的key值', () => {
+    function Parent() {
+      this.a = 1
+    }
+    Parent.prototype.b = 2
+
+    const obj = new Parent()
+    const symKey = Symbol('sym')
+    obj[symKey] = 'symbolValue'
+
+    const clone = deepClone(obj)
+
+    // 检查克隆后的对象与原始对象不同
+    expect(clone).not.toBe(obj)
+
+    // 检查克隆后的对象只包含原始对象上的key值
+    expect(clone).toHaveProperty('a', 1)
+    expect(clone).not.toHaveProperty('b') // 原型上的属性不应被拷贝
+
+    // 检查symbol键是否被正确拷贝
+    expect(clone[symKey]).toBe('symbolValue')
+  })
 })

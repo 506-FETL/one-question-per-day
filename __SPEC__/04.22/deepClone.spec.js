@@ -108,6 +108,30 @@ describe('deepClone function', () => {
     // 原始对象应保持不变
     expect(objWithMethod.getValue()).toBe(42)
   })
+  it('应在对象包含方法时正常运行，并保持方法的功能以及方法的属性', () => {
+    const objWithMethod = {
+      value: 42,
+      getValue: function () {
+        return this.value
+      },
+    }
+    objWithMethod.getValue.a = objWithMethod
+    const clonedObjWithMethod = deepClone(objWithMethod)
+
+    // 检查克隆后的对象结构
+    expect(clonedObjWithMethod).not.toBe(objWithMethod)
+    expect(clonedObjWithMethod.getValue.a.value).toBe(42)
+
+    // 检查克隆后的方法是否工作正常
+    expect(clonedObjWithMethod.getValue()).toBe(42)
+
+    // 修改克隆对象的值并检查方法输出
+    clonedObjWithMethod.value = 100
+    expect(clonedObjWithMethod.getValue()).toBe(100)
+
+    // 原始对象应保持不变
+    expect(objWithMethod.getValue()).toBe(42)
+  })
 
   it('应确保深拷贝后的对象与原始对象不同，并且只包含原始对象上的key值', () => {
     function Parent() {
