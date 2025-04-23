@@ -99,4 +99,22 @@ describe('deepClone function', () => {
     // 原始对象应保持不变
     expect(objWithMethod.getValue()).toBe(42)
   })
+
+  // it('应确保深拷贝后的对象与原始对象不同，并且只包含原始对象上的key值', () => {
+  //   function Parent() {
+  //     this.a = 1
+  //   }
+  //   Parent.prototype.b = 2
+
+  //   const obj = new Parent()
+  //   const symKey = Symbol('sym')
+  //   obj[symKey] = 'symbolValue'
+
+  //   const clone = deepClone(obj)
+
+  //   expect(clone).not.toBe(obj)
+  //   expect(clone).toHaveProperty('a', 1)
+  //   expect(clone).not.toHaveProperty('b') // 原型上的属性不应被拷贝
+  //   expect(clone[symKey]).toBe('symbolValue') // 检查symbol键是否被正确拷贝
+  // })
 })
