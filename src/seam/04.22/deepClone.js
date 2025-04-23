@@ -39,30 +39,20 @@ const handleObject = (obj, cache) => {
 
   Object.keys(obj).forEach((key) => {
     const value = obj[key]
-    if (typeof value === 'function') {
-      tmp[key] = value.bind(tmp)
-    } else {
-      switchToHandle(value, tmp, key, cache)
-    }
+
+    switchToHandle(value, tmp, key, cache)
   })
 
   Object.getOwnPropertySymbols(obj).forEach((sym) => {
     const value = obj[sym]
-    if (typeof value === 'function') {
-      tmp[sym] = value.bind(tmp)
-    } else {
-      switchToHandle(value, tmp, sym, cache)
-    }
+
+    switchToHandle(value, tmp, sym, cache)
   })
 
   return tmp
 }
 
 const handleBasic = (obj) => {
-  if (typeof obj === 'function') {
-    return (...args) => obj(...args)
-  }
-
   if (typeof obj === 'symbol') {
     return Symbol(obj.description)
   }
