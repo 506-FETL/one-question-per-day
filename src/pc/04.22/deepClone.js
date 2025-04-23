@@ -57,7 +57,7 @@ const handleBasic = (obj) => {
   }
 
   if (typeof obj === 'symbol') {
-    return obj
+    return Symbol(obj.description)
   }
 
   if (obj instanceof RegExp) {
