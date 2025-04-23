@@ -68,6 +68,12 @@ describe('deepClone function', () => {
           ['key2', 'value2'],
         ]),
         set: new Set([1, 2, 3]),
+        arrayWithObj: [
+          { ['1']: 'jack' },
+          2,
+          3,
+          { a: 1, b: 2, c: { d: /111/g, b: [1, 2, 3, Symbol(1)] } },
+        ],
       },
     }
 
