@@ -20,7 +20,12 @@ export default function myFrom(arrayLike, mapFn, thisArg) {
   }
 
   const maxSafeInteger = Number.MAX_SAFE_INTEGER
-  const toLength = (v) => Math.min(maxSafeInteger, Math.max(0, toInteger(v)))
+  const toLength = (v) => {
+    const n = toInteger(v)
+    if (n > maxSafeInteger) throw new RangeError('length exceeds MAX_SAFE_INTEGER')
+
+    return Math.max(0, n)
+  }
 
   if (arrayLike == null)
     throw new TypeError(

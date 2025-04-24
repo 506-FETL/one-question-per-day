@@ -9,7 +9,8 @@
  * @throws {TypeError} 如果提供的 `mapFn` 不是函数，抛出类型错误。
  */
 export default function myFrom(arrayLike, mapFn, thisArg) {
-  const isCallable = (fn) => Object.prototype.toString.call(fn) === '[object Function]'
+  const isCallable = (fn) =>
+    typeof fn === 'function' || Object.prototype.toString.call(fn) === '[object Function]'
   const toInteger = (v) => {
     const _v = Number(v)
     if (isNaN(_v)) return 0
@@ -19,7 +20,12 @@ export default function myFrom(arrayLike, mapFn, thisArg) {
   }
 
   const maxSafeInteger = Number.MAX_SAFE_INTEGER
-  const toLength = (v) => Math.min(maxSafeInteger, Math.max(0, toInteger(v)))
+  const toLength = (v) => {
+    const n = toInteger(v)
+    if (n > maxSafeInteger) throw new RangeError('length exceeds MAX_SAFE_INTEGER')
+
+    return Math.max(0, n)
+  }
 
   if (arrayLike == null)
     throw new TypeError(

@@ -7,6 +7,11 @@ describe('myFrom function', () => {
     const result = myFrom(arrayLike)
     expect(result).toEqual(['a', 'b', 'c'])
   })
+  it('应正确处理 length 为负数的情况', () => {
+    const arrayLike = { 0: 'a', 1: 'b', 2: 'c', length: -1 }
+    const result = myFrom(arrayLike)
+    expect(result).toEqual([])
+  })
 
   it('应正确处理字符串', () => {
     const result = myFrom('abc')
