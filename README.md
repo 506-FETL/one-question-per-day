@@ -195,6 +195,7 @@ pnpm install
 
 ## 贡献者
 
-每位实验室成员均为本项目的贡献者，感谢大家的努力！
+<!-- readme: contributors -start -->
+<!-- readme: contributors -end -->
 
 ---
