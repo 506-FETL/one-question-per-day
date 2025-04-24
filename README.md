@@ -220,6 +220,13 @@ pnpm install
                     <sub><b>Gong Che Yu</b></sub>
                 </a>
             </td>
+            <td align="center">
+                <a href="https://github.com/wang-danni">
+                    <img src="https://avatars.githubusercontent.com/u/126050206?v=4" width="100;" alt="wang-danni"/>
+                    <br />
+                    <sub><b>wang-danni</b></sub>
+                </a>
+            </td>
 		</tr>
 	<tbody>
 </table>
