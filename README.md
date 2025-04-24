@@ -195,6 +195,34 @@ pnpm install
 
 ## 贡献者
 
-每位实验室成员均为本项目的贡献者，感谢大家的努力！
+<!-- readme: contributors -start -->
+<table>
+	<tbody>
+		<tr>
+            <td align="center">
+                <a href="https://github.com/SeaMmMm">
+                    <img src="https://avatars.githubusercontent.com/u/87215099?v=4" width="100;" alt="SeaMmMm"/>
+                    <br />
+                    <sub><b>lll</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/pcppp">
+                    <img src="https://avatars.githubusercontent.com/u/104177657?v=4" width="100;" alt="pcppp"/>
+                    <br />
+                    <sub><b>peng chang</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/xiersiki">
+                    <img src="https://avatars.githubusercontent.com/u/74220172?v=4" width="100;" alt="xiersiki"/>
+                    <br />
+                    <sub><b>Gong Che Yu</b></sub>
+                </a>
+            </td>
+		</tr>
+	<tbody>
+</table>
+<!-- readme: contributors -end -->
 
 ---
