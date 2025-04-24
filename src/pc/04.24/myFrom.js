@@ -24,6 +24,9 @@ export default function myFrom(arrayLike, mapFn, thisArg) {
 
   let index = 0
   if (isArrLike || isArr) {
+    if (arrayLike.length > Number.MAX_SAFE_INTEGER) {
+      throw new RangeError('too long')
+    }
     for (; index < arrayLike.length; index++) {
       if (!mapFn) arr[index] = arrayLike[index]
       else arr[index] = mapFn(arrayLike[index], index)
