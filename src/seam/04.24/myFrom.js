@@ -29,7 +29,7 @@ export default function myFrom(arrayLike, mapFn, thisArg) {
 
   if (arrayLike == null)
     throw new TypeError(
-      `provided arrayLike must be an array-like object - not null/undefined`
+      `provided arrayLike must be an array-like object - not null/undefined`,
     )
 
   const items =

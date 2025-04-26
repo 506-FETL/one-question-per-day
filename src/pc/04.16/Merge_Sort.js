@@ -12,10 +12,10 @@ export default function mergeSort(arr) {
   let res = arr
 
   function concatSortedArr(arrLeft, arrRight) {
-    if (typeof arrLeft === "number") {
+    if (typeof arrLeft === 'number') {
       arrLeft = [arrLeft]
     }
-    if (typeof arrRight === "number") {
+    if (typeof arrRight === 'number') {
       arrRight = [arrRight]
     }
     let resArr = []

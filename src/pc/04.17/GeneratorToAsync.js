@@ -36,7 +36,7 @@ export default function generatorToAsync(func) {
               (value) => handleFunction(value),
               (error) => {
                 reject(error)
-              }
+              },
             )
           }
         } catch (error) {

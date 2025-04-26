@@ -47,7 +47,6 @@ function merge(arr, left, mid, right) {
 
 export default function mergeSort(arr) {
   resolve(arr, 0, arr.length - 1)
-  console.log(arr)
 }
 
 mergeSort([12, 22, 1, 33, 12, 98, 22, 4])

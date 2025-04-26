@@ -7,7 +7,8 @@ export default defineConfig({
     exclude: [...configDefaults.exclude, '__SPEC__/*'],
     coverage: {
       provider: 'v8',
-      include: ['.src/**'],
+      include: ['src/**'],
+      enabled: true,
     },
     alias: {
       '@': resolve(__dirname, './__SPEC__'),
