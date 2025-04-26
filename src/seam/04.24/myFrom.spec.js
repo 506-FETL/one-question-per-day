@@ -38,7 +38,7 @@ describe('myFrom function', () => {
       function (value) {
         return value * this.multiplier
       },
-      context
+      context,
     )
     expect(result).toEqual([3, 6, 9])
   })

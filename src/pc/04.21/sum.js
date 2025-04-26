@@ -5,6 +5,3 @@ export default function sum(base = 0) {
   cb.valueOf = () => base
   return cb
 }
-let sum1 = sum(1)(2)(3)
-console.log(sum1(1)(1) == 8)
-console.log(sum1(1)(1) == 8)
