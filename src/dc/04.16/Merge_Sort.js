@@ -1,0 +1,50 @@
+/**
+ * @param {number[]} arr
+ *
+ * 手写[Merge Sort](https://en.wikipedia.org/wiki/Merge_sort)
+ * 请直接修改传入的数组，不要返回新数组。
+ *
+ * 追问
+ * 时间空间复杂度是多少？是否是稳定的排序？
+ */
+
+function resolve(arr, left, right) {
+  if (left < right) {
+    let mid = (left + right) / 2
+
+    resolve(arr, left, mid)
+
+    resolve(arr, mid + 1, right)
+
+    merge(arr, left, mid,right);
+  }
+}
+
+function merge(arr, left, mid,right) {
+  let temp = []
+  let posl = left;
+  let posr = mid + 1;
+  
+  while (posl <= mid && posr <= right)
+  {
+    if (arr[posl] < arr[posr])
+      temp[left++] = arr[posl++];
+    else
+      temp[left++] = arr[posr++];
+  }
+
+  while (posl <= mid) {
+    temp[left++] = arr[posl++]
+  }
+  
+  while (posr <= right) {
+    temp[left++]=arr[posr++]
+  }
+
+  while (left <= right) {
+    arr[left]=temp[left]
+  }
+}
+export default function mergeSort(arr) {
+  resolve(arr, 0, arr.length - 1)
+}
