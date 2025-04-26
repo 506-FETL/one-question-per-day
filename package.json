@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "run-s lint format test",
-    "lint": "eslint src --config eslint.config.js",
+    "lint": "eslint src __SPEC__ --config eslint.config.js",
     "test": "vitest --config vitest.config.js",
-    "format": "prettier --write \"src/**/*.{js,cjs,mjs,vue,ts,json,css,md}\""
+    "format": "prettier --write \"src/**/*.{js,cjs,mjs,vue,ts,json,css,md}\" \"__SPEC__/**/*.{js,cjs,mjs,vue,ts,json,css,md}\""
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
