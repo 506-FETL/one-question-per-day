@@ -10,41 +10,44 @@
 
 function resolve(arr, left, right) {
   if (left < right) {
-    let mid = (left + right) / 2
+    let mid = (left + right) >> 1
 
     resolve(arr, left, mid)
 
     resolve(arr, mid + 1, right)
 
-    merge(arr, left, mid,right);
+    merge(arr, left, mid, right)
   }
 }
 
-function merge(arr, left, mid,right) {
+function merge(arr, left, mid, right) {
   let temp = []
-  let posl = left;
-  let posr = mid + 1;
-  
-  while (posl <= mid && posr <= right)
-  {
-    if (arr[posl] < arr[posr])
-      temp[left++] = arr[posl++];
-    else
-      temp[left++] = arr[posr++];
+  let posl = left
+  let posr = mid + 1
+  let low = left
+
+  while (posl <= mid && posr <= right) {
+    if (arr[posl] < arr[posr]) temp[left++] = arr[posl++]
+    else temp[left++] = arr[posr++]
   }
 
   while (posl <= mid) {
     temp[left++] = arr[posl++]
   }
-  
+
   while (posr <= right) {
-    temp[left++]=arr[posr++]
+    temp[left++] = arr[posr++]
   }
 
-  while (left <= right) {
-    arr[left]=temp[left]
+  while (low <= right) {
+    arr[low] = temp[low]
+    low++
   }
 }
+
 export default function mergeSort(arr) {
   resolve(arr, 0, arr.length - 1)
+  console.log(arr)
 }
+
+mergeSort([12, 22, 1, 33, 12, 98, 22, 4])
