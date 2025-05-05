@@ -12,6 +12,7 @@ export default defineConfig([
       'no-unused-vars': 'warn',
       'no-console': 'error',
       'no-undef': 'error',
+      'no-unused-private-class-members': 'warn',
     },
     settings: {
       'import/resolver': {
