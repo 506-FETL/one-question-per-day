@@ -69,7 +69,7 @@ export default class MyPromise {
   #runMicroTask(func) {
     if (typeof process === 'object' && typeof process.nextTick === 'function') {
       process.nextTick(func)
-    } else if (MutationObserver === 'function') {
+    } else if (typeof MutationObserver === 'function') {
       const ob = new MutationObserver(func)
       const txtNode = document.createTextNode('1')
       ob.observe(txtNode, { characterData: true })
