@@ -11,8 +11,13 @@ export default function generatorToAsync(func) {
   }
 
   const iterator = func()
-  const isPromiseLike = (v) =>
-    typeof v === 'object' && v !== null && typeof v.then === 'function'
+  const isPromiseLike = (v) => {
+    if (v !== null && (typeof v === 'function' || typeof v === 'object')) {
+      return typeof v.then === 'function'
+    }
+
+    return false
+  }
 
   return () =>
     new Promise((resolve, reject) => {
