@@ -245,6 +245,13 @@ pnpm install
                     <sub><b>wang-danni</b></sub>
                 </a>
             </td>
+            <td align="center">
+                <a href="https://github.com/notshine">
+                    <img src="https://avatars.githubusercontent.com/u/105473589?v=4" width="100;" alt="notshine"/>
+                    <br />
+                    <sub><b>Peng Liang</b></sub>
+                </a>
+            </td>
 		</tr>
 	<tbody>
 </table>
