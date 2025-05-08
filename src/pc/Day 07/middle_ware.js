@@ -1,39 +1,30 @@
 export default class Middleware {
-  constructor() {
-    this.cbQueue = []
-    this.step = 0
-    this.next = this.next.bind(this)
+  cbList = []
+  errList = []
+  use(cb) {
+    if (cb.length === 3) this.errList.push(cb)
+    if (cb.length === 2) this.cbList.push(cb)
   }
   start(req) {
-    this.req = req
-    this.next()
-  }
-  use(cb) {
-    this.cbQueue.push(cb)
-  }
-  next(err) {
-    try {
-      if (err) {
-        throw err
+    const _this = this
+    let cbIndex = 0,
+      errIndex = 0
+    function next(error) {
+      let currentFunc = null
+      const args = [req, next]
+      if (error) {
+        currentFunc = _this.errList[errIndex++]
+        args.unshift(error)
+      } else {
+        currentFunc = _this.cbList[cbIndex++]
       }
-      if (this.step < this.cbQueue.length) {
-        Promise.resolve(this.cbQueue[this.step++](this.req, this.next)).catch((error) => {
-          return this.next(error)
-        })
-      }
-    } catch (error) {
-      while (this.step < this.cbQueue.length) {
-        if (this.cbQueue[this.step].length === 3) {
-          Promise.resolve(this.cbQueue[this.step++](error, this.req, this.next)).catch(
-            (error) => {
-              return this.next(error)
-            },
-          )
-          break
-        } else {
-          this.step++
-        }
+      try {
+        currentFunc &&
+          Promise.resolve(currentFunc.call(_this, ...args)).catch((error) => next(error))
+      } catch (error) {
+        next(error)
       }
     }
+    next()
   }
 }
