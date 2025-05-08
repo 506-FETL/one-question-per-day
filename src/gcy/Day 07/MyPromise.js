@@ -9,14 +9,13 @@ export default class MyPromise {
     } catch (error) {
       this.reject(error)
     }
-
   }
   then(onFulfilled, onRejected) {
     return new MyPromise((resolve, reject) => {
       const successHandler = (value) => {
         if (typeof onFulfilled !== 'function') {
-          resolve(value);
-          return;
+          resolve(value)
+          return
         }
         try {
           // 成功的回调，也就是执行resolve之后的回调，或者是promise里面的执行函数是同步的就会直接执行
@@ -38,8 +37,8 @@ export default class MyPromise {
       const errorHandler = (reason) => {
         // 如果回调不是函数，实现错误透传
         if (typeof onRejected !== 'function') {
-          reject(reason);
-          return;
+          reject(reason)
+          return
         }
         try {
           const result = onRejected(reason)
@@ -54,14 +53,14 @@ export default class MyPromise {
       }
       if (this.#state === 'pending') {
         // 如果还在进行中，把回调存起来
-        this.#successHandlers.push(successHandler);
-        this.#errorHandlers.push(errorHandler);
+        this.#successHandlers.push(successHandler)
+        this.#errorHandlers.push(errorHandler)
       } else if (this.#state === 'fulfilled') {
         // 如果已经成功，异步执行成功回调
-        queueMicrotask(() => successHandler(this.#value));
+        queueMicrotask(() => successHandler(this.#value))
       } else if (this.#state === 'reject') {
         // 如果已经失败，异步执行失败回调
-        queueMicrotask(() => errorHandler(this.#value));
+        queueMicrotask(() => errorHandler(this.#value))
       }
     })
   }
@@ -89,21 +88,20 @@ export default class MyPromise {
   static resolve(value) {
     if (value instanceof MyPromise) {
       return value
-    } else if (value && typeof value === "object" && typeof value.then === "function") {
-      return new Promise((resolve,reject)=>{
-        value.then(resolve,reject)
+    } else if (value && typeof value === 'object' && typeof value.then === 'function') {
+      return new Promise((resolve, reject) => {
+        value.then(resolve, reject)
       })
     } else {
       return new MyPromise((resolve) => {
         resolve(value)
       })
     }
-
   }
   static reject(error) {
     if (error instanceof MyPromise) {
       return error
-    } else if (error && typeof value === "object" && typeof error.then === "function") {
+    } else if (error && typeof value === 'object' && typeof error.then === 'function') {
       error.then(this.resolve, this.reject)
     } else {
       return new MyPromise((resolve, reject) => {
@@ -112,21 +110,21 @@ export default class MyPromise {
     }
   }
   catch(onRejected) {
-    return this.then(onRejected, onRejected);
+    return this.then(onRejected, onRejected)
   }
   finally(callback) {
     // finally 需要返回一个新的 Promise
     return this.then(
       // 成功时执行 callback，并透传原值
-      value => {
-        return MyPromise.resolve(callback()).then(() => value);
+      (value) => {
+        return MyPromise.resolve(callback()).then(() => value)
       },
       // 失败时执行 callback，并继续抛出错误
-      reason => {
+      (reason) => {
         return MyPromise.resolve(callback()).then(() => {
-          throw reason;
-        });
-      }
-    );
+          throw reason
+        })
+      },
+    )
   }
 }

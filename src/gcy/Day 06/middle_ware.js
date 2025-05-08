@@ -18,16 +18,16 @@ export default class Middleware {
       const middleware = middlewares[index++]
       if (!middleware) return
       try {
-        if(err) {
-          if(middleware.length ===3) {
-            await middleware(err,req,next)
-          }else {
+        if (err) {
+          if (middleware.length === 3) {
+            await middleware(err, req, next)
+          } else {
             await next(err)
           }
-        }else {
-          if(middleware.length <3){
-            await middleware(req,next)
-          }else {
+        } else {
+          if (middleware.length < 3) {
+            await middleware(req, next)
+          } else {
             await next()
           }
         }
