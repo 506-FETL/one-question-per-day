@@ -1,7 +1,6 @@
 export default class MyPromise {
   #state = 'pending'
   #value = null
-  #result = null
   #successHandlers = []
   #errorHandlers = []
   constructor(executor) {
@@ -95,7 +94,7 @@ export default class MyPromise {
         value.then(resolve,reject)
       })
     } else {
-      return new MyPromise((resolve, reject) => {
+      return new MyPromise((resolve) => {
         resolve(value)
       })
     }
@@ -131,19 +130,3 @@ export default class MyPromise {
     );
   }
 }
-new MyPromise(resolve => {
-  setTimeout(() => resolve("Step 1"), 1000);
-})
-  .then(result => {
-    console.log(result); // 输出: Step 1
-    return new MyPromise(resolve => {
-      setTimeout(() => resolve("Step 2"), 1000);
-    });
-  })
-  .then(result => {
-    console.log(result); // 输出: Step 2
-    return "Step 3";
-  })
-  .then(result => {
-    console.log(result); // 输出: Step 3
-  });
