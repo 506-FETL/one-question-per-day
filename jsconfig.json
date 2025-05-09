@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "target": "esnext",
     "baseUrl": ".", // 设置项目的根目录
     "paths": {
       "@/*": ["__SPEC__/*"] // 配置路径别名
