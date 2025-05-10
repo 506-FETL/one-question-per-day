@@ -65,32 +65,76 @@ pnpm test
 
 所有新成员需要在自己的分支上进行更改，禁止直接在 `main` 分支上修改代码。
 
-1. 确保在自己的分支上完成更改（分支名建议为 `[成员名]`）。如果尚未创建分支，可以通过以下命令创建：
+#### 推荐分支管理与提交流程
 
-```bash
-git checkout main
-git pull
-git checkout -b [成员名]
-```
+1. **每次新任务都应基于最新主分支新建分支，分支名建议为 `[成员名]-[日期]`，如 `jack-Day01`，避免历史提交混入新 PR。**
 
-2. 提交代码到自己的分支：
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b [成员名]-[日期]
+   ```
 
-```bash
-git add .
-git commit -m "完成每日一题"
-git push origin [成员名]
-```
+2. **在新分支上完成每日一题的开发与提交：**
 
-3. 在提交前，先从 `main` 分支拉取最新版本并合并到自己的分支中，解决可能的冲突：
+   ```bash
+   git add .
+   git commit -m "feat: 完成[日期]每日一题"
+   git push origin [成员名]-[日期]
+   ```
 
-```bash
-git checkout main
-git pull
-git checkout [成员名]
-git merge main
-```
+3. **如需同步主分支最新内容，推荐使用 rebase 保持提交历史整洁：**
 
-4. 确保所有单元测试通过后，创建合并请求（Pull Request），并在通过代码审查后合并到 `main` 分支。
+   ```bash
+   git fetch origin
+   git rebase origin/main
+   ```
+
+   > ⚠️ 不建议在旧分支上直接新建新分支，否则会导致历史提交混入新 PR。
+
+4. **确保所有单元测试通过后，在 GitHub 上发起 Pull Request（PR），无任何问题后合并到 `main` 分支。**
+
+5. **PR 合并后，建议删除本地和远端分支，保持分支整洁：**
+
+   ```bash
+   git checkout main
+   git pull origin main
+   git branch -d [日期]-[成员名]
+   git push origin --delete [日期]-[成员名]
+   ```
+
+6. **一键删除所有远端已删除但本地还存在的分支（可选）：**
+
+   新建脚本 `delete-gone-branches.sh`，内容如下：
+
+   ```bash
+   #!/bin/bash
+   git fetch -p
+   git branch -vv | awk '/: gone]/{print $1}' | xargs -r git branch -d
+   echo "已删除所有远端已删除的本地分支。"
+   ```
+
+   赋予执行权限并运行：
+
+   ```bash
+   chmod +x delete-gone-branches.sh
+   ./delete-gone-branches.sh
+   ```
+
+---
+
+> **常见问题整理：**
+>
+> - **为什么 PR 会有历史提交？**  
+>   因为新分支不是基于最新主分支新建，或在旧分支上直接新建，导致历史提交混入。务必每次新建分支前先 `git checkout main && git pull`。
+> - **远端分支删除后，本地分支还在怎么办？**  
+>   需要手动删除本地分支，或用上面的脚本一键清理。
+> - **每次都要删除本地分支吗？**  
+>   建议删除，保持分支整洁，防止误操作。如果不想手动删，可用脚本批量处理。
+> - **可以复用本地分支吗？**  
+>   不推荐。每次新任务都应新建分支，保证 PR 只包含本次内容，历史清晰。
+> - **同步主分支用 merge 还是 rebase？**  
+>   推荐 `rebase`，提交历史更干净。多人协作时注意冲突处理。
 
 ---
 
