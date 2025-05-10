@@ -34,19 +34,14 @@ export default function traverse(root) {
   dfs(root, 0, 0, 0)
 
   Object.keys(tramap)
+    .map(Number)
     .sort((a, b) => b - a)
     .forEach((key) => {
-      result.push(
-        ...tramap[key]
-          .sort((a, b) => {
-            if (a.deep !== b.deep) return a.deep - b.deep
-            else return b.parentLine - a.parentLine
-          })
-          .reduce((acc, cur) => {
-            acc.push(cur.value)
-            return acc
-          }, []),
-      )
+      tramap[key]
+        .sort((a, b) => a.deep - b.deep || b.parentLine - a.parentLine)
+        .forEach((node) => {
+          result.push(node.value)
+        })
     })
 
   return result
