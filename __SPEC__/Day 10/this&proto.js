@@ -80,5 +80,3 @@ export function selfNew(fn, ...args) {
   // 如果fn函数有返回值，并且返回值是一个对象或方法，则返回该对象，否则返回新生成的instance对象
   return typeof res === 'object' || typeof res === 'function' ? res : instance
 }
-
-function add() {}
