@@ -1,36 +1,48 @@
+// This is the class for the node
+// you can use this directly as it is bundled with your code
+export class Node {
+  constructor(val) {
+    this.value = val
+    this.left = null
+    this.right = null
+  }
+}
 /**
- * @param {number[]} arr
- *
- * 手写[Merge Sort](https://en.wikipedia.org/wiki/Merge_sort)
- * 请直接修改传入的数组，不要返回新数组。
- *
- * 追问
- * 时间空间复杂度是多少？是否是稳定的排序？
+ * @param {Node} root
+ * @returns {number[]}
  */
-export default function mergeSort(arr) {
-  let l = 0,
-    r = arr.length - 1
+export default function traverse(root) {
+  if (root === null) return []
 
-  function _merge(arr, l, r) {
-    if (l >= r) return
-    const mid = (l + r) >> 1
+  const tramap = {}
+  const result = []
 
-    _merge(arr, l, mid), _merge(arr, mid + 1, r)
+  function dfs(root, line, deep, parentLine) {
+    if (root === null) return
 
-    let i = l,
-      j = mid + 1
-    const tmp = []
-
-    while (i <= mid && j <= r) {
-      if (arr[i] < arr[j]) tmp.push(arr[i++])
-      else tmp.push(arr[j++])
+    const value = root.value
+    if (!Object.hasOwn(tramap, line)) {
+      tramap[line] = []
     }
 
-    while (i <= mid) tmp.push(arr[i++])
-    while (j <= r) tmp.push(arr[j++])
+    tramap[line].push({ value, deep, parentLine })
 
-    for (let i = l, j = 0; i <= r; i++, j++) arr[i] = tmp[j]
+    dfs(root.left, line + 1, deep + 1, line)
+    dfs(root.right, line - 1, deep + 1, line)
   }
 
-  _merge(arr, l, r)
+  dfs(root, 0, 0, 0)
+
+  Object.keys(tramap)
+    .map(Number)
+    .sort((a, b) => b - a)
+    .forEach((key) => {
+      tramap[key]
+        .sort((a, b) => a.deep - b.deep || b.parentLine - a.parentLine)
+        .forEach((node) => {
+          result.push(node.value)
+        })
+    })
+
+  return result
 }
