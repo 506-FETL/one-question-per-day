@@ -23,10 +23,8 @@ describe('Day10 - this&proto', () => {
       function getThis() {
         return this
       }
-      // 在Node环境中，global相当于浏览器中的window
-      const globalObj = typeof window !== 'undefined' ? window : globalThis
-      expect(getThis.Call(null)).toBe(globalObj)
-      expect(getThis.Call(undefined)).toBe(globalObj)
+      expect(getThis.Call(null)).toBe(globalThis)
+      expect(getThis.Call(undefined)).toBe(globalThis)
     })
   })
 
@@ -36,7 +34,16 @@ describe('Day10 - this&proto', () => {
         return `你好, ${this.name}`
       }
       const person = { name: '李四' }
-      expect(greet.Apply(person, [])).toBe('你好, 李四')
+      expect(greet.Apply(person)).toBe('你好, 李四')
+    })
+
+    it('当context为null或undefined时，应该默认使用全局对象', () => {
+      function getThis() {
+        return this
+      }
+
+      expect(getThis.Apply(null)).toBe(globalThis)
+      expect(getThis.Apply(undefined)).toBe(globalThis)
     })
 
     it('应该可以传递参数数组', () => {
@@ -87,6 +94,15 @@ describe('Day10 - this&proto', () => {
       expect(person instanceof Person).toBe(true)
       expect(person.name).toBe('赵六')
       expect(person.getName()).toBe('赵六')
+    })
+
+    it('Bind 返回的构造函数实例的 constructor 应该指向自身', () => {
+      function Person(name) {
+        this.name = name
+      }
+      const BoundPerson = Person.Bind(null, '张三')
+      const p = new BoundPerson()
+      expect(p.constructor).toBe(BoundPerson)
     })
   })
 

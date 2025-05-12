@@ -14,12 +14,9 @@ one-question-per-day/
 │ ├── member1/ # 成员 1 的解法
 │ ├── member2/ # 成员 2 的解法
 │ └── ... # 其他成员的解法
-├── **SPEC**/ # 测试以及题目答案文件
-│ ├── [题目].js # 每日题目(包含答案)
-│ ├── [题目].spec.js # 单元测试
-│ └── README.md # 题目描述
 ├── Problems/ # 每日题目汇总
-│ ├── [题目].js # 每日题目(不包含答案)
+│ ├── [题目].js # 每日题目
+│ ├── answer.js # 答案
 │ ├── [题目].spec.js # 单元测试
 │ └── README.md # 题目描述
 ├── package.json # 项目配置文件
@@ -41,7 +38,7 @@ one-question-per-day/
 
 ```
 src/
-├── member1 # 成员 1 维护的文件夹
+├── [member1] # 成员 1 维护的文件夹
 │ ├── Day [date] # 每日一题文件
 │ │  ├── [题目].js # 完成题目
 │ │  ├── [题目].spec.js # 复制 __SPEC__ 文件中对应的测试文件
