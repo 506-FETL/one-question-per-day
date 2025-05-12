@@ -17,7 +17,6 @@ export default defineConfig([
     settings: {
       'import/resolver': {
         alias: {
-          map: [['@', './__SPEC__']],
           extensions: ['.js', 'mjs', 'cjs'],
         },
       },
