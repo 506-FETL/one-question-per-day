@@ -54,11 +54,11 @@ Function.prototype.Bind = function (context, ...args) {
   return returnFunc
 }
 export function instanceOf(obj, fn) {
-  if (obj == null) return false
+  if (obj.__proto__ == null) return false
   if (typeof fn !== 'function') {
     throw new TypeError("Right-hand side of 'instanceof' is not callable")
   }
-  if (obj.__proto__ !== fn.prototype) {
+  if (obj.__proto__.constructor !== fn) {
     return instanceOf(obj.__proto__, fn)
   } else {
     return true
