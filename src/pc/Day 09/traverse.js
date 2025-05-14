@@ -16,7 +16,6 @@ export default function traverse(root) {
   if (!root) return []
 
   const nodeList = []
-  let index = 0
 
   function DFS(node, x, y, f) {
     if (!node) return
@@ -26,7 +25,6 @@ export default function traverse(root) {
       x: x,
       y: y,
       f: f,
-      index: index++, // 记录遍历顺序，用于解决相同坐标的排序
     })
 
     DFS(node.left, x - 1, y - 1, x)
