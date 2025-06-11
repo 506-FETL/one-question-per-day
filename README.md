@@ -250,8 +250,8 @@ pnpm install
 	<tbody>
 		<tr>
             <td align="center">
-                <a href="https://github.com/SeaMmMm">
-                    <img src="https://avatars.githubusercontent.com/u/87215099?v=4" width="100;" alt="SeaMmMm"/>
+                <a href="https://github.com/seaeam">
+                    <img src="https://avatars.githubusercontent.com/u/87215099?v=4" width="100;" alt="seaeam"/>
                     <br />
                     <sub><b>lll</b></sub>
                 </a>
