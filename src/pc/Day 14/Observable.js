@@ -10,50 +10,36 @@ class Observable {
     unsubscribe: () => {},
   }
   observeWrapper = (observe) => {
-    if (typeof observe !== 'function') {
-      if (!observe) {
-        return this.nullObserve
-      }
-      return {
-        next: (...args) => {
-          if (observe.next) return observe.next(...args)
-        },
-        error: (...args) => {
-          let res
-          if (observe.error) res = observe.error(...args)
-          observe = this.nullObserve
-          return res
-        },
-        complete: (...args) => {
-          let res
-          if (observe.complete) res = observe.complete(...args)
-          observe = this.nullObserve
-          return res
-        },
-        unsubscribe: () => {
-          observe = this.nullObserve
-        },
-      }
-    } else {
-      return {
-        next: (...args) => {
-          return observe(...args)
-        },
-        error: () => {},
-        complete: () => {},
-        unsubscribe: () => {
-          observe = this.nullObserve
-        },
-      }
+    if (!observe) {
+      return this.nullObserve
+    }
+    return {
+      next: (...args) => {
+        if (observe instanceof Function) return observe(...args)
+        if (observe.next) return observe.next(...args)
+        return
+      },
+      error: (...args) => {
+        let res = new Error()
+        if (observe.error) res = observe.error(...args)
+        observe = this.nullObserve
+        return res
+      },
+      complete: (...args) => {
+        let res
+        if (observe.complete) res = observe.complete(...args)
+        observe = this.nullObserve
+        return res
+      },
+      unsubscribe: () => {
+        observe = this.nullObserve
+      },
     }
   }
   subscribe(subscriber) {
     subscriber = this.observeWrapper(subscriber)
-    try {
-      this.execute(subscriber)
-    } catch (error) {
-      throw new error()
-    }
+    this.execute(subscriber)
+
     return {
       unsubscribe: subscriber.unsubscribe,
       unsubscribed: true,
@@ -61,3 +47,9 @@ class Observable {
   }
 }
 export default Observable
+const observable = new Observable((sub) => {
+  sub.next(1)
+  sub.complete()
+})
+observable.subscribe({})
+// observable.subscribe()
