@@ -23,8 +23,8 @@ describe('Day10 - this&proto', () => {
       function getThis() {
         return this
       }
-      expect(getThis.Call(null)).toBe(globalThis)
-      expect(getThis.Call(undefined)).toBe(globalThis)
+      expect(getThis.Call(null)).toBe(window)
+      expect(getThis.Call(undefined)).toBe(window)
     })
   })
 
@@ -42,8 +42,8 @@ describe('Day10 - this&proto', () => {
         return this
       }
 
-      expect(getThis.Apply(null)).toBe(globalThis)
-      expect(getThis.Apply(undefined)).toBe(globalThis)
+      expect(getThis.Apply(null)).toBe(window)
+      expect(getThis.Apply(undefined)).toBe(window)
     })
 
     it('应该可以传递参数数组', () => {

@@ -1,6 +1,3 @@
-// 由于 Node 环境没有 window，用 globalThis 代替
-const window = globalThis
-
 /**
  * call
  * @param {*} context 希望函数里面指针指向的是什么

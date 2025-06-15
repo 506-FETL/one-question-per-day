@@ -1,5 +1,3 @@
-// 由于 Node 环境没有 window，用 globalThis 代替
-const window = globalThis
 // 手写call
 Function.prototype.Call = function (context, ...args) {
   // context为undefined或null时，则this默认指向全局window
