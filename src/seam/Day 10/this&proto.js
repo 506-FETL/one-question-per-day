@@ -1,6 +1,3 @@
-// 由于 Node 环境没有 window，用 globalThis 代替
-const window = globalThis
-
 // call
 Function.prototype.Call = function (context, ...args) {
   if (context == null) context = window
