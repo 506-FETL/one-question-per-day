@@ -13,6 +13,7 @@ export default defineConfig([
       'no-console': 'error',
       'no-undef': 'error',
       'no-unused-private-class-members': 'warn',
+      'no-sparse-arrays': 'off',
     },
     settings: {
       'import/resolver': {
