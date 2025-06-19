@@ -1,5 +1,3 @@
-/*global process */
-
 const PENDING = 'pending' // 状态: 等待中
 const FULFILLED = 'fulfilled' // 状态: 已完成
 const REJECTED = 'rejected' // 状态: 已拒绝
