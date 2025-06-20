@@ -1,7 +1,13 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "baseUrl": "." // 设置项目的根目录
+    "module": "esnext",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["**/*"] // 包含所有文件
+  "include": ["**/*"], // 包含所有文件
+  "exclude": ["node_modules"]
 }
