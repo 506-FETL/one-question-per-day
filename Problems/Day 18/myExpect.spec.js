@@ -10,9 +10,10 @@ describe('Day18-myExpect', () => {
     [1, 1, true],
     [Symbol(1), Symbol(1), false],
     [Symbol.for(1), Symbol.for(1), true],
+    [+0, -0, false],
     [{}, {}, false],
     [theSameObject, theSameObject, true],
-  ])('myExpect(%j).toBe(%j) 的结果应为 %s', (received, expected, result) => {
+  ])('myExpect(%s).toBe(%s) 的结果应为 %s', (received, expected, result) => {
     expect(myExpect(received).toBe(expected)).toBe(result)
   })
 
@@ -23,7 +24,7 @@ describe('Day18-myExpect', () => {
     [Symbol.for(1), Symbol.for(1), false],
     [{}, {}, true],
     [theSameObject, theSameObject, false],
-  ])('myExpect(%j).not.toBe(%j) 的结果应为 %s', (received, expected, result) => {
+  ])('myExpect(%s).not.toBe(%s) 的结果应为 %s', (received, expected, result) => {
     expect(myExpect(received).not.toBe(expected)).toBe(result)
   })
 })
