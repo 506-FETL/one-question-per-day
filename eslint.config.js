@@ -6,7 +6,7 @@ import globals from 'globals'
 export default defineConfig([
   {
     files: ['**/*.{js,mjs,cjs,vue}'],
-    ignores: ['Problems/**/*'],
+    ignores: ['problems/**/*'],
     plugins: { js },
     extends: ['js/recommended'],
     rules: {
