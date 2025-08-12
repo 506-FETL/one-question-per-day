@@ -3,8 +3,8 @@
 # 批量生成复习文档的脚本
 # 获取脚本所在目录
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-DAYS_DIR="$SCRIPT_DIR/Problems/days"
-REVIEW_DIR="$SCRIPT_DIR/Problems/review"
+DAYS_DIR="$SCRIPT_DIR/problems/days"
+REVIEW_DIR="$SCRIPT_DIR/problems/review"
 
 # 创建 review 目录（如果不存在）
 mkdir -p "$REVIEW_DIR"
