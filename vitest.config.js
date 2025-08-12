@@ -3,7 +3,7 @@ import { configDefaults, defineConfig } from 'vitest/config'
 export default defineConfig({
   test: {
     environment: 'jsdom',
-    exclude: [...configDefaults.exclude, 'Problems/**'],
+    exclude: [...configDefaults.exclude, 'problems/**'],
     coverage: {
       provider: 'v8',
       include: ['src/**'],
