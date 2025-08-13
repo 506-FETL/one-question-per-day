@@ -71,17 +71,17 @@
     "preRelease": [
       {
         "name": "运行测试",
-        "command": "npm run test",
+        "command": "pnpm run test",
         "required": true
       },
       {
         "name": "代码检查",
-        "command": "npm run lint",
+        "command": "pnpm run lint",
         "required": true
       },
       {
         "name": "类型检查",
-        "command": "npm run type-check",
+        "command": "pnpm run type-check",
         "required": false
       }
     ],
