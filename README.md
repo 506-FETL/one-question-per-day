@@ -231,10 +231,35 @@ pnpm install
 
 ## 项目脚本
 
+### 基础开发命令
+
 - **运行测试**：`pnpm test`
 - **格式化代码**: `pnpm format`
 - **代码检查**: `pnpm lint`
-- **运行**: `pnpm dev`
+- **类型检查**: `pnpm type-check`
+- **运行**: `pnpm dev`（包含代码检查、格式化、测试）
+
+### Release 发布命令
+
+- **手动发布**: `pnpm release`（交互式选择版本类型）
+- **补丁版本**: `pnpm release:patch`（bug修复，如 v1.0.0 → v1.0.1）
+- **次要版本**: `pnpm release:minor`（新功能，如 v1.0.0 → v1.1.0）
+- **主要版本**: `pnpm release:major`（重大更新，如 v1.0.0 → v2.0.0）
+- **自定义版本**: `pnpm release:custom`（手动指定版本号）
+- **发布前检查**: `pnpm pre-release`（运行所有质量检查）
+
+### 手动 Release 策略
+
+**为适应多人协作环境，项目采用手动 Release 策略：**
+
+- � **已禁用自动触发**: 避免每次提交到 main 分支都触发发布
+- 🎯 **手动控制**: 只有指定人员可以在合适时机手动发布版本
+- � **协作友好**: 团队成员可以自由提交代码，不用担心意外触发发布
+- 📋 **两种方式**:
+  - GitHub Actions 页面手动触发（推荐）
+  - 本地脚本发布 (`pnpm release`)
+
+> 💡 **提示**: 查看 [Release 文档](./docs/RELEASE.md) 了解详细的版本管理流程。
 
 ---
 
