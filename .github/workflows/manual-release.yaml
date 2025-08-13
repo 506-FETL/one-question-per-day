@@ -1,0 +1,292 @@
+name: 手动 Release
+
+on:
+  # 只保留手动触发，移除自动触发
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: '版本类型'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      custom_version:
+        description: '自定义版本号 (可选，格式: v1.2.3)'
+        required: false
+        type: string
+      skip_tests:
+        description: '跳过测试检查'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  manual-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 安装依赖
+        run: npm install
+
+      - name: 运行预发布检查
+        if: ${{ !github.event.inputs.skip_tests }}
+        run: |
+          npm run lint
+          npm run type-check
+          npm run test
+
+      - name: 统计项目信息
+        id: stats
+        run: |
+          # 统计题目数量
+          TOTAL_DAYS=$(find problems/days -type d -name "Day *" | wc -l | tr -d ' ')
+          echo "total-days=$TOTAL_DAYS" >> $GITHUB_OUTPUT
+
+          # 统计贡献者
+          CONTRIBUTORS=$(git shortlog -sn --all | wc -l | tr -d ' ')
+          echo "contributors=$CONTRIBUTORS" >> $GITHUB_OUTPUT
+
+      - name: 生成版本号
+        id: version
+        run: |
+          if [ -n "${{ github.event.inputs.custom_version }}" ]; then
+            NEW_VERSION="${{ github.event.inputs.custom_version }}"
+            # 确保版本号格式正确
+            if [[ ! $NEW_VERSION =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "错误：自定义版本号格式不正确，应为 v1.2.3"
+              exit 1
+            fi
+          else
+            # 获取当前版本
+            CURRENT_VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+            echo "Current version: $CURRENT_VERSION"
+            
+            # 解析版本号
+            VERSION_NUM=${CURRENT_VERSION#v}
+            IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION_NUM"
+            
+            # 根据选择的版本类型递增版本号
+            case "${{ github.event.inputs.version_type }}" in
+              "major")
+                MAJOR=$((MAJOR + 1))
+                MINOR=0
+                PATCH=0
+                ;;
+              "minor")
+                MINOR=$((MINOR + 1))
+                PATCH=0
+                ;;
+              "patch")
+                PATCH=$((PATCH + 1))
+                ;;
+            esac
+            
+            NEW_VERSION="v${MAJOR}.${MINOR}.${PATCH}"
+          fi
+
+          echo "New version: $NEW_VERSION"
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: 生成 Release Notes
+        id: release-notes
+        run: |
+          # 获取最新的更新文档
+          LATEST_UPDATE=$(find updates -name "*.md" -not -name "README.md" | sort -r | head -1)
+
+          # 开始构建 Release Notes
+          cat > release-notes.md << 'EOF'
+          # 📚 506实验室每日一题 Release
+
+          ## 🎯 本次更新概览
+
+          EOF
+
+          # 如果有更新文档，包含其内容
+          if [ -f "$LATEST_UPDATE" ]; then
+            echo "从 $LATEST_UPDATE 生成 Release Notes..."
+            echo "" >> release-notes.md
+            echo "## 📝 详细更新内容" >> release-notes.md
+            echo "" >> release-notes.md
+            cat "$LATEST_UPDATE" >> release-notes.md
+            echo "" >> release-notes.md
+          fi
+
+          # 添加项目统计
+          echo "## 📊 项目统计" >> release-notes.md
+          echo "" >> release-notes.md
+          echo "- 📚 总题目数量: **${{ steps.stats.outputs.total-days }}** 天" >> release-notes.md
+          echo "- 👥 贡献者数量: **${{ steps.stats.outputs.contributors }}** 人" >> release-notes.md
+          echo "" >> release-notes.md
+
+          # 添加技术栈信息
+          echo "## 🛠️ 技术栈" >> release-notes.md
+          echo "" >> release-notes.md
+          echo "- **语言**: JavaScript, TypeScript" >> release-notes.md
+          echo "- **测试**: Vitest" >> release-notes.md
+          echo "- **代码质量**: ESLint, Prettier" >> release-notes.md
+          echo "- **包管理**: pnpm" >> release-notes.md
+          echo "" >> release-notes.md
+
+          # 添加使用说明
+          echo "## 🚀 快速开始" >> release-notes.md
+          echo "" >> release-notes.md
+          echo "\`\`\`bash" >> release-notes.md
+          echo "# 克隆项目" >> release-notes.md
+          echo "git clone https://github.com/506-FETL/one-question-per-day.git" >> release-notes.md
+          echo "" >> release-notes.md
+          echo "# 安装依赖" >> release-notes.md
+          echo "pnpm install" >> release-notes.md
+          echo "" >> release-notes.md
+          echo "# 运行测试" >> release-notes.md
+          echo "pnpm test" >> release-notes.md
+          echo "" >> release-notes.md
+          echo "# 开发模式（包含代码检查、格式化、测试）" >> release-notes.md
+          echo "pnpm dev" >> release-notes.md
+          echo "\`\`\`" >> release-notes.md
+          echo "" >> release-notes.md
+
+          # 添加贡献指南链接
+          echo "## 🤝 参与贡献" >> release-notes.md
+          echo "" >> release-notes.md
+          echo "欢迎加入506实验室每日一题！请查看 [README.md](https://github.com/506-FETL/one-question-per-day/blob/main/README.md) 了解详细的参与指南。" >> release-notes.md
+          echo "" >> release-notes.md
+
+          # 输出到变量
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
+          cat release-notes.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: 更新 CHANGELOG
+        id: update-changelog
+        run: |
+          # 获取最新的更新文档
+          LATEST_UPDATE=$(find updates -name "*.md" -not -name "README.md" | sort -r | head -1)
+
+          # 更新 CHANGELOG.md
+          if [ -f "CHANGELOG.md" ]; then
+            # 获取当前日期
+            CURRENT_DATE=$(date +%Y-%m-%d)
+            
+            # 创建临时文件
+            temp_changelog="changelog-temp.md"
+            
+            # 查找 [未发布] 行的位置
+            unreleased_line=$(grep -n "## \[未发布\]" CHANGELOG.md | cut -d: -f1)
+            
+            if [ -n "$unreleased_line" ]; then
+              # 复制文件头部分
+              head -n $((unreleased_line + 5)) CHANGELOG.md > $temp_changelog
+              
+              # 添加新版本条目
+              echo "" >> $temp_changelog
+              echo "## [${{ steps.version.outputs.version }}] - $CURRENT_DATE" >> $temp_changelog
+              echo "" >> $temp_changelog
+              
+              # 如果有最新更新文档，解析其内容
+              if [ -f "$LATEST_UPDATE" ]; then
+                # 提取更新文档中的分类内容
+                if grep -q "## 新增功能" "$LATEST_UPDATE"; then
+                  echo "### 新增功能" >> $temp_changelog
+                  sed -n '/## 新增功能/,/## /p' "$LATEST_UPDATE" | sed '1d;$d' | grep '^-' >> $temp_changelog
+                  echo "" >> $temp_changelog
+                fi
+                
+                if grep -q "## 修改内容" "$LATEST_UPDATE"; then
+                  echo "### 修改内容" >> $temp_changelog
+                  sed -n '/## 修改内容/,/## /p' "$LATEST_UPDATE" | sed '1d;$d' | grep '^-' >> $temp_changelog
+                  echo "" >> $temp_changelog
+                fi
+                
+                if grep -q "## 问题修复\|## 修复问题" "$LATEST_UPDATE"; then
+                  echo "### 问题修复" >> $temp_changelog
+                  sed -n '/## 问题修复\|## 修复问题/,/## /p' "$LATEST_UPDATE" | sed '1d;$d' | grep '^-' >> $temp_changelog
+                  echo "" >> $temp_changelog
+                fi
+              else
+                # 如果没有更新文档，添加通用条目
+                echo "### 新增功能" >> $temp_changelog
+                echo "- 手动发布版本 ${{ steps.version.outputs.version }}" >> $temp_changelog
+                echo "" >> $temp_changelog
+              fi
+              
+              # 添加其余内容
+              tail -n +$((unreleased_line + 6)) CHANGELOG.md >> $temp_changelog
+              
+              # 替换原文件
+              mv $temp_changelog CHANGELOG.md
+              
+              echo "changelog-updated=true" >> $GITHUB_OUTPUT
+            else
+              echo "changelog-updated=false" >> $GITHUB_OUTPUT
+              echo "警告: CHANGELOG.md 格式不标准，跳过自动更新"
+            fi
+          else
+            echo "changelog-updated=false" >> $GITHUB_OUTPUT
+            echo "警告: CHANGELOG.md 不存在，跳过自动更新"
+          fi
+
+      - name: 更新 package.json 版本号
+        run: |
+          # 移除 v 前缀用于 package.json
+          VERSION_NUMBER=${{ steps.version.outputs.version }}
+          VERSION_NUMBER=${VERSION_NUMBER#v}
+
+          # 更新 package.json
+          npm version $VERSION_NUMBER --no-git-tag-version
+
+      - name: 提交更改
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add package.json
+          if [ "${{ steps.update-changelog.outputs.changelog-updated }}" = "true" ]; then
+            git add CHANGELOG.md
+          fi
+          git commit -m "chore: release ${{ steps.version.outputs.version }}
+
+          - 更新 package.json 版本号
+          - 更新 CHANGELOG.md 添加版本记录" || echo "No changes to commit"
+          git push origin main
+
+      - name: 创建 Git Tag
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git tag -a ${{ steps.version.outputs.version }} -m "Release ${{ steps.version.outputs.version }}"
+          git push origin ${{ steps.version.outputs.version }}
+
+      - name: 创建 GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          release_name: '📚 ${{ steps.version.outputs.version }} - 506实验室每日一题'
+          body: ${{ steps.release-notes.outputs.RELEASE_NOTES }}
+          draft: false
+          prerelease: false
+
+      - name: 发布成功通知
+        run: |
+          echo "✅ Release 发布成功!"
+          echo "📚 项目: 506实验室每日一题"
+          echo "🏷️ 版本: ${{ steps.version.outputs.version }}"
+          echo "📊 总题目数: ${{ steps.stats.outputs.total-days }} 天"
+          echo "👥 贡献者: ${{ steps.stats.outputs.contributors }} 人"
