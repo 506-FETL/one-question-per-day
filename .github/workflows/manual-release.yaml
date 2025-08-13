@@ -69,21 +69,75 @@ jobs:
       - name: 生成版本号
         id: version
         run: |
+          # 函数：验证版本号格式
+          validate_version() {
+            local version=$1
+            if [[ $version =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*)?$ ]]; then
+              return 0
+            else
+              return 1
+            fi
+          }
+
+          # 函数：解析版本号
+          parse_version() {
+            local version=$1
+            # 移除 v 前缀
+            version=${version#v}
+            # 分离主版本和预发布标识
+            if [[ $version == *"-"* ]]; then
+              local base_version=${version%-*}
+              local prerelease=${version#*-}
+            else
+              local base_version=$version
+              local prerelease=""
+            fi
+            
+            # 解析主版本号
+            IFS='.' read -r MAJOR MINOR PATCH <<< "$base_version"
+            
+            # 验证解析结果
+            if [[ ! $MAJOR =~ ^[0-9]+$ ]] || [[ ! $MINOR =~ ^[0-9]+$ ]] || [[ ! $PATCH =~ ^[0-9]+$ ]]; then
+              echo "错误：无法解析版本号 $1"
+              exit 1
+            fi
+            
+            echo "$MAJOR $MINOR $PATCH $prerelease"
+          }
+
           if [ -n "${{ github.event.inputs.custom_version }}" ]; then
             NEW_VERSION="${{ github.event.inputs.custom_version }}"
-            # 确保版本号格式正确
-            if [[ ! $NEW_VERSION =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-              echo "错误：自定义版本号格式不正确，应为 v1.2.3"
+            echo "使用自定义版本号: $NEW_VERSION"
+            
+            # 验证自定义版本号格式
+            if ! validate_version "$NEW_VERSION"; then
+              echo "错误：自定义版本号格式不正确"
+              echo "支持的格式: v1.2.3 或 v1.2.3-beta.1"
               exit 1
             fi
           else
-            # 获取当前版本
-            CURRENT_VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-            echo "Current version: $CURRENT_VERSION"
+            # 获取当前最新版本
+            CURRENT_VERSION=$(git describe --tags --abbrev=0 2>/dev/null)
             
-            # 解析版本号
-            VERSION_NUM=${CURRENT_VERSION#v}
-            IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION_NUM"
+            if [ -z "$CURRENT_VERSION" ]; then
+              # 如果没有任何标签，从 package.json 获取当前版本
+              PACKAGE_VERSION=$(node -p "require('./package.json').version" 2>/dev/null || echo "1.0.0")
+              CURRENT_VERSION="v$PACKAGE_VERSION"
+              echo "没有找到 Git 标签，使用 package.json 版本: $CURRENT_VERSION"
+            else
+              echo "当前版本: $CURRENT_VERSION"
+            fi
+            
+            # 验证当前版本格式
+            if ! validate_version "$CURRENT_VERSION"; then
+              echo "警告：当前版本格式不标准，重置为 v1.0.0"
+              CURRENT_VERSION="v1.0.0"
+            fi
+            
+            # 解析当前版本
+            read -r MAJOR MINOR PATCH PRERELEASE <<< "$(parse_version "$CURRENT_VERSION")"
+            
+            echo "解析结果: MAJOR=$MAJOR, MINOR=$MINOR, PATCH=$PATCH, PRERELEASE=$PRERELEASE"
             
             # 根据选择的版本类型递增版本号
             case "${{ github.event.inputs.version_type }}" in
@@ -91,20 +145,34 @@ jobs:
                 MAJOR=$((MAJOR + 1))
                 MINOR=0
                 PATCH=0
+                echo "升级主版本: $MAJOR.0.0"
                 ;;
               "minor")
                 MINOR=$((MINOR + 1))
                 PATCH=0
+                echo "升级次版本: $MAJOR.$MINOR.0"
                 ;;
               "patch")
                 PATCH=$((PATCH + 1))
+                echo "升级补丁版本: $MAJOR.$MINOR.$PATCH"
+                ;;
+              *)
+                echo "错误：不支持的版本类型 ${{ github.event.inputs.version_type }}"
+                exit 1
                 ;;
             esac
             
             NEW_VERSION="v${MAJOR}.${MINOR}.${PATCH}"
           fi
 
-          echo "New version: $NEW_VERSION"
+          echo "🏷️ 新版本号: $NEW_VERSION"
+
+          # 验证最终版本号
+          if ! validate_version "$NEW_VERSION"; then
+            echo "错误：生成的版本号格式不正确: $NEW_VERSION"
+            exit 1
+          fi
+
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
       - name: 生成 Release Notes
