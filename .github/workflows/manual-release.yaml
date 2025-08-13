@@ -38,8 +38,6 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -48,7 +46,7 @@ jobs:
           cache: 'pnpm'
 
       - name: 安装依赖
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: 运行预发布检查
         if: ${{ !github.event.inputs.skip_tests }}
