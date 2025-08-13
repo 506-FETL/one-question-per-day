@@ -332,7 +332,22 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           BRANCH_NAME="release/${{ steps.version.outputs.version }}"
+
+          # 检查远程分支是否存在
+          if git ls-remote --heads origin $BRANCH_NAME | grep -q $BRANCH_NAME; then
+            echo "⚠️ 远程分支 $BRANCH_NAME 已存在，正在删除..."
+            git push origin --delete $BRANCH_NAME || echo "删除远程分支失败，可能已被删除"
+          fi
+
+          # 检查本地分支是否存在并删除
+          if git show-ref --verify --quiet refs/heads/$BRANCH_NAME; then
+            echo "⚠️ 本地分支 $BRANCH_NAME 已存在，正在删除..."
+            git branch -D $BRANCH_NAME
+          fi
+
+          # 创建新分支
           git checkout -b $BRANCH_NAME
+          echo "✅ 创建新分支: $BRANCH_NAME"
           echo "branch-name=$BRANCH_NAME" >> $GITHUB_OUTPUT
         id: create-branch
 
@@ -342,28 +357,88 @@ jobs:
           if [ "${{ steps.update-changelog.outputs.changelog-updated }}" = "true" ]; then
             git add CHANGELOG.md
           fi
-          git commit -m "chore: release ${{ steps.version.outputs.version }}
+
+          # 检查是否有更改需要提交
+          if git diff --staged --quiet; then
+            echo "⚠️ 没有检测到更改，跳过提交"
+          else
+            git commit -m "chore: release ${{ steps.version.outputs.version }}
 
           - 更新 package.json 版本号
-          - 更新 CHANGELOG.md 添加版本记录" || echo "No changes to commit"
+          - 更新 CHANGELOG.md 添加版本记录"
+            echo "✅ 提交完成"
+          fi
+
+          # 强制推送到远程（因为我们已经清理了冲突的分支）
           git push origin ${{ steps.create-branch.outputs.branch-name }}
 
-      - name: 创建 Pull Request
+      - name: 创建或更新 Pull Request
         id: create_pr
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.CONTRIB_TOKEN }}
           script: |
+            const branchName = '${{ steps.create-branch.outputs.branch-name }}';
+            const version = '${{ steps.version.outputs.version }}';
+
+            // 检查是否已有相同的开放PR
+            const { data: existingPRs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head: `${context.repo.owner}:${branchName}`,
+              state: 'open'
+            });
+
+            if (existingPRs.length > 0) {
+              const existingPR = existingPRs[0];
+              console.log(`⚠️ 发现现有的PR #${existingPR.number}: ${existingPR.html_url}`);
+              
+              // 更新现有PR的描述
+              await github.rest.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: existingPR.number,
+                body: `## 📚 506实验室每日一题 Release (更新)
+
+            ### 🎯 发布内容
+            - 版本号更新至 ${version}
+            - 更新 CHANGELOG.md
+            - 总题目数量: ${{ steps.stats.outputs.total-days }} 天
+            - 贡献者数量: ${{ steps.stats.outputs.contributors }} 人
+
+            ### 🔍 自动检查
+            此 PR 将自动触发必要的检查：
+            - ✅ 代码格式检查 (Lint)
+            - ✅ 类型检查 (Type Check)  
+            - ✅ 单元测试 (Test)
+
+            ### 📝 下一步
+            1. 等待所有检查通过
+            2. 合并此 PR 到 main 分支
+            3. 自动创建 Git Tag 和 GitHub Release
+
+            ---
+            *此 PR 由 GitHub Actions 自动更新于 ${new Date().toISOString()}*`
+              });
+              
+              core.setOutput('pr_number', existingPR.number);
+              core.setOutput('pr_url', existingPR.html_url);
+              core.setOutput('pr_action', 'updated');
+              
+              return existingPR.number;
+            }
+
+            // 创建新的PR
             const { data: pullRequest } = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `🚀 Release ${{ steps.version.outputs.version }}`,
-              head: '${{ steps.create-branch.outputs.branch-name }}',
+              title: `🚀 Release ${version}`,
+              head: branchName,
               base: 'main',
               body: `## 📚 506实验室每日一题 Release
 
             ### 🎯 发布内容
-            - 版本号更新至 ${{ steps.version.outputs.version }}
+            - 版本号更新至 ${version}
             - 更新 CHANGELOG.md
             - 总题目数量: ${{ steps.stats.outputs.total-days }} 天
             - 贡献者数量: ${{ steps.stats.outputs.contributors }} 人
@@ -383,38 +458,23 @@ jobs:
             *此 PR 由 GitHub Actions 自动创建*`
             });
 
-            // 设置输出
             core.setOutput('pr_number', pullRequest.number);
             core.setOutput('pr_url', pullRequest.html_url);
+            core.setOutput('pr_action', 'created');
 
             return pullRequest.number;
 
-      - name: 等待手动合并 PR
+      - name: 发布成功通知
         run: |
-          echo "📋 Release PR 已创建，请手动处理："
+          echo "✅ Release PR 处理完成!"
           echo ""
-          echo "📝 下一步操作："
+          echo "📚 项目: 506实验室每日一题"
+          echo "🏷️ 版本: ${{ steps.version.outputs.version }}"
+          echo "📊 总题目数: ${{ steps.stats.outputs.total-days }} 天"
+          echo "👥 贡献者: ${{ steps.stats.outputs.contributors }} 人"
+          echo ""
+          echo "📋 下一步操作："
           echo "1. 访问 GitHub PR 页面"
-          echo "2. 确认所有检查都已通过（Lint、Type Check、Test）"
+          echo "2. 等待所有 CI 检查通过"
           echo "3. 手动合并 PR 到 main 分支"
-          echo "4. 合并完成后，Tag 和 GitHub Release 将自动创建"
-          echo ""
-          echo "⚠️  注意：此工作流将在 PR 创建后结束，Tag 创建需要 PR 合并后由触发器自动处理"
-
-      - name: 提醒合并后续步骤
-        run: |
-          echo "🎯 PR 创建完成！"
-          echo ""
-          echo "✅ 已完成的步骤："
-          echo "- ✅ 创建发布分支: ${{ steps.create-branch.outputs.branch-name }}"
-          echo "- ✅ 更新版本号到: ${{ steps.version.outputs.version }}"
-          echo "- ✅ 更新 CHANGELOG.md"
-          echo "- ✅ 创建 Pull Request"
-          echo ""
-          echo "📋 待手动完成的步骤："
-          echo "- ⏳ 等待 CI 检查通过"
-          echo "- ⏳ 合并 PR 到 main 分支"
-          echo ""
-          echo "� 合并后自动执行："
-          echo "- 🏷️ 创建 Git Tag: ${{ steps.version.outputs.version }}"
-          echo "- � 创建 GitHub Release"
+          echo "4. 合并后自动创建 Git Tag 和 GitHub Release"
