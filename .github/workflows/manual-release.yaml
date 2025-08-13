@@ -327,10 +327,17 @@ jobs:
             sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"$VERSION_NUMBER\"/" package.json
           fi
 
-      - name: 提交更改
+      - name: 创建发布分支
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          BRANCH_NAME="release/${{ steps.version.outputs.version }}"
+          git checkout -b $BRANCH_NAME
+          echo "branch-name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+        id: create-branch
+
+      - name: 提交更改到发布分支
+        run: |
           git add package.json
           if [ "${{ steps.update-changelog.outputs.changelog-updated }}" = "true" ]; then
             git add CHANGELOG.md
@@ -339,30 +346,75 @@ jobs:
 
           - 更新 package.json 版本号
           - 更新 CHANGELOG.md 添加版本记录" || echo "No changes to commit"
-          git push origin main
+          git push origin ${{ steps.create-branch.outputs.branch-name }}
 
-      - name: 创建 Git Tag
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git tag -a ${{ steps.version.outputs.version }} -m "Release ${{ steps.version.outputs.version }}"
-          git push origin ${{ steps.version.outputs.version }}
-
-      - name: 创建 GitHub Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 创建 Pull Request
+        id: create_pr
+        uses: actions/github-script@v7
         with:
-          tag_name: ${{ steps.version.outputs.version }}
-          release_name: '📚 ${{ steps.version.outputs.version }} - 506实验室每日一题'
-          body: ${{ steps.release-notes.outputs.RELEASE_NOTES }}
-          draft: false
-          prerelease: false
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: pullRequest } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚀 Release ${{ steps.version.outputs.version }}`,
+              head: '${{ steps.create-branch.outputs.branch-name }}',
+              base: 'main',
+              body: `## 📚 506实验室每日一题 Release
 
-      - name: 发布成功通知
+            ### 🎯 发布内容
+            - 版本号更新至 ${{ steps.version.outputs.version }}
+            - 更新 CHANGELOG.md
+            - 总题目数量: ${{ steps.stats.outputs.total-days }} 天
+            - 贡献者数量: ${{ steps.stats.outputs.contributors }} 人
+
+            ### 🔍 自动检查
+            此 PR 将自动触发必要的检查：
+            - ✅ 代码格式检查 (Lint)
+            - ✅ 类型检查 (Type Check)  
+            - ✅ 单元测试 (Test)
+
+            ### 📝 下一步
+            1. 等待所有检查通过
+            2. 合并此 PR 到 main 分支
+            3. 自动创建 Git Tag 和 GitHub Release
+
+            ---
+            *此 PR 由 GitHub Actions 自动创建*`
+            });
+
+            // 设置输出
+            core.setOutput('pr_number', pullRequest.number);
+            core.setOutput('pr_url', pullRequest.html_url);
+
+            return pullRequest.number;
+
+      - name: 等待手动合并 PR
         run: |
-          echo "✅ Release 发布成功!"
-          echo "📚 项目: 506实验室每日一题"
-          echo "🏷️ 版本: ${{ steps.version.outputs.version }}"
-          echo "📊 总题目数: ${{ steps.stats.outputs.total-days }} 天"
-          echo "👥 贡献者: ${{ steps.stats.outputs.contributors }} 人"
+          echo "📋 Release PR 已创建，请手动处理："
+          echo ""
+          echo "📝 下一步操作："
+          echo "1. 访问 GitHub PR 页面"
+          echo "2. 确认所有检查都已通过（Lint、Type Check、Test）"
+          echo "3. 手动合并 PR 到 main 分支"
+          echo "4. 合并完成后，Tag 和 GitHub Release 将自动创建"
+          echo ""
+          echo "⚠️  注意：此工作流将在 PR 创建后结束，Tag 创建需要 PR 合并后由触发器自动处理"
+
+      - name: 提醒合并后续步骤
+        run: |
+          echo "🎯 PR 创建完成！"
+          echo ""
+          echo "✅ 已完成的步骤："
+          echo "- ✅ 创建发布分支: ${{ steps.create-branch.outputs.branch-name }}"
+          echo "- ✅ 更新版本号到: ${{ steps.version.outputs.version }}"
+          echo "- ✅ 更新 CHANGELOG.md"
+          echo "- ✅ 创建 Pull Request"
+          echo ""
+          echo "📋 待手动完成的步骤："
+          echo "- ⏳ 等待 CI 检查通过"
+          echo "- ⏳ 合并 PR 到 main 分支"
+          echo ""
+          echo "� 合并后自动执行："
+          echo "- 🏷️ 创建 Git Tag: ${{ steps.version.outputs.version }}"
+          echo "- � 创建 GitHub Release"
