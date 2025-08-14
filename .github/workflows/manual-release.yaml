@@ -422,12 +422,27 @@ jobs:
           VERSION_NUMBER=${{ steps.version.outputs.version }}
           VERSION_NUMBER=${VERSION_NUMBER#v}
 
-          # 使用 pnpm 或者直接修改 package.json
-          if command -v pnpm >/dev/null 2>&1; then
-            pnpm version $VERSION_NUMBER --no-git-tag-version
+          # 获取当前 package.json 中的版本号
+          CURRENT_VERSION=$(node -p "require('./package.json').version" 2>/dev/null || echo "1.0.0")
+
+          echo "🔍 版本检查:"
+          echo "当前版本: $CURRENT_VERSION"
+          echo "目标版本: $VERSION_NUMBER"
+
+          if [ "$CURRENT_VERSION" = "$VERSION_NUMBER" ]; then
+            echo "⏭️ 版本号相同，跳过更新"
           else
-            # 如果 pnpm 不可用，使用 sed 直接修改
-            sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"$VERSION_NUMBER\"/" package.json
+            echo "🔄 更新版本号..."
+            # 直接修改 package.json，避免 npm/pnpm 的版本检查
+            if command -v jq >/dev/null 2>&1; then
+              # 如果有 jq，使用 jq 修改（更安全）
+              jq ".version = \"$VERSION_NUMBER\"" package.json > package.json.tmp && mv package.json.tmp package.json
+            else
+              # 使用 sed 直接修改
+              sed -i.bak "s/\"version\": \"[^\"]*\"/\"version\": \"$VERSION_NUMBER\"/" package.json
+              rm -f package.json.bak
+            fi
+            echo "✅ 版本号已更新为: $VERSION_NUMBER"
           fi
 
       - name: 创建发布分支
