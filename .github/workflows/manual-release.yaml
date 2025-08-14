@@ -175,6 +175,99 @@ jobs:
 
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
+      - name: 创建发布包
+        id: create-release-package
+        run: |
+          echo "📦 创建发布包 (仅包含 problems 目录)"
+
+          # 创建临时目录用于打包
+          TEMP_DIR="release-temp"
+          PACKAGE_NAME="506-lab-daily-questions-${{ steps.version.outputs.version }}"
+
+          # 清理可能存在的临时目录
+          rm -rf "$TEMP_DIR" || true
+
+          # 创建打包目录结构
+          mkdir -p "$TEMP_DIR/$PACKAGE_NAME"
+
+          # 复制 problems 目录
+          cp -r problems "$TEMP_DIR/$PACKAGE_NAME/"
+
+          # 创建包信息文件
+          cat > "$TEMP_DIR/$PACKAGE_NAME/README.md" << EOF
+          # 506实验室每日一题 - ${{ steps.version.outputs.version }}
+
+          📚 **题目总数**: ${{ steps.stats.outputs.total-days }} 题  
+          👥 **贡献者**: ${{ steps.stats.outputs.contributors }} 人  
+          📅 **发布日期**: $(date +%Y-%m-%d)  
+
+          ## 📁 目录结构
+
+          \`\`\`
+          problems/
+          ├── days/           # 每日题目
+          │   ├── Day 01/     # 第1天题目
+          │   ├── Day 02/     # 第2天题目
+          │   └── ...
+          └── review/         # 复习总结
+              ├── 01.md       # 第1天复习
+              ├── 02.md       # 第2天复习  
+              └── ...
+          \`\`\`
+
+          ## 🚀 使用说明
+
+          1. 每个 Day 目录包含：
+             - \`README.md\` - 题目描述
+             - \`answer.js\` - 参考答案
+             - 题目相关的 JavaScript 文件
+             - 对应的测试文件 (\`*.spec.js\`)
+             - \`ts/\` 目录 - TypeScript 版本实现
+
+          2. review 目录包含每天的复习总结
+
+          ## 🌐 项目地址
+
+          - GitHub: https://github.com/506-FETL/one-question-per-day
+          - 完整项目包含测试环境、开发工具等，请访问 GitHub 获取
+
+          ---
+
+          **506实验室** - 让学习成为习惯 ✨
+          EOF
+
+          # 创建压缩包
+          cd "$TEMP_DIR"
+          tar -czf "../$PACKAGE_NAME.tar.gz" "$PACKAGE_NAME"
+          zip -r "../$PACKAGE_NAME.zip" "$PACKAGE_NAME"
+          cd ..
+
+          # 计算文件大小和哈希
+          TAR_SIZE=$(du -h "$PACKAGE_NAME.tar.gz" | cut -f1)
+          ZIP_SIZE=$(du -h "$PACKAGE_NAME.zip" | cut -f1)
+          TAR_SHA256=$(shasum -a 256 "$PACKAGE_NAME.tar.gz" | cut -d' ' -f1)
+          ZIP_SHA256=$(shasum -a 256 "$PACKAGE_NAME.zip" | cut -d' ' -f1)
+
+          echo "✅ 发布包创建完成:"
+          echo "📦 $PACKAGE_NAME.tar.gz ($TAR_SIZE)"
+          echo "📦 $PACKAGE_NAME.zip ($ZIP_SIZE)"
+          echo ""
+          echo "🔐 SHA256 校验码:"
+          echo "tar.gz: $TAR_SHA256"
+          echo "zip: $ZIP_SHA256"
+
+          # 清理临时目录
+          rm -rf "$TEMP_DIR"
+
+          # 输出到 GitHub Actions
+          echo "package-name=$PACKAGE_NAME" >> $GITHUB_OUTPUT
+          echo "tar-file=$PACKAGE_NAME.tar.gz" >> $GITHUB_OUTPUT
+          echo "zip-file=$PACKAGE_NAME.zip" >> $GITHUB_OUTPUT
+          echo "tar-size=$TAR_SIZE" >> $GITHUB_OUTPUT
+          echo "zip-size=$ZIP_SIZE" >> $GITHUB_OUTPUT
+          echo "tar-sha256=$TAR_SHA256" >> $GITHUB_OUTPUT
+          echo "zip-sha256=$ZIP_SHA256" >> $GITHUB_OUTPUT
+
       - name: 生成 Release Notes
         id: release-notes
         run: |
@@ -204,6 +297,24 @@ jobs:
           echo "" >> release-notes.md
           echo "- 📚 总题目数量: **${{ steps.stats.outputs.total-days }}** 题" >> release-notes.md
           echo "- 👥 贡献者数量: **${{ steps.stats.outputs.contributors }}** 人" >> release-notes.md
+          echo "" >> release-notes.md
+
+          # 添加发布包信息
+          echo "## 📦 发布包下载" >> release-notes.md
+          echo "" >> release-notes.md
+          echo "本版本提供以下发布包（仅包含题目文件）：" >> release-notes.md
+          echo "" >> release-notes.md
+          echo "| 格式 | 文件名 | 大小 | SHA256 |" >> release-notes.md
+          echo "|------|--------|------|--------|" >> release-notes.md
+          echo "| ZIP | \`${{ steps.create-release-package.outputs.zip-file }}\` | ${{ steps.create-release-package.outputs.zip-size }} | \`${{ steps.create-release-package.outputs.zip-sha256 }}\` |" >> release-notes.md
+          echo "| TAR.GZ | \`${{ steps.create-release-package.outputs.tar-file }}\` | ${{ steps.create-release-package.outputs.tar-size }} | \`${{ steps.create-release-package.outputs.tar-sha256 }}\` |" >> release-notes.md
+          echo "" >> release-notes.md
+          echo "📁 **包含内容**：" >> release-notes.md
+          echo "- \`problems/days/\` - 所有每日题目（Day 01 - Day ${{ steps.stats.outputs.total-days }}）" >> release-notes.md
+          echo "- \`problems/review/\` - 复习总结文档" >> release-notes.md
+          echo "- \`README.md\` - 使用说明和目录结构" >> release-notes.md
+          echo "" >> release-notes.md
+          echo "💡 **注意**：发布包仅包含题目文件，如需完整开发环境请克隆 GitHub 仓库。" >> release-notes.md
           echo "" >> release-notes.md
 
           # 添加技术栈信息
