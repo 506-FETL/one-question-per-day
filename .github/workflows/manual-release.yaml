@@ -62,8 +62,8 @@ jobs:
           TOTAL_DAYS=$(find problems/days -type d -name "Day *" | wc -l | tr -d ' ')
           echo "total-days=$TOTAL_DAYS" >> $GITHUB_OUTPUT
 
-          # 统计贡献者
-          CONTRIBUTORS=$(git shortlog -sn --all | wc -l | tr -d ' ')
+          # 统计贡献者（排除机器人账户，使用 mailmap 去重相同身份）
+          CONTRIBUTORS=$(git shortlog -sne --all | grep -v -E "(GitHub Action|action@github\.com|xier164.*gitee\.com)" | wc -l | tr -d ' ')
           echo "contributors=$CONTRIBUTORS" >> $GITHUB_OUTPUT
 
       - name: 生成版本号
@@ -202,7 +202,7 @@ jobs:
           # 添加项目统计
           echo "## 📊 项目统计" >> release-notes.md
           echo "" >> release-notes.md
-          echo "- 📚 总题目数量: **${{ steps.stats.outputs.total-days }}** 天" >> release-notes.md
+          echo "- 📚 总题目数量: **${{ steps.stats.outputs.total-days }}** 题" >> release-notes.md
           echo "- 👥 贡献者数量: **${{ steps.stats.outputs.contributors }}** 人" >> release-notes.md
           echo "" >> release-notes.md
 

@@ -1,0 +1,23 @@
+# Git mailmap file to consolidate contributor identities
+# Format: Proper Name <proper@email.com> Commit Name <commit@email.com>
+
+# 合并 lll 的多个身份
+lll <347552878@qq.com> lll <87215099+SeaMmMm@users.noreply.github.com>
+lll <347552878@qq.com> lll <87215099+seaeam@users.noreply.github.com>
+
+# 合并 Gong Chen Yu 的多个身份（可能是拼写差异）
+Gong Chen Yu <1072742518@qq.com> Gong Che Yu <74220172+xiersiki@users.noreply.github.com>
+Gong Chen Yu <1072742518@qq.com> Gong Chen Yu <74220172+xiersiki@users.noreply.github.com>
+
+# 合并彭畅的中英文身份
+彭畅 <1326278155@qq.com> peng chang <104177657+pcppp@users.noreply.github.com>
+
+# 合并 dc 的多个身份
+dc <dongc.nyist@qq.com> Dc9309 <103992756+Dc9309@users.noreply.github.com>
+dc <dongc.nyist@qq.com> dc <103992756+Dc9309@users.noreply.github.com>
+
+# 合并 wang-danni 的多个身份
+wang-danni <319231518@qq.com> wang-danni <126050206+wang-danni@users.noreply.github.com>
+
+# 合并 Peng Liang 的简写身份
+Peng Liang <105473589+notshine@users.noreply.github.com> pl <879037491@qq.com>
