@@ -234,10 +234,9 @@ jobs:
           if [ -n "$RELEASE_NOTES_FILE" ] && [ -f "$RELEASE_NOTES_FILE" ]; then
             echo "📝 使用构建生成的 Release Notes: $RELEASE_NOTES_FILE"
             
-            # 直接使用构建生成的 Release Notes
-            echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
-            cat "$RELEASE_NOTES_FILE" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
+            # 将构建生成的 Release Notes 复制到标准位置
+            cp "$RELEASE_NOTES_FILE" release-notes-output.md
+            echo "release-notes-file=release-notes-output.md" >> $GITHUB_OUTPUT
           else
             echo "📝 构建的 Release Notes 不存在，生成默认 Release Notes"
             
@@ -280,10 +279,8 @@ jobs:
             echo "| TAR.GZ | \`${{ steps.create-release-package.outputs.tar-file }}\` | ${{ steps.create-release-package.outputs.tar-size }} | \`${{ steps.create-release-package.outputs.tar-sha256 }}\` |" >> release-notes.md
             echo "" >> release-notes.md
 
-            # 输出到变量
-            echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
-            cat release-notes.md >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
+            # 设置文件输出而不是多行字符串
+            echo "release-notes-file=release-notes.md" >> $GITHUB_OUTPUT
           fi
 
       - name: 更新 CHANGELOG
