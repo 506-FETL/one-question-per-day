@@ -48,12 +48,15 @@ jobs:
       - name: 安装依赖
         run: pnpm install --frozen-lockfile
 
-      - name: 运行预发布检查
+      - name: 运行开发流程和构建
         if: ${{ !github.event.inputs.skip_tests }}
         run: |
-          pnpm run lint
-          pnpm run type-check
-          pnpm run test
+          pnpm run dev
+
+      - name: 仅构建（跳过测试时）
+        if: ${{ github.event.inputs.skip_tests }}
+        run: |
+          pnpm run build
 
       - name: 统计项目信息
         id: stats
@@ -175,185 +178,113 @@ jobs:
 
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
-      - name: 创建发布包
+      - name: 检查构建输出
         id: create-release-package
         run: |
-          echo "📦 创建发布包 (仅包含 problems 目录)"
+          echo "📦 检查构建输出"
 
-          # 创建临时目录用于打包
-          TEMP_DIR="release-temp"
-          PACKAGE_NAME="506-lab-daily-questions-${{ steps.version.outputs.version }}"
+          # 检查 dist 目录是否存在
+          if [ ! -d "dist" ]; then
+            echo "❌ dist 目录不存在，构建可能失败"
+            exit 1
+          fi
 
-          # 清理可能存在的临时目录
-          rm -rf "$TEMP_DIR" || true
+          # 查找构建生成的文件
+          TAR_FILE=$(find dist -name "*.tar.gz" | head -1)
+          ZIP_FILE=$(find dist -name "*.zip" | head -1)
+          RELEASE_NOTES=$(find dist -name "release-notes-*.md" | head -1)
 
-          # 创建打包目录结构
-          mkdir -p "$TEMP_DIR/$PACKAGE_NAME"
+          if [ -z "$TAR_FILE" ] || [ -z "$ZIP_FILE" ]; then
+            echo "❌ 未找到构建生成的压缩包"
+            ls -la dist/
+            exit 1
+          fi
 
-          # 复制 problems 目录
-          cp -r problems "$TEMP_DIR/$PACKAGE_NAME/"
+          # 获取文件信息
+          PACKAGE_NAME=$(basename "$TAR_FILE" .tar.gz)
+          TAR_SIZE=$(du -h "$TAR_FILE" | cut -f1)
+          ZIP_SIZE=$(du -h "$ZIP_FILE" | cut -f1)
+          TAR_SHA256=$(shasum -a 256 "$TAR_FILE" | cut -d' ' -f1)
+          ZIP_SHA256=$(shasum -a 256 "$ZIP_FILE" | cut -d' ' -f1)
 
-          # 创建包信息文件
-          cat > "$TEMP_DIR/$PACKAGE_NAME/README.md" << EOF
-          # 506实验室每日一题 - ${{ steps.version.outputs.version }}
-
-          📚 **题目总数**: ${{ steps.stats.outputs.total-days }} 题  
-          👥 **贡献者**: ${{ steps.stats.outputs.contributors }} 人  
-          📅 **发布日期**: $(date +%Y-%m-%d)  
-
-          ## 📁 目录结构
-
-          \`\`\`
-          problems/
-          ├── days/           # 每日题目
-          │   ├── Day 01/     # 第1天题目
-          │   ├── Day 02/     # 第2天题目
-          │   └── ...
-          └── review/         # 复习总结
-              ├── 01.md       # 第1天复习
-              ├── 02.md       # 第2天复习  
-              └── ...
-          \`\`\`
-
-          ## 🚀 使用说明
-
-          1. 每个 Day 目录包含：
-             - \`README.md\` - 题目描述
-             - \`answer.js\` - 参考答案
-             - 题目相关的 JavaScript 文件
-             - 对应的测试文件 (\`*.spec.js\`)
-             - \`ts/\` 目录 - TypeScript 版本实现
-
-          2. review 目录包含每天的复习总结
-
-          ## 🌐 项目地址
-
-          - GitHub: https://github.com/506-FETL/one-question-per-day
-          - 完整项目包含测试环境、开发工具等，请访问 GitHub 获取
-
-          ---
-
-          **506实验室** - 让学习成为习惯 ✨
-          EOF
-
-          # 创建压缩包
-          cd "$TEMP_DIR"
-          tar -czf "../$PACKAGE_NAME.tar.gz" "$PACKAGE_NAME"
-          zip -r "../$PACKAGE_NAME.zip" "$PACKAGE_NAME"
-          cd ..
-
-          # 计算文件大小和哈希
-          TAR_SIZE=$(du -h "$PACKAGE_NAME.tar.gz" | cut -f1)
-          ZIP_SIZE=$(du -h "$PACKAGE_NAME.zip" | cut -f1)
-          TAR_SHA256=$(shasum -a 256 "$PACKAGE_NAME.tar.gz" | cut -d' ' -f1)
-          ZIP_SHA256=$(shasum -a 256 "$PACKAGE_NAME.zip" | cut -d' ' -f1)
-
-          echo "✅ 发布包创建完成:"
-          echo "📦 $PACKAGE_NAME.tar.gz ($TAR_SIZE)"
-          echo "📦 $PACKAGE_NAME.zip ($ZIP_SIZE)"
+          echo "✅ 发布包检查完成:"
+          echo "📦 $(basename "$TAR_FILE") ($TAR_SIZE)"
+          echo "📦 $(basename "$ZIP_FILE") ($ZIP_SIZE)"
           echo ""
           echo "🔐 SHA256 校验码:"
           echo "tar.gz: $TAR_SHA256"
           echo "zip: $ZIP_SHA256"
 
-          # 清理临时目录
-          rm -rf "$TEMP_DIR"
-
           # 输出到 GitHub Actions
           echo "package-name=$PACKAGE_NAME" >> $GITHUB_OUTPUT
-          echo "tar-file=$PACKAGE_NAME.tar.gz" >> $GITHUB_OUTPUT
-          echo "zip-file=$PACKAGE_NAME.zip" >> $GITHUB_OUTPUT
+          echo "tar-file=$(basename "$TAR_FILE")" >> $GITHUB_OUTPUT
+          echo "zip-file=$(basename "$ZIP_FILE")" >> $GITHUB_OUTPUT
           echo "tar-size=$TAR_SIZE" >> $GITHUB_OUTPUT
           echo "zip-size=$ZIP_SIZE" >> $GITHUB_OUTPUT
           echo "tar-sha256=$TAR_SHA256" >> $GITHUB_OUTPUT
           echo "zip-sha256=$ZIP_SHA256" >> $GITHUB_OUTPUT
+          echo "release-notes-file=$RELEASE_NOTES" >> $GITHUB_OUTPUT
 
       - name: 生成 Release Notes
         id: release-notes
         run: |
-          # 获取最新的更新文档
-          LATEST_UPDATE=$(find updates -name "*.md" -not -name "README.md" | sort -r | head -1)
+          # 检查是否有构建生成的 Release Notes
+          RELEASE_NOTES_FILE="${{ steps.create-release-package.outputs.release-notes-file }}"
 
-          # 开始构建 Release Notes
-          cat > release-notes.md << 'EOF'
+          if [ -n "$RELEASE_NOTES_FILE" ] && [ -f "$RELEASE_NOTES_FILE" ]; then
+            echo "📝 使用构建生成的 Release Notes: $RELEASE_NOTES_FILE"
+            
+            # 直接使用构建生成的 Release Notes
+            echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
+            cat "$RELEASE_NOTES_FILE" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "📝 构建的 Release Notes 不存在，生成默认 Release Notes"
+            
+            # 获取最新的更新文档作为备用
+            LATEST_UPDATE=$(find updates -name "*.md" -not -name "README.md" | sort -r | head -1)
+
+            # 生成默认 Release Notes
+            cat > release-notes.md << 'EOF'
           # 📚 506实验室每日一题 Release
 
           ## 🎯 本次更新概览
 
           EOF
 
-          # 如果有更新文档，包含其内容
-          if [ -f "$LATEST_UPDATE" ]; then
-            echo "从 $LATEST_UPDATE 生成 Release Notes..."
+            # 如果有更新文档，包含其内容
+            if [ -f "$LATEST_UPDATE" ]; then
+              echo "从 $LATEST_UPDATE 生成 Release Notes..."
+              echo "" >> release-notes.md
+              echo "## 📝 详细更新内容" >> release-notes.md
+              echo "" >> release-notes.md
+              cat "$LATEST_UPDATE" >> release-notes.md
+              echo "" >> release-notes.md
+            fi
+
+            # 添加项目统计
+            echo "## 📊 项目统计" >> release-notes.md
             echo "" >> release-notes.md
-            echo "## 📝 详细更新内容" >> release-notes.md
+            echo "- 📚 总题目数量: **${{ steps.stats.outputs.total-days }}** 题" >> release-notes.md
+            echo "- 👥 贡献者数量: **${{ steps.stats.outputs.contributors }}** 人" >> release-notes.md
             echo "" >> release-notes.md
-            cat "$LATEST_UPDATE" >> release-notes.md
+
+            # 添加发布包信息
+            echo "## 📦 发布包下载" >> release-notes.md
             echo "" >> release-notes.md
+            echo "本版本提供以下发布包（仅包含题目文件）：" >> release-notes.md
+            echo "" >> release-notes.md
+            echo "| 格式 | 文件名 | 大小 | SHA256 |" >> release-notes.md
+            echo "|------|--------|------|--------|" >> release-notes.md
+            echo "| ZIP | \`${{ steps.create-release-package.outputs.zip-file }}\` | ${{ steps.create-release-package.outputs.zip-size }} | \`${{ steps.create-release-package.outputs.zip-sha256 }}\` |" >> release-notes.md
+            echo "| TAR.GZ | \`${{ steps.create-release-package.outputs.tar-file }}\` | ${{ steps.create-release-package.outputs.tar-size }} | \`${{ steps.create-release-package.outputs.tar-sha256 }}\` |" >> release-notes.md
+            echo "" >> release-notes.md
+
+            # 输出到变量
+            echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
+            cat release-notes.md >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
           fi
-
-          # 添加项目统计
-          echo "## 📊 项目统计" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "- 📚 总题目数量: **${{ steps.stats.outputs.total-days }}** 题" >> release-notes.md
-          echo "- 👥 贡献者数量: **${{ steps.stats.outputs.contributors }}** 人" >> release-notes.md
-          echo "" >> release-notes.md
-
-          # 添加发布包信息
-          echo "## 📦 发布包下载" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "本版本提供以下发布包（仅包含题目文件）：" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "| 格式 | 文件名 | 大小 | SHA256 |" >> release-notes.md
-          echo "|------|--------|------|--------|" >> release-notes.md
-          echo "| ZIP | \`${{ steps.create-release-package.outputs.zip-file }}\` | ${{ steps.create-release-package.outputs.zip-size }} | \`${{ steps.create-release-package.outputs.zip-sha256 }}\` |" >> release-notes.md
-          echo "| TAR.GZ | \`${{ steps.create-release-package.outputs.tar-file }}\` | ${{ steps.create-release-package.outputs.tar-size }} | \`${{ steps.create-release-package.outputs.tar-sha256 }}\` |" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "📁 **包含内容**：" >> release-notes.md
-          echo "- \`problems/days/\` - 所有每日题目（Day 01 - Day ${{ steps.stats.outputs.total-days }}）" >> release-notes.md
-          echo "- \`problems/review/\` - 复习总结文档" >> release-notes.md
-          echo "- \`README.md\` - 使用说明和目录结构" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "💡 **注意**：发布包仅包含题目文件，如需完整开发环境请克隆 GitHub 仓库。" >> release-notes.md
-          echo "" >> release-notes.md
-
-          # 添加技术栈信息
-          echo "## 🛠️ 技术栈" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "- **语言**: JavaScript, TypeScript" >> release-notes.md
-          echo "- **测试**: Vitest" >> release-notes.md
-          echo "- **代码质量**: ESLint, Prettier" >> release-notes.md
-          echo "- **包管理**: pnpm" >> release-notes.md
-          echo "" >> release-notes.md
-
-          # 添加使用说明
-          echo "## 🚀 快速开始" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "\`\`\`bash" >> release-notes.md
-          echo "# 克隆项目" >> release-notes.md
-          echo "git clone https://github.com/506-FETL/one-question-per-day.git" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "# 安装依赖" >> release-notes.md
-          echo "pnpm install" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "# 运行测试" >> release-notes.md
-          echo "pnpm test" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "# 开发模式（包含代码检查、格式化、测试）" >> release-notes.md
-          echo "pnpm dev" >> release-notes.md
-          echo "\`\`\`" >> release-notes.md
-          echo "" >> release-notes.md
-
-          # 添加贡献指南链接
-          echo "## 🤝 参与贡献" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "欢迎加入506实验室每日一题！请查看 [README.md](https://github.com/506-FETL/one-question-per-day/blob/main/README.md) 了解详细的参与指南。" >> release-notes.md
-          echo "" >> release-notes.md
-
-          # 输出到变量
-          echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
-          cat release-notes.md >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: 更新 CHANGELOG
         id: update-changelog

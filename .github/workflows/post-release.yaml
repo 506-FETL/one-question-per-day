@@ -40,85 +40,126 @@ jobs:
           echo "version=v$VERSION" >> $GITHUB_OUTPUT
           echo "提取到版本号: v$VERSION"
 
-      - name: 统计项目信息
-        id: stats
+      - name: 构建发布包
         run: |
-          # 统计题目数量
-          TOTAL_DAYS=$(find problems/days -type d -name "Day *" | wc -l | tr -d ' ')
-          echo "total-days=$TOTAL_DAYS" >> $GITHUB_OUTPUT
+          echo "🏗️ 构建发布包..."
+          pnpm run build
 
-          # 统计贡献者
-          CONTRIBUTORS=$(git shortlog -sn --all | wc -l | tr -d ' ')
-          echo "contributors=$CONTRIBUTORS" >> $GITHUB_OUTPUT
+      - name: 检查构建输出
+        id: check-build
+        run: |
+          # 检查 dist 目录
+          if [ ! -d "dist" ]; then
+            echo "❌ dist 目录不存在"
+            exit 1
+          fi
+
+          # 查找构建文件
+          TAR_FILE=$(find dist -name "*.tar.gz" | head -1)
+          ZIP_FILE=$(find dist -name "*.zip" | head -1)
+          RELEASE_NOTES=$(find dist -name "release-notes-*.md" | head -1)
+
+          if [ -z "$TAR_FILE" ] || [ -z "$ZIP_FILE" ]; then
+            echo "❌ 未找到构建文件"
+            exit 1
+          fi
+
+          echo "tar-file=$TAR_FILE" >> $GITHUB_OUTPUT
+          echo "zip-file=$ZIP_FILE" >> $GITHUB_OUTPUT
+          echo "release-notes-file=$RELEASE_NOTES" >> $GITHUB_OUTPUT
+
+          echo "✅ 构建文件检查完成"
 
       - name: 生成 Release Notes
         id: release-notes
         run: |
-          # 获取最新的更新文档
-          LATEST_UPDATE=$(find updates -name "*.md" -not -name "README.md" | sort -r | head -1)
+          # 检查是否有构建生成的 Release Notes
+          RELEASE_NOTES_FILE="${{ steps.check-build.outputs.release-notes-file }}"
 
-          # 开始构建 Release Notes
-          cat > release-notes.md << 'EOF'
+          if [ -n "$RELEASE_NOTES_FILE" ] && [ -f "$RELEASE_NOTES_FILE" ]; then
+            echo "📝 使用构建生成的 Release Notes: $RELEASE_NOTES_FILE"
+            
+            # 直接使用构建生成的 Release Notes
+            echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
+            cat "$RELEASE_NOTES_FILE" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "📝 构建的 Release Notes 不存在，生成默认 Release Notes"
+            
+            # 统计项目信息作为备用
+            TOTAL_DAYS=$(find problems/days -type d -name "Day *" | wc -l | tr -d ' ')
+            CONTRIBUTORS=$(git shortlog -sn --all | wc -l | tr -d ' ')
+            
+            # 获取最新的更新文档
+            LATEST_UPDATE=$(find updates -name "*.md" -not -name "README.md" | sort -r | head -1)
+
+            # 开始构建 Release Notes
+            cat > release-notes.md << 'EOF'
           # 📚 506实验室每日一题 Release
 
           ## 🎯 本次更新概览
 
           EOF
 
-          # 如果有更新文档，包含其内容
-          if [ -f "$LATEST_UPDATE" ]; then
-            echo "从 $LATEST_UPDATE 生成 Release Notes..."
+            # 如果有更新文档，包含其内容
+            if [ -f "$LATEST_UPDATE" ]; then
+              echo "从 $LATEST_UPDATE 生成 Release Notes..."
+              echo "" >> release-notes.md
+              echo "## 📝 详细更新内容" >> release-notes.md
+              echo "" >> release-notes.md
+              cat "$LATEST_UPDATE" >> release-notes.md
+              echo "" >> release-notes.md
+            fi
+
+            # 添加项目统计
+            echo "## 📊 项目统计" >> release-notes.md
             echo "" >> release-notes.md
-            echo "## 📝 详细更新内容" >> release-notes.md
+            echo "- 📚 总题目数量: **$TOTAL_DAYS** 题" >> release-notes.md
+            echo "- 👥 贡献者数量: **$CONTRIBUTORS** 人" >> release-notes.md
             echo "" >> release-notes.md
-            cat "$LATEST_UPDATE" >> release-notes.md
+
+            # 添加技术栈信息
+            echo "## 🛠️ 技术栈" >> release-notes.md
             echo "" >> release-notes.md
+            echo "- **语言**: JavaScript, TypeScript" >> release-notes.md
+            echo "- **测试**: Vitest" >> release-notes.md
+            echo "- **代码质量**: ESLint, Prettier" >> release-notes.md
+            echo "- **包管理**: pnpm" >> release-notes.md
+            echo "- **构建工具**: Vite" >> release-notes.md
+            echo "" >> release-notes.md
+
+            # 添加使用说明
+            echo "## 🚀 快速开始" >> release-notes.md
+            echo "" >> release-notes.md
+            echo "\`\`\`bash" >> release-notes.md
+            echo "# 克隆项目" >> release-notes.md
+            echo "git clone https://github.com/506-FETL/one-question-per-day.git" >> release-notes.md
+            echo "" >> release-notes.md
+            echo "# 安装依赖" >> release-notes.md
+            echo "pnpm install" >> release-notes.md
+            echo "" >> release-notes.md
+            echo "# 运行测试" >> release-notes.md
+            echo "pnpm test" >> release-notes.md
+            echo "" >> release-notes.md
+            echo "# 开发模式（包含代码检查、格式化、测试）" >> release-notes.md
+            echo "pnpm dev" >> release-notes.md
+            echo "" >> release-notes.md
+            echo "# 构建发布包" >> release-notes.md
+            echo "pnpm build" >> release-notes.md
+            echo "\`\`\`" >> release-notes.md
+            echo "" >> release-notes.md
+
+            # 添加贡献指南链接
+            echo "## 🤝 参与贡献" >> release-notes.md
+            echo "" >> release-notes.md
+            echo "欢迎加入506实验室每日一题！请查看 [README.md](https://github.com/506-FETL/one-question-per-day/blob/main/README.md) 了解详细的参与指南。" >> release-notes.md
+            echo "" >> release-notes.md
+
+            # 输出到变量
+            echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
+            cat release-notes.md >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
           fi
-
-          # 添加项目统计
-          echo "## 📊 项目统计" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "- 📚 总题目数量: **${{ steps.stats.outputs.total-days }}** 天" >> release-notes.md
-          echo "- 👥 贡献者数量: **${{ steps.stats.outputs.contributors }}** 人" >> release-notes.md
-          echo "" >> release-notes.md
-
-          # 添加技术栈信息
-          echo "## 🛠️ 技术栈" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "- **语言**: JavaScript, TypeScript" >> release-notes.md
-          echo "- **测试**: Vitest" >> release-notes.md
-          echo "- **代码质量**: ESLint, Prettier" >> release-notes.md
-          echo "- **包管理**: pnpm" >> release-notes.md
-          echo "" >> release-notes.md
-
-          # 添加使用说明
-          echo "## 🚀 快速开始" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "\`\`\`bash" >> release-notes.md
-          echo "# 克隆项目" >> release-notes.md
-          echo "git clone https://github.com/506-FETL/one-question-per-day.git" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "# 安装依赖" >> release-notes.md
-          echo "pnpm install" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "# 运行测试" >> release-notes.md
-          echo "pnpm test" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "# 开发模式（包含代码检查、格式化、测试）" >> release-notes.md
-          echo "pnpm dev" >> release-notes.md
-          echo "\`\`\`" >> release-notes.md
-          echo "" >> release-notes.md
-
-          # 添加贡献指南链接
-          echo "## 🤝 参与贡献" >> release-notes.md
-          echo "" >> release-notes.md
-          echo "欢迎加入506实验室每日一题！请查看 [README.md](https://github.com/506-FETL/one-question-per-day/blob/main/README.md) 了解详细的参与指南。" >> release-notes.md
-          echo "" >> release-notes.md
-
-          # 输出到变量
-          echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
-          cat release-notes.md >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: 检查 Tag 是否存在
         id: check-tag
@@ -142,25 +183,33 @@ jobs:
 
       - name: 创建 GitHub Release
         if: steps.check-tag.outputs.tag-exists == 'false'
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.extract-version.outputs.version }}
-          release_name: '📚 ${{ steps.extract-version.outputs.version }} - 506实验室每日一题'
+          name: '📚 ${{ steps.extract-version.outputs.version }} - 506实验室每日一题'
           body: ${{ steps.release-notes.outputs.RELEASE_NOTES }}
+          files: |
+            ${{ steps.check-build.outputs.tar-file }}
+            ${{ steps.check-build.outputs.zip-file }}
           draft: false
           prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 发布成功通知
         if: steps.check-tag.outputs.tag-exists == 'false'
         run: |
+          # 统计项目信息用于通知
+          TOTAL_DAYS=$(find problems/days -type d -name "Day *" | wc -l | tr -d ' ')
+          CONTRIBUTORS=$(git shortlog -sn --all | wc -l | tr -d ' ')
+
           echo "✅ 发布完成!"
           echo "📚 项目: 506实验室每日一题"
           echo "🏷️ 版本: ${{ steps.extract-version.outputs.version }}"
-          echo "📊 总题目数: ${{ steps.stats.outputs.total-days }} 天"
-          echo "👥 贡献者: ${{ steps.stats.outputs.contributors }} 人"
+          echo "📊 总题目数: $TOTAL_DAYS 题"
+          echo "👥 贡献者: $CONTRIBUTORS 人"
           echo "🎉 GitHub Release 已创建完成"
+          echo "📦 发布包已上传到 Release"
 
       - name: 跳过发布通知
         if: steps.check-tag.outputs.tag-exists == 'true'

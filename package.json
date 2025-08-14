@@ -1,12 +1,14 @@
 {
   "name": "one-question-per-day",
   "private": true,
-  "version": "2.1.2",
+  "version": "2.1.3",
   "type": "module",
   "scripts": {
-    "dev": "run-s lint type-check format test",
+    "dev": "run-s lint type-check format test build",
+    "build": "vite build",
     "lint": "eslint src \"problems/**/answer.{js,ts}\" --config eslint.config.ts",
-    "test": "vitest --config vitest.config.ts",
+    "test": "vitest run --config vitest.config.ts",
+    "test:watch": "vitest --config vitest.config.ts",
     "format": "prettier --write \"src/**/*.{js,cjs,mjs,vue,ts,tsx,json,css,md}\" \"problems/**/*.{js,cjs,mjs,vue,ts,tsx,json,css,md}\"",
     "type-check": "tsc --noEmit",
     "release": "scripts/release.sh",
