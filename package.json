@@ -1,7 +1,7 @@
 {
   "name": "one-question-per-day",
   "private": true,
-  "version": "2.2.1",
+  "version": "2.2.2",
   "type": "module",
   "scripts": {
     "dev": "run-s lint type-check format test build",
