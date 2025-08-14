@@ -1,23 +1,15 @@
 {
   "name": "one-question-per-day",
   "private": true,
-  "version": "2.2.3",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "run-s lint type-check format test build",
-    "build": "vite build",
+    "dev": "run-s lint type-check format test",
     "lint": "eslint src \"problems/**/answer.{js,ts}\" --config eslint.config.ts",
     "test": "vitest run --config vitest.config.ts",
     "test:watch": "vitest --config vitest.config.ts",
     "format": "prettier --write \"src/**/*.{js,cjs,mjs,vue,ts,tsx,json,css,md}\" \"problems/**/*.{js,cjs,mjs,vue,ts,tsx,json,css,md}\"",
-    "type-check": "tsc --noEmit",
-    "release": "cmd/release.sh",
-    "release:patch": "cmd/release.sh patch",
-    "release:minor": "cmd/release.sh minor",
-    "release:major": "cmd/release.sh major",
-    "release:custom": "cmd/release.sh custom",
-    "pre-release": "run-s lint type-check test",
-    "demo:changelog": "cmd/demo-changelog.sh"
+    "type-check": "tsc --noEmit"
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
