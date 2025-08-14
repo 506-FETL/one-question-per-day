@@ -21,170 +21,27 @@ jobs:
           fetch-depth: 0
           ref: main # 明确 checkout 到 main 分支
 
-      - name: 确保在最新的 main 分支上
-        run: |
-          git checkout main
-          git pull origin main
-          echo "当前分支: $(git branch --show-current)"
-          echo "当前 commit: $(git rev-parse HEAD)"
-          echo "最新 commit 信息: $(git log -1 --oneline)"
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'pnpm'
-
-      - name: 安装依赖
-        run: pnpm install --frozen-lockfile
-
       - name: 提取版本号
         id: extract-version
         run: |
-          # 确认我们在正确的分支和位置
-          echo "当前工作目录: $(pwd)"
-          echo "当前分支: $(git branch --show-current)"
-          echo "当前 commit: $(git rev-parse HEAD)"
-
-          # 从package.json提取版本号
+          # 从 main 分支上的 package.json 提取版本号
           VERSION=$(node -p "require('./package.json').version")
           echo "version=v$VERSION" >> $GITHUB_OUTPUT
-          echo "提取到版本号: v$VERSION"
-
-          # 验证 package.json 的内容
-          echo "package.json 中的版本信息:"
-          grep '"version"' package.json
-
-      - name: 构建发布包
-        run: |
-          echo "🏗️ 构建发布包..."
-          pnpm run build
-
-      - name: 检查构建输出
-        id: check-build
-        run: |
-          # 检查 dist 目录
-          if [ ! -d "dist" ]; then
-            echo "❌ dist 目录不存在"
-            exit 1
-          fi
-
-          # 查找构建文件
-          TAR_FILE=$(find dist -name "*.tar.gz" | head -1)
-          ZIP_FILE=$(find dist -name "*.zip" | head -1)
-          RELEASE_NOTES=$(find dist -name "release-notes-*.md" | head -1)
-
-          if [ -z "$TAR_FILE" ] || [ -z "$ZIP_FILE" ]; then
-            echo "❌ 未找到构建文件"
-            exit 1
-          fi
-
-          echo "tar-file=$TAR_FILE" >> $GITHUB_OUTPUT
-          echo "zip-file=$ZIP_FILE" >> $GITHUB_OUTPUT
-          echo "release-notes-file=$RELEASE_NOTES" >> $GITHUB_OUTPUT
-
-          echo "✅ 构建文件检查完成"
-
-      - name: 生成 Release Notes
-        id: release-notes
-        run: |
-          # 检查是否有构建生成的 Release Notes
-          RELEASE_NOTES_FILE="${{ steps.check-build.outputs.release-notes-file }}"
-
-          if [ -n "$RELEASE_NOTES_FILE" ] && [ -f "$RELEASE_NOTES_FILE" ]; then
-            echo "📝 使用构建生成的 Release Notes: $RELEASE_NOTES_FILE"
-            
-            # 将构建生成的 Release Notes 复制到标准位置
-            cp "$RELEASE_NOTES_FILE" final-release-notes.md
-            echo "release-notes-file=final-release-notes.md" >> $GITHUB_OUTPUT
-          else
-            echo "📝 构建的 Release Notes 不存在，生成默认 Release Notes"
-            
-            # 统计项目信息作为备用
-            TOTAL_DAYS=$(find problems/days -type d -name "Day *" | wc -l | tr -d ' ')
-            CONTRIBUTORS=$(git shortlog -sn --all | wc -l | tr -d ' ')
-            
-            # 获取最新的更新文档
-            LATEST_UPDATE=$(find updates -name "*.md" -not -name "README.md" | sort -r | head -1)
-
-            # 开始构建 Release Notes
-            cat > release-notes.md << 'EOF'
-          # 📚 506实验室每日一题 Release
-
-          ## 🎯 本次更新概览
-
-          EOF
-
-            # 如果有更新文档，包含其内容
-            if [ -f "$LATEST_UPDATE" ]; then
-              echo "从 $LATEST_UPDATE 生成 Release Notes..."
-              echo "" >> release-notes.md
-              echo "## 📝 详细更新内容" >> release-notes.md
-              echo "" >> release-notes.md
-              cat "$LATEST_UPDATE" >> release-notes.md
-              echo "" >> release-notes.md
-            fi
-
-            # 添加项目统计
-            echo "## 📊 项目统计" >> release-notes.md
-            echo "" >> release-notes.md
-            echo "- 📚 总题目数量: **$TOTAL_DAYS** 题" >> release-notes.md
-            echo "- 👥 贡献者数量: **$CONTRIBUTORS** 人" >> release-notes.md
-            echo "" >> release-notes.md
-
-            # 添加技术栈信息
-            echo "## 🛠️ 技术栈" >> release-notes.md
-            echo "" >> release-notes.md
-            echo "- **语言**: JavaScript, TypeScript" >> release-notes.md
-            echo "- **测试**: Vitest" >> release-notes.md
-            echo "- **代码质量**: ESLint, Prettier" >> release-notes.md
-            echo "- **包管理**: pnpm" >> release-notes.md
-            echo "- **构建工具**: Vite" >> release-notes.md
-            echo "" >> release-notes.md
-
-            # 添加使用说明
-            echo "## 🚀 快速开始" >> release-notes.md
-            echo "" >> release-notes.md
-            echo "\`\`\`bash" >> release-notes.md
-            echo "# 克隆项目" >> release-notes.md
-            echo "git clone https://github.com/506-FETL/one-question-per-day.git" >> release-notes.md
-            echo "" >> release-notes.md
-            echo "# 安装依赖" >> release-notes.md
-            echo "pnpm install" >> release-notes.md
-            echo "" >> release-notes.md
-            echo "# 运行测试" >> release-notes.md
-            echo "pnpm test" >> release-notes.md
-            echo "" >> release-notes.md
-            echo "# 开发模式（包含代码检查、格式化、测试）" >> release-notes.md
-            echo "pnpm dev" >> release-notes.md
-            echo "" >> release-notes.md
-            echo "# 构建发布包" >> release-notes.md
-            echo "pnpm build" >> release-notes.md
-            echo "\`\`\`" >> release-notes.md
-            echo "" >> release-notes.md
-
-            # 添加贡献指南链接
-            echo "## 🤝 参与贡献" >> release-notes.md
-            echo "" >> release-notes.md
-            echo "欢迎加入506实验室每日一题！请查看 [README.md](https://github.com/506-FETL/one-question-per-day/blob/main/README.md) 了解详细的参与指南。" >> release-notes.md
-            echo "" >> release-notes.md
-
-            # 设置文件输出而不是多行字符串
-            echo "release-notes-file=release-notes.md" >> $GITHUB_OUTPUT
-          fi
+          echo "✅ 从 main 分支提取到版本号: v$VERSION"
+          echo "📍 当前 commit: $(git rev-parse HEAD)"
 
       - name: 检查 Tag 是否存在
         id: check-tag
         run: |
-          if git rev-parse "${{ steps.extract-version.outputs.version }}" >/dev/null 2>&1; then
+          TAG_NAME="${{ steps.extract-version.outputs.version }}"
+
+          # 检查远程是否有这个 tag
+          if git ls-remote --tags origin | grep -q "refs/tags/$TAG_NAME$"; then
             echo "tag-exists=true" >> $GITHUB_OUTPUT
-            echo "⚠️ Tag ${{ steps.extract-version.outputs.version }} 已存在"
+            echo "✅ Tag $TAG_NAME 已存在，跳过创建"
           else
             echo "tag-exists=false" >> $GITHUB_OUTPUT
-            echo "✅ Tag ${{ steps.extract-version.outputs.version }} 不存在，可以创建"
+            echo "🆕 Tag $TAG_NAME 不存在，需要创建"
           fi
 
       - name: 创建 Git Tag
@@ -193,26 +50,57 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-          # 获取当前 HEAD commit SHA
+          # 获取当前 main 分支的 HEAD commit
           CURRENT_COMMIT=$(git rev-parse HEAD)
-          echo "将为 commit $CURRENT_COMMIT 创建 tag ${{ steps.extract-version.outputs.version }}"
+          TAG_NAME="${{ steps.extract-version.outputs.version }}"
 
-          # 创建 tag 并明确指定 commit
-          git tag -a ${{ steps.extract-version.outputs.version }} $CURRENT_COMMIT -m "Release ${{ steps.extract-version.outputs.version }}"
-          git push origin ${{ steps.extract-version.outputs.version }}
-          echo "🏷️ Git Tag ${{ steps.extract-version.outputs.version }} 创建成功，指向 commit: $CURRENT_COMMIT"
+          echo "🏷️ 创建 tag $TAG_NAME 指向 commit $CURRENT_COMMIT"
+
+          # 创建 tag
+          git tag -a "$TAG_NAME" -m "Release $TAG_NAME"
+          git push origin "$TAG_NAME"
+
+          echo "✅ Git Tag $TAG_NAME 创建成功"
 
       - name: 创建 GitHub Release
         if: steps.check-tag.outputs.tag-exists == 'false'
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.extract-version.outputs.version }}
-          name: '📚 ${{ steps.extract-version.outputs.version }} - 506实验室每日一题'
-          body_path: ${{ steps.release-notes.outputs.release-notes-file }}
-          target_commitish: main # 明确指定基于 main 分支创建 release
-          files: |
-            ${{ steps.check-build.outputs.tar-file }}
-            ${{ steps.check-build.outputs.zip-file }}
+          name: '� ${{ steps.extract-version.outputs.version }} - 506实验室每日一题'
+          body: |
+            # 📚 506实验室每日一题 Release ${{ steps.extract-version.outputs.version }}
+
+            ## 🎯 本次发布
+
+            这是一个自动化发布，包含了最新的代码更新和改进。
+
+            ## 📊 项目统计
+
+            - 📚 总题目数量: 持续增长中
+            - 👥 活跃贡献者: 多位开发者参与
+            - 🛠️ 技术栈: JavaScript, TypeScript, Vite, Vitest
+
+            ## 🚀 快速开始
+
+            ```bash
+            # 克隆项目
+            git clone https://github.com/506-FETL/one-question-per-day.git
+
+            # 安装依赖
+            pnpm install
+
+            # 运行测试
+            pnpm test
+
+            # 开发模式
+            pnpm dev
+            ```
+
+            ## 🤝 参与贡献
+
+            欢迎查看 [README.md](https://github.com/506-FETL/one-question-per-day/blob/main/README.md) 了解如何参与贡献！
+
           draft: false
           prerelease: false
         env:
@@ -221,21 +109,15 @@ jobs:
       - name: 发布成功通知
         if: steps.check-tag.outputs.tag-exists == 'false'
         run: |
-          # 统计项目信息用于通知
-          TOTAL_DAYS=$(find problems/days -type d -name "Day *" | wc -l | tr -d ' ')
-          CONTRIBUTORS=$(git shortlog -sn --all | wc -l | tr -d ' ')
-
-          echo "✅ 发布完成!"
+          echo "🎉 发布完成!"
           echo "📚 项目: 506实验室每日一题"
           echo "🏷️ 版本: ${{ steps.extract-version.outputs.version }}"
-          echo "📊 总题目数: $TOTAL_DAYS 题"
-          echo "👥 贡献者: $CONTRIBUTORS 人"
-          echo "🎉 GitHub Release 已创建完成"
-          echo "📦 发布包已上传到 Release"
+          echo "� Commit: $(git rev-parse HEAD)"
+          echo "✨ GitHub Release 已创建完成"
 
       - name: 跳过发布通知
         if: steps.check-tag.outputs.tag-exists == 'true'
         run: |
           echo "ℹ️ Tag ${{ steps.extract-version.outputs.version }} 已存在，跳过发布"
           echo "📚 项目: 506实验室每日一题"
-          echo "🏷️ 现有版本: ${{ steps.extract-version.outputs.version }}"
+          echo "📍 当前 Commit: $(git rev-parse HEAD)"
