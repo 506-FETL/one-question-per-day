@@ -79,10 +79,9 @@ jobs:
           if [ -n "$RELEASE_NOTES_FILE" ] && [ -f "$RELEASE_NOTES_FILE" ]; then
             echo "📝 使用构建生成的 Release Notes: $RELEASE_NOTES_FILE"
             
-            # 直接使用构建生成的 Release Notes
-            echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
-            cat "$RELEASE_NOTES_FILE" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
+            # 将构建生成的 Release Notes 复制到标准位置
+            cp "$RELEASE_NOTES_FILE" final-release-notes.md
+            echo "release-notes-file=final-release-notes.md" >> $GITHUB_OUTPUT
           else
             echo "📝 构建的 Release Notes 不存在，生成默认 Release Notes"
             
@@ -155,10 +154,8 @@ jobs:
             echo "欢迎加入506实验室每日一题！请查看 [README.md](https://github.com/506-FETL/one-question-per-day/blob/main/README.md) 了解详细的参与指南。" >> release-notes.md
             echo "" >> release-notes.md
 
-            # 输出到变量
-            echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
-            cat release-notes.md >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
+            # 设置文件输出而不是多行字符串
+            echo "release-notes-file=release-notes.md" >> $GITHUB_OUTPUT
           fi
 
       - name: 检查 Tag 是否存在
@@ -187,7 +184,7 @@ jobs:
         with:
           tag_name: ${{ steps.extract-version.outputs.version }}
           name: '📚 ${{ steps.extract-version.outputs.version }} - 506实验室每日一题'
-          body: ${{ steps.release-notes.outputs.RELEASE_NOTES }}
+          body_path: ${{ steps.release-notes.outputs.release-notes-file }}
           files: |
             ${{ steps.check-build.outputs.tar-file }}
             ${{ steps.check-build.outputs.zip-file }}
