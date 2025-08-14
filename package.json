@@ -11,13 +11,13 @@
     "test:watch": "vitest --config vitest.config.ts",
     "format": "prettier --write \"src/**/*.{js,cjs,mjs,vue,ts,tsx,json,css,md}\" \"problems/**/*.{js,cjs,mjs,vue,ts,tsx,json,css,md}\"",
     "type-check": "tsc --noEmit",
-    "release": "scripts/release.sh",
-    "release:patch": "scripts/release.sh patch",
-    "release:minor": "scripts/release.sh minor",
-    "release:major": "scripts/release.sh major",
-    "release:custom": "scripts/release.sh custom",
+    "release": "cmd/release.sh",
+    "release:patch": "cmd/release.sh patch",
+    "release:minor": "cmd/release.sh minor",
+    "release:major": "cmd/release.sh major",
+    "release:custom": "cmd/release.sh custom",
     "pre-release": "run-s lint type-check test",
-    "demo:changelog": "scripts/demo-changelog.sh"
+    "demo:changelog": "cmd/demo-changelog.sh"
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
