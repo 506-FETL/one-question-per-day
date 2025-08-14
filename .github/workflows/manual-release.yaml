@@ -270,29 +270,21 @@ jobs:
               echo "## [${{ steps.version.outputs.version }}] - $CURRENT_DATE" >> $temp_changelog
               echo "" >> $temp_changelog
               
-              # 如果有最新更新文档，解析其内容
+              # 如果有最新更新文档，直接添加其内容
               if [ -f "$LATEST_UPDATE" ]; then
-                # 提取更新文档中的分类内容
-                if grep -q "## 新增功能" "$LATEST_UPDATE"; then
-                  echo "### 新增功能" >> $temp_changelog
-                  sed -n '/## 新增功能/,/## /p' "$LATEST_UPDATE" | sed '1d;$d' | grep '^-' >> $temp_changelog
-                  echo "" >> $temp_changelog
-                fi
-                
-                if grep -q "## 修改内容" "$LATEST_UPDATE"; then
-                  echo "### 修改内容" >> $temp_changelog
-                  sed -n '/## 修改内容/,/## /p' "$LATEST_UPDATE" | sed '1d;$d' | grep '^-' >> $temp_changelog
-                  echo "" >> $temp_changelog
-                fi
-                
-                if grep -q "## 问题修复\|## 修复问题" "$LATEST_UPDATE"; then
-                  echo "### 问题修复" >> $temp_changelog
-                  sed -n '/## 问题修复\|## 修复问题/,/## /p' "$LATEST_UPDATE" | sed '1d;$d' | grep '^-' >> $temp_changelog
-                  echo "" >> $temp_changelog
-                fi
+                echo "### 更新内容" >> $temp_changelog
+                echo "" >> $temp_changelog
+                # 获取更新文档的标题
+                echo "**$(head -1 "$LATEST_UPDATE" | sed 's/^# //')**" >> $temp_changelog
+                echo "" >> $temp_changelog
+                # 添加更新概述（跳过标题和元信息，提取主要内容）
+                sed -n '/## /,$p' "$LATEST_UPDATE" | head -20 | grep -E '^- |^## ' | sed 's/^## /#### /' >> $temp_changelog
+                echo "" >> $temp_changelog
+                echo "详细信息请查看: [更新文档]($LATEST_UPDATE)" >> $temp_changelog
+                echo "" >> $temp_changelog
               else
                 # 如果没有更新文档，添加通用条目
-                echo "### 新增功能" >> $temp_changelog
+                echo "### 更新内容" >> $temp_changelog
                 echo "- 手动发布版本 ${{ steps.version.outputs.version }}" >> $temp_changelog
                 echo "" >> $temp_changelog
               fi
