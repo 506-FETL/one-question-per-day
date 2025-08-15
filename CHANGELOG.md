@@ -1,5 +1,15 @@
 # Changelog
 
+所有重要的更改都将记录在此文件中。
+
+格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，并且此项目遵循 [语义化版本控制](https://semver.org/lang/zh-CN/)。
+
+
+
+## [1.3.5](https://github.com/506-FETL/one-question-per-day/compare/v1.3.4...v1.3.5) (2025-08-15)
+
+# Changelog
+
 ## [1.3.4](https://github.com/506-FETL/one-question-per-day/compare/v1.3.3...v1.3.4) (2025-08-15)
 
 ## [1.3.3](https://github.com/506-FETL/one-question-per-day/compare/v1.3.2...v1.3.3) (2025-08-15)
