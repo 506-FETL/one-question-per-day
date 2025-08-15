@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.3.2](https://github.com/506-FETL/one-question-per-day/compare/v1.3.1...v1.3.2) (2025-08-15)
+
 ## [1.3.1](https://github.com/506-FETL/one-question-per-day/compare/v1.3.0...v1.3.1) (2025-08-15)
 
 所有重要的更改都将记录在此文件中。
