@@ -281,6 +281,22 @@ pnpm run generate-release-notes
 
 > 📚 **详细文档**: 查看 [自动发布说明文档](./docs/AUTO_RELEASE_NOTES.md) 了解完整使用指南。
 
+### 📦 Problems 压缩包
+
+每次发布都会自动生成一个只包含题目的压缩包：
+
+- **🎯 专注内容**: 仅包含 `problems/` 文件夹，无其他项目文件
+- **📁 完整题库**: 包含所有每日题目和技术复习资料  
+- **🚀 自动生成**: 发布时自动创建并上传到 GitHub Release
+- **💾 轻量下载**: 相比完整项目更小，下载更快
+
+```bash
+# 手动生成 problems 压缩包
+pnpm run create-problems-archive
+```
+
+> 📚 **详细说明**: 查看 [Problems 压缩包文档](./docs/PROBLEMS_ARCHIVE.md) 了解完整功能。
+
 ---
 
 ## 注意事项

@@ -16,12 +16,12 @@
     "releaseNotes": "node scripts/get-release-notes.js",
     "autoGenerate": false,
     "tokenRef": "GITHUB_TOKEN",
-    "assets": [],
+    "assets": ["dist/problems-v${version}.zip"],
     "web": true
   },
   "hooks": {
     "before:init": ["pnpm run dev"],
-    "after:bump": "node scripts/generate-release-notes.js",
+    "after:bump": ["node scripts/generate-release-notes.js", "node scripts/create-problems-archive.js"],
     "after:git:release": "echo 🎉 Release v${version} completed!",
     "after:github:release": "echo 📦 GitHub release created!"
   },
