@@ -84,9 +84,4 @@ const generateReleaseNotes = () => {
   return releaseNotes
 }
 
-// 如果直接运行此脚本
-if (import.meta.url === `file://${process.argv[1]}`) {
-  generateReleaseNotes()
-}
-
-export { generateReleaseNotes }
+generateReleaseNotes()
