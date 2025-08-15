@@ -1,7 +1,7 @@
 {
   "name": "one-question-per-day",
   "private": true,
-  "version": "1.3.2",
+  "version": "1.3.3",
   "type": "module",
   "scripts": {
     "build:release": "vite build --config vite.config.ts",
