@@ -21,7 +21,11 @@
   },
   "hooks": {
     "before:init": ["pnpm run dev"],
-    "after:bump": ["node scripts/generate-release-notes.js", "pnpm run build:release"],
+    "after:bump": [
+      "node scripts/generate-release-notes.js",
+      "pnpm run build:release",
+      "git add dist/"
+    ],
     "after:git:release": "echo 🎉 Release v${version} completed!",
     "after:github:release": "echo 📦 GitHub release created!"
   },

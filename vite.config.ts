@@ -95,7 +95,7 @@ export default defineConfig({
   // 简化的构建配置，主要用于触发插件
   build: {
     outDir: 'dist',
-    emptyOutDir: false, // 不清空，因为我们的压缩包在里面
+    emptyOutDir: false,
 
     rollupOptions: {
       // 使用实际的入口文件
@@ -108,7 +108,7 @@ export default defineConfig({
 
     // 设置为 lib 模式避免 HTML 相关处理
     lib: {
-      entry: resolve(__dirname, 'scripts/build-entry.js'),
+      entry: resolve(__dirname, 'src/index.ts'),
       name: 'ProblemsArchive',
       formats: ['es'],
     },
