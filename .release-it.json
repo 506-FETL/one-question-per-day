@@ -17,15 +17,14 @@
     "autoGenerate": false,
     "tokenRef": "GITHUB_TOKEN",
     "assets": ["dist/problems-v${version}.zip"],
-    "web": true
+    "web": true,
+    "draft": false,
+    "preRelease": false
   },
   "hooks": {
     "before:init": ["pnpm run dev"],
-    "after:bump": [
-      "node scripts/generate-release-notes.js",
-      "pnpm run build:release",
-      "git add dist/"
-    ],
+    "before:bump": ["node scripts/generate-release-notes.js", "pnpm run build:release"],
+    "after:bump": ["git add dist/"],
     "after:git:release": "echo 🎉 Release v${version} completed!",
     "after:github:release": "echo 📦 GitHub release created!"
   },
