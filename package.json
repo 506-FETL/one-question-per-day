@@ -10,6 +10,7 @@
     "test:watch": "vitest --config vitest.config.ts",
     "format": "prettier --write \"src/**/*.{js,cjs,mjs,vue,ts,tsx,json,css,md}\" \"problems/**/*.{js,cjs,mjs,vue,ts,tsx,json,css,md}\"",
     "type-check": "tsc --noEmit",
+    "generate-release-notes": "node scripts/generate-release-notes.js",
     "release": "dotenv -f .env run -- release-it"
   },
   "devDependencies": {

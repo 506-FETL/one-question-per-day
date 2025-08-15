@@ -89,5 +89,19 @@ export default defineConfig([
       '@typescript-eslint/explicit-module-boundary-types': 'off',
     },
   },
+  {
+    // 检查 scripts 目录下的 JavaScript 文件
+    files: ['scripts/**/*.{js,mjs,cjs}'],
+    rules: {
+      'no-unused-vars': 'warn',
+      'no-console': 'off', // scripts 允许使用 console
+      'no-undef': 'error',
+    },
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
   ...pluginVue.configs['flat/essential'],
 ])
