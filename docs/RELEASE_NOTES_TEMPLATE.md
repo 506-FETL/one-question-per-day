@@ -78,17 +78,20 @@ cat RELEASE_NOTES.md
 ## 🎉 Release v1.2.0
 
 ✨ **Features**
-* 每日一题-- myFrom 函数，支持类数组对象和可迭代对象的转换
-* 每日一题--生成器函数转换为异步函数
-* 完成 Day 08-实现 Promise
+
+- 每日一题-- myFrom 函数，支持类数组对象和可迭代对象的转换
+- 每日一题--生成器函数转换为异步函数
+- 完成 Day 08-实现 Promise
 
 🐛 **Bug Fixes**
-* 修复 ts 错误
-* 修正 ESLint 配置中的路径别名和 lint、format 脚本
-* 更新深拷贝函数，增强对Symbol和方法的处理能力
+
+- 修复 ts 错误
+- 修正 ESLint 配置中的路径别名和 lint、format 脚本
+- 更新深拷贝函数，增强对Symbol和方法的处理能力
 
 📚 **Documentation**
-* 更新项目文档，添加每日一题描述文件，优化代码结构和测试用例
+
+- 更新项目文档，添加每日一题描述文件，优化代码结构和测试用例
 
 ---
 
