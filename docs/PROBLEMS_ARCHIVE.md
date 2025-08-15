@@ -7,11 +7,13 @@
 ## ✨ 主要特性
 
 ### 1. 🤖 自动生成
+
 - 每次执行 `pnpm run release` 时自动创建
 - 文件名格式：`problems-v{版本号}.zip`
 - 自动上传到 GitHub Release
 
 ### 2. 📁 包含内容
+
 压缩包只包含 `problems/` 文件夹，其中包括：
 
 ```
@@ -30,7 +32,9 @@ problems/
 ```
 
 ### 3. 🚫 排除内容
+
 压缩包会自动排除：
+
 - `.DS_Store` 文件（macOS 系统文件）
 - `node_modules/` 目录
 - `.git/` 目录
@@ -52,9 +56,11 @@ pnpm run release
 如果需要单独生成压缩包：
 
 ```bash
-# 仅生成 problems 压缩包
+# 使用 Vite 构建生成 problems 压缩包
 pnpm run create-problems-archive
 ```
+
+> 💡 **技术实现**: 使用 Vite 构建工具和自定义插件实现，支持自动清理和高效压缩。
 
 ### 下载使用
 
@@ -95,9 +101,7 @@ pnpm run create-problems-archive
 ### 核心文件
 
 ```
-scripts/
-└── create-problems-archive.js  # 压缩包生成脚本
-
+vite.config.problems.ts        # Vite 配置文件（压缩包生成）
 .release-it.json               # 包含压缩包配置
 package.json                   # 包含相关脚本
 ```
@@ -114,18 +118,40 @@ package.json                   # 包含相关脚本
   "hooks": {
     "after:bump": [
       "node scripts/generate-release-notes.js",
-      "node scripts/create-problems-archive.js"
+      "pnpm run create-problems-archive"
     ]
   }
 }
 ```
 
-### 脚本功能
+### Vite 插件实现
 
-- **自动版本检测** - 从 `package.json` 读取当前版本
-- **创建输出目录** - 自动创建 `dist/` 目录
-- **智能排除** - 排除系统文件和不必要的内容
-- **压缩包信息** - 显示文件大小和包含内容
+使用 Vite 自定义插件实现压缩包生成：
+
+```typescript
+// vite.config.problems.ts
+export default defineConfig({
+  plugins: [
+    {
+      name: 'problems-archiver',
+      async buildStart() {
+        // 1. 清理 dist 目录
+        // 2. 检查 problems 文件夹
+        // 3. 使用 archiver 创建 ZIP
+        // 4. 排除不必要文件
+      },
+    },
+  ],
+})
+```
+
+### Vite 构建特性
+
+- **🧹 自动清理** - 构建前自动清理 `dist/` 目录
+- **📦 高效压缩** - 使用 archiver 库实现高效 ZIP 压缩
+- **🎯 智能排除** - 自动排除系统文件和不必要的内容
+- **📊 构建报告** - 显示压缩包大小和包含内容
+- **⚡ 快速构建** - 基于 Vite 的高性能构建流程
 
 ## 📊 使用统计
 
@@ -141,16 +167,19 @@ package.json                   # 包含相关脚本
 ## 🎯 用户场景
 
 ### 学习者
+
 - 只需要题目和复习资料
 - 不关心项目构建和配置
 - 希望快速获取学习内容
 
 ### 贡献者
+
 - 需要完整项目进行开发
 - 可以选择下载完整源码
 - 使用 git clone 获取最新代码
 
 ### 教师/培训师
+
 - 批量分发题目给学员
 - 不包含项目配置，避免混淆
 - 专注于学习内容本身
@@ -160,11 +189,13 @@ package.json                   # 包含相关脚本
 ### 常见问题
 
 1. **压缩包生成失败**
+
    - 确保系统有 `zip` 命令
    - 检查 `problems/` 文件夹是否存在
    - 确保有写入 `dist/` 目录的权限
 
 2. **GitHub Release 上传失败**
+
    - 检查 GitHub Token 权限
    - 确保压缩包文件存在
    - 查看 release-it 日志

@@ -21,7 +21,7 @@
   },
   "hooks": {
     "before:init": ["pnpm run dev"],
-    "after:bump": ["node scripts/generate-release-notes.js", "node scripts/create-problems-archive.js"],
+    "after:bump": ["node scripts/generate-release-notes.js", "pnpm run build:release"],
     "after:git:release": "echo 🎉 Release v${version} completed!",
     "after:github:release": "echo 📦 GitHub release created!"
   },
@@ -29,7 +29,7 @@
     "@release-it/conventional-changelog": {
       "preset": "angular",
       "infile": "CHANGELOG.md",
-      "header": "# Changelog\n\n所有重要的更改都将记录在此文件中。\n\n格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，并且此项目遵循 [语义化版本控制](https://semver.org/lang/zh-CN/)。\n\n",
+      "header": "# Changelog",
       "releaseCommitMessageFormat": "chore: release v{{currentTag}}",
       "context": {
         "linkCompare": true,
