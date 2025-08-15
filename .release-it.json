@@ -16,7 +16,6 @@
     "releaseNotes": "node scripts/get-release-notes.js",
     "autoGenerate": false,
     "tokenRef": "GITHUB_TOKEN",
-    "assets": ["dist/problems-v${version}.zip"],
     "web": true
   },
   "hooks": {

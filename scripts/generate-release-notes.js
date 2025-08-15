@@ -21,7 +21,11 @@ const getCurrentVersion = () => {
 const getLatestChangelogEntry = (version) => {
   try {
     const changelog = readFileSync('CHANGELOG.md', 'utf8')
-    const versionRegex = new RegExp(`# ${version}[\\s\\S]*?(?=# \\d|$)`, 'g')
+    // 匹配版本号，支持多种格式：## [1.3.5], # [1.3.0], ## 1.3.5, # 1.3.0
+    const versionRegex = new RegExp(
+      `^#{1,2}\\s*\\[?${version.replace(/\./g, '\\.')}\\]?[\\s\\S]*?(?=^#{1,2}\\s*\\[?\\d|$)`,
+      'gm',
+    )
     const match = changelog.match(versionRegex)
 
     if (!match || match.length === 0) {
@@ -41,7 +45,11 @@ const formatReleaseNotes = (changelogEntry, version) => {
   }
 
   // 移除版本标题，因为 GitHub Release 会自动添加
-  let notes = changelogEntry.replace(new RegExp(`# ${version}.*\n\n?`), '')
+  // 支持多种格式：## [1.3.5], # [1.3.0], ## 1.3.5, # 1.3.0
+  let notes = changelogEntry.replace(
+    new RegExp(`^#{1,2}\\s*\\[?${version.replace(/\./g, '\\.')}\\]?.*\n\n?`, 'm'),
+    '',
+  )
 
   // 添加一些表情符号和格式化
   notes = notes
@@ -56,7 +64,7 @@ const formatReleaseNotes = (changelogEntry, version) => {
 
   // 添加头部说明
   const header = `## 🎉 Release v${version}\n\n`
-  const downloadSection = `\n\n## 📥 下载\n\n- **📦 完整项目**: 通过 GitHub Release 自动生成的源码压缩包\n- **📁 题目合集**: \`problems-v${version}.zip\` - 仅包含每日题目和复习资料\n- **🔗 在线浏览**: 直接浏览仓库获取最新内容\n\n> 💡 **推荐**: 如果你只需要题目文件，下载 \`problems-v${version}.zip\` 即可。`
+  const downloadSection = `\n\n## 📥 下载\n\n- **📦 完整项目**: 通过 GitHub Release 自动生成的源码压缩包\n- **📁 题目合集**: \`dist/problems-v${version}.zip\` - 仅包含每日题目和复习资料\n- **🔗 在线浏览**: 直接浏览仓库获取最新内容\n\n> 💡 **推荐**: 如果你只需要题目文件，下载 \`dist/problems-v${version}.zip\` 即可。`
   const footer = `\n\n---\n\n💡 **完整更改日志**: [CHANGELOG.md](./CHANGELOG.md)\n📦 **安装**: \`git clone\` 或下载最新版本\n🐛 **发现问题?** 请提交 [Issue](../../issues)`
 
   return header + notes + downloadSection + footer
