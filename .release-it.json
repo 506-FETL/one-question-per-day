@@ -23,7 +23,7 @@
   },
   "hooks": {
     "before:init": ["pnpm run dev"],
-    "after:bump": [
+    "after:init": [
       "pnpm run build:release",
       "node scripts/generate-release-notes.js",
       "git add dist/"
