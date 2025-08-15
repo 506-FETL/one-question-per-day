@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/506-FETL/one-question-per-day/compare/v1.1.0...v1.1.1) (2025-08-15)
+
+
+### Bug Fixes
+
+* remove release URL from GitHub release message ([65fd3bd](https://github.com/506-FETL/one-question-per-day/commit/65fd3bdb6c06de84d16d0b8321d6a36456ba5722))
+
 # 1.1.0 (2025-08-15)
 
 
