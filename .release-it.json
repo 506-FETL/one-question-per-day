@@ -1,0 +1,31 @@
+{
+  "$schema": "https://unpkg.com/release-it/schema/release-it.json",
+  "git": {
+    "requireCleanWorkingDir": true,
+    "requireUpstream": false,
+    "commitMessage": "chore: release v${version}",
+    "tagName": "v${version}",
+    "tagAnnotation": "Release v${version}"
+  },
+  "npm": {
+    "publish": false
+  },
+  "github": {
+    "release": true,
+    "releaseName": "Release v${version}",
+    "tokenRef": "GITHUB_TOKEN",
+    "assets": [],
+    "web": true
+  },
+  "hooks": {
+    "before:init": ["pnpm run dev"],
+    "after:git:release": "echo 🎉 Release v${version} completed!",
+    "after:github:release": "echo 📦 GitHub release created: ${releaseUrl}"
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": "angular",
+      "infile": "CHANGELOG.md"
+    }
+  }
+}

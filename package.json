@@ -9,15 +9,18 @@
     "test": "vitest run --config vitest.config.ts",
     "test:watch": "vitest --config vitest.config.ts",
     "format": "prettier --write \"src/**/*.{js,cjs,mjs,vue,ts,tsx,json,css,md}\" \"problems/**/*.{js,cjs,mjs,vue,ts,tsx,json,css,md}\"",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "release": "dotenv -f .env run -- release-it"
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
+    "@release-it/conventional-changelog": "^10.0.1",
     "@types/node": "^24.2.1",
     "@typescript-eslint/eslint-plugin": "^8.39.1",
     "@typescript-eslint/parser": "^8.39.1",
     "@vitest/coverage-v8": "3.1.1",
     "@vitest/ui": "^3.2.4",
+    "dotenv": "^17.2.1",
     "eslint": "^9.24.0",
     "eslint-plugin-vue": "^10.0.0",
     "globals": "^16.0.0",
@@ -25,6 +28,7 @@
     "jsdom": "^26.1.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.5.3",
+    "release-it": "^19.0.4",
     "typescript": "^5.9.2",
     "vite": "^6.2.6",
     "vitest": "^3.1.1"
