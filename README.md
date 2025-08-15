@@ -319,6 +319,13 @@ pnpm run generate-release-notes
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/Dc9309">
+                    <img src="https://avatars.githubusercontent.com/u/103992756?v=4" width="100;" alt="Dc9309"/>
+                    <br />
+                    <sub><b>Dc9309</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/notshine">
                     <img src="https://avatars.githubusercontent.com/u/105473589?v=4" width="100;" alt="notshine"/>
                     <br />
