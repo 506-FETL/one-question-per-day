@@ -6,6 +6,13 @@
 
 
 
+# [1.4.0](https://github.com/506-FETL/one-question-per-day/compare/v1.3.5...v1.4.0) (2025-08-15)
+
+
+### Features
+
+* 更新发布说明生成脚本，移除资产字段并调整下载链接格式 ([1f64f41](https://github.com/506-FETL/one-question-per-day/commit/1f64f41b80a23bc1f9483524f58deeaac1c2dc33))
+
 ## [1.3.5](https://github.com/506-FETL/one-question-per-day/compare/v1.3.4...v1.3.5) (2025-08-15)
 
 # Changelog
