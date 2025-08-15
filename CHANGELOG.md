@@ -6,6 +6,13 @@
 
 
 
+# [1.3.0](https://github.com/506-FETL/one-question-per-day/compare/v1.2.0...v1.3.0) (2025-08-15)
+
+
+### Features
+
+* add automatic problems archive generation for releases ([7a59d7c](https://github.com/506-FETL/one-question-per-day/commit/7a59d7c054c6ac2554bc8beb2529a04ab1b0881c))
+
 # [1.2.0](https://github.com/506-FETL/one-question-per-day/compare/v1.1.1...v1.2.0) (2025-08-15)
 
 
