@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.3.4](https://github.com/506-FETL/one-question-per-day/compare/v1.3.3...v1.3.4) (2025-08-15)
+
 ## [1.3.3](https://github.com/506-FETL/one-question-per-day/compare/v1.3.2...v1.3.3) (2025-08-15)
 
 ## [1.3.2](https://github.com/506-FETL/one-question-per-day/compare/v1.3.1...v1.3.2) (2025-08-15)
