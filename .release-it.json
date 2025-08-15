@@ -20,8 +20,8 @@
     "web": true
   },
   "hooks": {
-    "before:init": ["pnpm run dev", "pnpm run build:release"],
-    "after:bump": ["node scripts/generate-release-notes.js"],
+    "before:init": ["pnpm run dev"],
+    "after:bump": ["node scripts/generate-release-notes.js", "pnpm run build:release"],
     "after:git:release": "echo 🎉 Release v${version} completed!",
     "after:github:release": "echo 📦 GitHub release created!"
   },
