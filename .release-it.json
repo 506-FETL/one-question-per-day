@@ -20,7 +20,7 @@
   "hooks": {
     "before:init": ["pnpm run dev"],
     "after:git:release": "echo 🎉 Release v${version} completed!",
-    "after:github:release": "echo 📦 GitHub release created: ${releaseUrl}"
+    "after:github:release": "echo 📦 GitHub release created!"
   },
   "plugins": {
     "@release-it/conventional-changelog": {
