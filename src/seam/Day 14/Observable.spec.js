@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import Observable from './Observable'
 
-describe('Observable 基本行为', () => {
+describe('observable 基本行为', () => {
   it('应按正确顺序传递值并完成', async () => {
     const results = []
     const observer = {
-      next: (v) => results.push(['next', v]),
-      error: (e) => results.push(['error', e]),
+      next: v => results.push(['next', v]),
+      error: e => results.push(['error', e]),
       complete: () => results.push(['complete']),
     }
     const observable = new Observable((subscriber) => {
@@ -20,7 +20,7 @@ describe('Observable 基本行为', () => {
     })
 
     observable.subscribe(observer)
-    await new Promise((res) => setTimeout(res, 20))
+    await new Promise(res => setTimeout(res, 20))
     expect(results).toEqual([
       ['next', 1],
       ['next', 2],
@@ -33,8 +33,8 @@ describe('Observable 基本行为', () => {
   it('complete 后应忽略 next/error/complete', () => {
     const results = []
     const observer = {
-      next: (v) => results.push(['next', v]),
-      error: (e) => results.push(['error', e]),
+      next: v => results.push(['next', v]),
+      error: e => results.push(['error', e]),
       complete: () => results.push(['complete']),
     }
     const observable = new Observable((subscriber) => {
@@ -51,8 +51,8 @@ describe('Observable 基本行为', () => {
   it('error 后应忽略 next/error/complete', () => {
     const results = []
     const observer = {
-      next: (v) => results.push(['next', v]),
-      error: (e) => results.push(['error', e]),
+      next: v => results.push(['next', v]),
+      error: e => results.push(['error', e]),
       complete: () => results.push(['complete']),
     }
     const observable = new Observable((subscriber) => {
@@ -76,7 +76,7 @@ describe('Observable 基本行为', () => {
       sub.next(2)
       sub.complete()
     })
-    observable.subscribe((v) => received.push(v))
+    observable.subscribe(v => received.push(v))
     expect(received).toEqual([1, 2])
   })
 
@@ -90,12 +90,12 @@ describe('Observable 基本行为', () => {
         sub.complete()
       }, 10)
     })
-    observable.subscribe((v) => results1.push(v))
+    observable.subscribe(v => results1.push(v))
     observable.subscribe({
-      next: (v) => results2.push(v),
+      next: v => results2.push(v),
       complete: () => results2.push('done'),
     })
-    await new Promise((res) => setTimeout(res, 20))
+    await new Promise(res => setTimeout(res, 20))
     expect(results1).toEqual([1, 2])
     expect(results2).toEqual([1, 2, 'done'])
   })
@@ -106,15 +106,16 @@ describe('Observable 基本行为', () => {
       let i = 0
       const id = setInterval(() => {
         sub.next(++i)
-        if (i === 10) sub.complete()
+        if (i === 10)
+          sub.complete()
       }, 5)
       return () => clearInterval(id)
     })
-    const sub = observable.subscribe((v) => received.push(v))
-    await new Promise((res) => setTimeout(res, 16))
+    const sub = observable.subscribe(v => received.push(v))
+    await new Promise(res => setTimeout(res, 16))
     sub.unsubscribe()
     const prev = [...received]
-    await new Promise((res) => setTimeout(res, 16))
+    await new Promise(res => setTimeout(res, 16))
     expect(received).toEqual(prev) // 取消订阅后不再接收新值
   })
 
@@ -125,7 +126,7 @@ describe('Observable 基本行为', () => {
       sub.next(2)
       sub.complete()
     })
-    observable.subscribe({ next: (v) => received.push(v) })
+    observable.subscribe({ next: v => received.push(v) })
     expect(received).toEqual([1, 2])
   })
 

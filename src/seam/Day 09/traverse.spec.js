@@ -72,7 +72,7 @@ describe('traverse', () => {
     expect(traverse(root)).toEqual([3, 5, 10, 7, 15, 8, 18])
   })
 
-  const node = (v) => new Node(v)
+  const node = v => new Node(v)
   it('无敌连环绕', () => {
     const root = node(1)
     root.left = node(2)

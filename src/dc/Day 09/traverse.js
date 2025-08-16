@@ -12,9 +12,10 @@ export class Node {
  * @returns {number[]}
  */
 export default function traverse(root) {
-  if (root === null) return []
-  let map = {}
-  let result = []
+  if (root === null)
+    return []
+  const map = {}
+  const result = []
   dfs(root, 0, 0, null, map)
   Object.keys(map)
     .map(Number)
@@ -23,7 +24,7 @@ export default function traverse(root) {
       const arr = map[level]
       arr
         .sort((a, b) => a.deep - b.deep || a.pid.value - b.pid.value)
-        .forEach((node) => result.push(node.value))
+        .forEach(node => result.push(node.value))
       // result = [...result, ...arr]
     })
   return result

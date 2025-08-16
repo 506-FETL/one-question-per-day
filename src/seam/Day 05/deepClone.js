@@ -1,8 +1,10 @@
+const isObject = v => Object.prototype.toString.call(v) === '[object Object]'
+
 /**
  * 深拷贝一个对象或数组。
  *
  * @param {any} obj - 要深拷贝的对象或数组。
- * @param {Map} [cache=new Map()] - 用于存储已拷贝对象的缓存，防止循环引用。
+ * @param {Map} [cache] - 用于存储已拷贝对象的缓存，防止循环引用。
  * @returns {any} 返回深拷贝后的对象或数组。
  */
 export default function deepClone(obj, cache = new Map()) {
@@ -10,16 +12,18 @@ export default function deepClone(obj, cache = new Map()) {
 
   if (Array.isArray(obj)) {
     result = handleArray(obj, cache)
-  } else if (isObject(obj)) {
+  }
+  else if (isObject(obj)) {
     result = handleObject(obj, cache)
-  } else {
+  }
+  else {
     result = handleBasic(obj)
   }
 
   return result
 }
 
-const handleArray = (arr, cache) => {
+function handleArray(arr, cache) {
   const tmp = []
 
   arr.forEach((el, idx) => {
@@ -29,7 +33,7 @@ const handleArray = (arr, cache) => {
   return tmp
 }
 
-const handleObject = (obj, cache) => {
+function handleObject(obj, cache) {
   if (cache.has(obj)) {
     return cache.get(obj)
   }
@@ -52,7 +56,7 @@ const handleObject = (obj, cache) => {
   return tmp
 }
 
-const handleBasic = (obj) => {
+function handleBasic(obj) {
   if (typeof obj === 'symbol') {
     return Symbol(obj.description)
   }
@@ -68,13 +72,14 @@ const handleBasic = (obj) => {
   return obj
 }
 
-const isObject = (v) => Object.prototype.toString.call(v) === '[object Object]'
-const switchToHandle = (el, tmp, idx, cache) => {
+function switchToHandle(el, tmp, idx, cache) {
   if (isObject(el)) {
     tmp[idx] = handleObject(el, cache)
-  } else if (Array.isArray(el)) {
+  }
+  else if (Array.isArray(el)) {
     tmp[idx] = handleArray(el, cache)
-  } else {
+  }
+  else {
     tmp[idx] = handleBasic(el)
   }
 }

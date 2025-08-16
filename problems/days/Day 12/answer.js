@@ -9,10 +9,9 @@ export default function compose(fns) {
 
   return function (...args) {
     return fns.reduce(
-      (acc, cur) => {
-        return acc.then((result) => {
-          return cur.call(this, result)
-        })
+      async (acc, cur) => {
+        const result = await acc
+        return cur.call(this, result)
       },
       Promise.resolve(init.apply(null, args)),
     )

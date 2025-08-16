@@ -1,3 +1,5 @@
+const isObject = v => Object.prototype.toString.call(v) === '[object Object]'
+
 /**
  * @param {object} obj 要被深拷贝的值
  * @param {WeakMap} hash 你猜干什么的
@@ -9,17 +11,19 @@ export default function deepClone(obj, cache = new Map()) {
 
   if (Array.isArray(obj)) {
     result = handleArray(obj, cache)
-  } else if (isObject(obj)) {
+  }
+  else if (isObject(obj)) {
     result = handleObject(obj, cache)
-  } else {
+  }
+  else {
     result = handleBasic(obj)
   }
 
   return result
 }
 
-const handleArray = (arr, cache) => {
-  let tmp = []
+function handleArray(arr, cache) {
+  const tmp = []
 
   arr.forEach((el) => {
     tmp.push(deepClone(el, cache))
@@ -28,7 +32,7 @@ const handleArray = (arr, cache) => {
   return tmp
 }
 
-const handleObject = (obj, cache) => {
+function handleObject(obj, cache) {
   if (cache.has(obj)) {
     return cache.get(obj)
   }
@@ -44,14 +48,15 @@ const handleObject = (obj, cache) => {
     const value = obj[sym]
     if (typeof value === 'function') {
       tmp[sym] = value.bind(tmp)
-    } else {
+    }
+    else {
       tmp[sym] = deepClone(value, cache)
     }
   })
   return tmp
 }
 
-const handleBasic = (obj) => {
+function handleBasic(obj) {
   if (typeof obj === 'function') {
     return obj
   }
@@ -70,5 +75,3 @@ const handleBasic = (obj) => {
 
   return obj
 }
-
-const isObject = (v) => Object.prototype.toString.call(v) === '[object Object]'

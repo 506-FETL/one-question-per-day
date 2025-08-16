@@ -1,24 +1,25 @@
 #!/usr/bin/env node
 
-import { readFileSync, writeFileSync } from 'fs'
-import { join } from 'path'
+import { readFileSync, writeFileSync } from 'node:fs'
+import { join } from 'node:path'
 
 /**
  * 生成发布说明的脚本
  * 自动从 CHANGELOG.md 提取最新版本的内容，并生成格式化的发布说明
  */
 
-const getCurrentVersion = () => {
+function getCurrentVersion() {
   try {
     const packageJson = JSON.parse(readFileSync('package.json', 'utf8'))
     return packageJson.version
-  } catch (error) {
+  }
+  catch (error) {
     console.error('无法读取 package.json:', error.message)
     process.exit(1)
   }
 }
 
-const getLatestChangelogEntry = (version) => {
+function getLatestChangelogEntry(version) {
   try {
     const changelog = readFileSync('CHANGELOG.md', 'utf8')
     // 匹配版本号，支持多种格式：## [1.3.5], # [1.3.0], ## 1.3.5, # 1.3.0
@@ -33,13 +34,14 @@ const getLatestChangelogEntry = (version) => {
     }
 
     return match[0].trim()
-  } catch (error) {
+  }
+  catch (error) {
     console.error('无法读取 CHANGELOG.md:', error.message)
     return null
   }
 }
 
-const formatReleaseNotes = (changelogEntry, version) => {
+function formatReleaseNotes(changelogEntry, version) {
   if (!changelogEntry) {
     return `## Release v${version}\n\n🎉 新版本发布！\n\n详细更改请查看 [CHANGELOG.md](./CHANGELOG.md)`
   }
@@ -70,7 +72,7 @@ const formatReleaseNotes = (changelogEntry, version) => {
   return header + notes + downloadSection + footer
 }
 
-const generateReleaseNotes = () => {
+function generateReleaseNotes() {
   console.log('🚀 正在生成发布说明...')
 
   const version = getCurrentVersion()

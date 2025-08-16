@@ -8,7 +8,8 @@ export default function myExpect(input) {
   return {
     toBe(checker) {
       const isEqual = Object.is(input, checker)
-      if ((isReserved && isEqual) || (!isReserved && !isEqual)) return false
+      if ((isReserved && isEqual) || (!isReserved && !isEqual))
+        return false
       else return true
     },
     get not() {

@@ -5,6 +5,6 @@
  * 追问
  * 时间空间复杂度是多少？是否是稳定的排序？
  */
-const mergeSort = (arr: number[]) => {}
+function mergeSort(arr: number[]) {}
 
 export default mergeSort

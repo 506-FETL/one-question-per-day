@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import deduplicate from './deduplicate'
 
 describe('deduplicate', () => {
@@ -27,13 +27,13 @@ describe('deduplicate', () => {
     expect(arr.length).toBe(3)
   })
 
-  it('BigInt 类型去重，原数组被修改', () => {
+  it('bigInt 类型去重，原数组被修改', () => {
     const arr = [1n, 2n, 1n, 3n, 2n]
     deduplicate(arr)
     expect(arr.sort((a, b) => (a > b ? 1 : -1))).toEqual([1n, 2n, 3n])
   })
 
-  it('Symbol 类型去重，原数组被修改', () => {
+  it('symbol 类型去重，原数组被修改', () => {
     const s1 = Symbol('foo')
     const s2 = Symbol('foo')
     const s3 = Symbol.for('bar')
@@ -43,12 +43,12 @@ describe('deduplicate', () => {
     // s1和s2不同，s3和s4相同
     expect(arr).toContain(s1)
     expect(arr).toContain(s2)
-    expect(arr.filter((x) => x === s3 || x === s4).length).toBe(1)
+    expect(arr.filter(x => x === s3 || x === s4).length).toBe(1)
     expect(arr.length).toBe(3)
   })
 
-  it('NaN 去重，原数组被修改', () => {
-    const arr = [NaN, NaN, 1, NaN]
+  it('naN 去重，原数组被修改', () => {
+    const arr = [Number.NaN, Number.NaN, 1, Number.NaN]
     deduplicate(arr)
     expect(arr).toContain(1)
     expect(arr.filter(Number.isNaN).length).toBe(1)
@@ -85,7 +85,7 @@ describe('deduplicate', () => {
     expect(arr.length).toBe(2)
   })
 
-  it('Date/RegExp/Map/Set 引用去重，原数组被修改', () => {
+  it('date/RegExp/Map/Set 引用去重，原数组被修改', () => {
     const d1 = new Date()
     const d2 = new Date()
     const r1 = /a/
@@ -134,22 +134,22 @@ describe('deduplicate', () => {
       f,
       d,
       d,
-      NaN,
-      NaN,
+      Number.NaN,
+      Number.NaN,
     ]
     deduplicate(arr)
     // 检查每种类型只保留一个
-    expect(arr.filter((x) => x === 1).length).toBe(1)
-    expect(arr.filter((x) => x === '1').length).toBe(1)
-    expect(arr.filter((x) => x === true).length).toBe(1)
-    expect(arr.filter((x) => x === false).length).toBe(1)
-    expect(arr.filter((x) => x === null).length).toBe(1)
-    expect(arr.filter((x) => x === undefined).length).toBe(1)
-    expect(arr.filter((x) => x === s).length).toBe(1)
-    expect(arr.filter((x) => x === o).length).toBe(1)
-    expect(arr.filter((x) => x === a).length).toBe(1)
-    expect(arr.filter((x) => x === f).length).toBe(1)
-    expect(arr.filter((x) => x === d).length).toBe(1)
+    expect(arr.filter(x => x === 1).length).toBe(1)
+    expect(arr.filter(x => x === '1').length).toBe(1)
+    expect(arr.filter(x => x === true).length).toBe(1)
+    expect(arr.filter(x => x === false).length).toBe(1)
+    expect(arr.filter(x => x === null).length).toBe(1)
+    expect(arr.filter(x => x === undefined).length).toBe(1)
+    expect(arr.filter(x => x === s).length).toBe(1)
+    expect(arr.filter(x => x === o).length).toBe(1)
+    expect(arr.filter(x => x === a).length).toBe(1)
+    expect(arr.filter(x => x === f).length).toBe(1)
+    expect(arr.filter(x => x === d).length).toBe(1)
     expect(arr.filter(Number.isNaN).length).toBe(1)
   })
 
@@ -171,18 +171,30 @@ describe('deduplicate', () => {
     // 检查空位数量
     let holes = 0
     for (let i = 0; i < arr.length; i++) {
-      if (!(i in arr)) holes++
+      if (!(i in arr))
+        holes++
     }
     expect(holes).toBe(1)
     expect(arr.length).toBe(4)
   })
 
   it('所有元素都不同', () => {
-    const arr = [1, 'a', true, null, undefined, {}, [], () => 1, Symbol('x'), 1n]
+    const arr = [
+      1,
+      'a',
+      true,
+      null,
+      undefined,
+      {},
+      [],
+      () => 1,
+      Symbol('x'),
+      1n,
+    ]
     const before = arr.slice()
     deduplicate(arr)
     expect(arr.length).toBe(before.length)
-    before.forEach((item) => expect(arr).toContain(item))
+    before.forEach(item => expect(arr).toContain(item))
   })
 
   it('所有元素都相同', () => {

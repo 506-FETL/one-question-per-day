@@ -57,7 +57,7 @@ export function instanceOf(obj, fn) {
   if (obj === null || obj === undefined) {
     return false
   }
-  const recursiveStack = [] //用于递归寻找
+  const recursiveStack = [] // 用于递归寻找
   recursiveStack.push(obj)
   while (recursiveStack.length !== 0) {
     const temp = recursiveStack.shift()
@@ -71,12 +71,13 @@ export function instanceOf(obj, fn) {
   return false
 }
 export function selfNew(fn, ...args) {
-  let obj = {}
+  const obj = {}
   obj.__proto__ = fn.prototype
   const result = fn.Apply(obj, args)
   if (typeof result === 'object') {
     return result
-  } else {
+  }
+  else {
     return obj
   }
 }

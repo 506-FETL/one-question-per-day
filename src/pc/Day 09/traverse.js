@@ -13,18 +13,20 @@ export class Node {
  * @returns {number[]}
  */
 export default function traverse(root) {
-  if (!root) return []
+  if (!root)
+    return []
 
   const nodeList = []
 
   function DFS(node, x, y, f) {
-    if (!node) return
+    if (!node)
+      return
 
     nodeList.push({
       value: node.value,
-      x: x,
-      y: y,
-      f: f,
+      x,
+      y,
+      f,
     })
 
     DFS(node.left, x - 1, y - 1, x)
@@ -34,11 +36,13 @@ export default function traverse(root) {
   DFS(root, 0, 0)
 
   nodeList.sort((a, b) => {
-    if (a.x !== b.x) return a.x - b.x
-    if (a.y !== b.y) return b.y - a.y
+    if (a.x !== b.x)
+      return a.x - b.x
+    if (a.y !== b.y)
+      return b.y - a.y
     return a.f - b.f
   })
 
   // 返回排序后的节点值
-  return nodeList.map((node) => node.value)
+  return nodeList.map(node => node.value)
 }

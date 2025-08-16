@@ -1,5 +1,5 @@
 // free to code
 
-let add
+const add = null
 
 export default add

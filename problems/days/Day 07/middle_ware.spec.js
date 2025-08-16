@@ -249,12 +249,12 @@ describe('04.29--default.处理异步MiddleWare', () => {
 
     mw.use(async (req, next) => {
       calls.push('first')
-      await new Promise((resolve) => setTimeout(resolve, 10))
+      await new Promise(resolve => setTimeout(resolve, 10))
       next()
     })
     mw.use(async (req, next) => {
       calls.push('second')
-      await new Promise((resolve) => setTimeout(resolve, 10))
+      await new Promise(resolve => setTimeout(resolve, 10))
       next()
     })
 
@@ -279,7 +279,7 @@ describe('04.29--default.处理异步MiddleWare', () => {
     })
     mw.use(async (err, req, next) => {
       calls.push('error')
-      await new Promise((resolve) => setTimeout(resolve, 10))
+      await new Promise(resolve => setTimeout(resolve, 10))
       next()
     })
 
@@ -354,7 +354,7 @@ describe('04.29--default.处理异步MiddleWare', () => {
 
     mw.use(async (req, next) => {
       calls.push('a1')
-      await new Promise((resolve) => setTimeout(resolve, 5))
+      await new Promise(resolve => setTimeout(resolve, 5))
       next()
       calls.push('a2')
     })

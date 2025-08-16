@@ -32,10 +32,12 @@ export default class MyPromise {
     }
     try {
       extractor(resolve, reject)
-    } catch (error) {
+    }
+    catch (error) {
       reject(error)
     }
   }
+
   static resolve(res) {
     if (isPromiseLike(res)) {
       return res
@@ -44,16 +46,19 @@ export default class MyPromise {
       resolve(res)
     })
   }
+
   static reject(res) {
     return new MyPromise((_, reject) => {
       reject(res)
     })
   }
+
   changeState(state) {
     if (this.state === PENDING) {
       this.state = state
       this.finallyCb()
-    } else {
+    }
+    else {
       throw new Error('状态已经确定,不能进行更改')
     }
   }
@@ -61,13 +66,15 @@ export default class MyPromise {
   catch(errorCb) {
     return this.then(void 0, errorCb)
   }
+
   then(resolveCb, rejectCb) {
     const cbHandler = (cb, resolve, reject) => {
       return (res) => {
         try {
           if (typeof cb !== 'function') {
             resolve(res)
-          } else {
+          }
+          else {
             res = cb(res)
             if (isPromiseLike(res)) {
               res.then(
@@ -78,11 +85,13 @@ export default class MyPromise {
                   reject(res)
                 },
               )
-            } else {
+            }
+            else {
               resolve(res)
             }
           }
-        } catch (error) {
+        }
+        catch (error) {
           reject(error)
         }
       }
@@ -92,6 +101,7 @@ export default class MyPromise {
       this.rejectList.push(cbHandler(rejectCb, resolve, reject))
     })
   }
+
   finally(cb) {
     return this.then(
       (result) => {
@@ -105,8 +115,11 @@ export default class MyPromise {
     )
   }
 }
-const isPromiseLike = (value) => {
-  if (value !== null && (typeof value === 'object' || typeof value === 'function')) {
+function isPromiseLike(value) {
+  if (
+    value !== null
+    && (typeof value === 'object' || typeof value === 'function')
+  ) {
     return typeof value.then === 'function'
   }
 

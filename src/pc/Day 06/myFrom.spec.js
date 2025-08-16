@@ -26,7 +26,7 @@ describe('myFrom function', () => {
 
   it('应正确应用mapFn', () => {
     const arrayLike = { 0: 1, 1: 2, 2: 3, length: 3 }
-    const result = myFrom(arrayLike, (value) => value * 2)
+    const result = myFrom(arrayLike, value => value * 2)
     expect(result).toEqual([2, 4, 6])
   })
 
@@ -97,7 +97,7 @@ describe('myFrom function', () => {
   })
 
   it('应正确处理length为NaN的情况', () => {
-    const arrayLike = { 0: 'a', length: NaN }
+    const arrayLike = { 0: 'a', length: Number.NaN }
     const result = myFrom(arrayLike)
     expect(result).toEqual([])
   })
@@ -126,7 +126,11 @@ describe('myFrom function', () => {
   it('应正确处理mapFn为箭头函数时的this', () => {
     const arrayLike = { 0: 2, 1: 4, length: 2 }
     const context = { x: 10 }
-    const result = myFrom(arrayLike, (v) => (this?.x ? this.x * v : v), context)
+    const result = myFrom(
+      arrayLike,
+      v => (this?.x ? this.x * v : v),
+      context,
+    )
     expect(result).toEqual([2, 4])
   })
 

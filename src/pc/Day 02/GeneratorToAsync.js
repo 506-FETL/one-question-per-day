@@ -27,19 +27,21 @@ export default function generatorToAsync(func) {
     return new Promise((resolve, reject) => {
       function handleFunction(asyncValue) {
         try {
-          let next = gen.next(asyncValue)
-          let { value, done } = next
+          const next = gen.next(asyncValue)
+          const { value, done } = next
           if (done) {
             return resolve(value)
-          } else {
+          }
+          else {
             return Promise.resolve(value).then(
-              (value) => handleFunction(value),
+              value => handleFunction(value),
               (error) => {
                 reject(error)
               },
             )
           }
-        } catch (error) {
+        }
+        catch (error) {
           reject(error)
         }
       }

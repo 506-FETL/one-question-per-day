@@ -1,7 +1,7 @@
+import { describe, expect, it } from 'vitest'
 import './call.js'
-import { describe, it, expect } from 'vitest'
 
-describe('Function.prototype.mycall', () => {
+describe('function.prototype.mycall', () => {
   it('应该正确调用函数并返回结果', () => {
     function add(a, b) {
       return a + b

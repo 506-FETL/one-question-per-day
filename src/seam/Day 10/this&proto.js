@@ -1,8 +1,9 @@
 // call
 Function.prototype.Call = function (context, ...args) {
-  if (context == null) context = window
+  if (context == null)
+    context = window
 
-  const key = Symbol()
+  const key = Symbol(1)
   context[key] = this
   const result = context[key](...args)
   delete context[key]
@@ -12,9 +13,10 @@ Function.prototype.Call = function (context, ...args) {
 
 // apply
 Function.prototype.Apply = function (context, args = []) {
-  if (context == null) context = window
+  if (context == null)
+    context = window
 
-  const key = Symbol()
+  const key = Symbol(2)
   context[key] = this
   const result = context[key](...args)
   delete context[key]
@@ -24,9 +26,10 @@ Function.prototype.Apply = function (context, args = []) {
 
 // bind
 Function.prototype.Bind = function (context, ...args) {
-  if (context == null) context = window
+  if (context == null)
+    context = window
 
-  const key = Symbol()
+  const key = Symbol(3)
   const that = this
 
   const result = function (...newArgs) {
@@ -36,7 +39,8 @@ Function.prototype.Bind = function (context, ...args) {
       delete this[key]
 
       return result
-    } else {
+    }
+    else {
       context[key] = that
       const result = context[key](...args, ...newArgs)
       delete context[key]
@@ -57,10 +61,12 @@ export function instanceOf(obj, fn) {
   if (proto) {
     if (proto === fn.prototype) {
       return true
-    } else {
+    }
+    else {
       return instanceOf(proto, fn)
     }
-  } else {
+  }
+  else {
     return false
   }
 }
@@ -69,5 +75,7 @@ export function selfNew(fn, ...args) {
   const instance = Object.create(fn.prototype)
   const result = fn.apply(instance, args)
 
-  return typeof result === 'function' || typeof result === 'object' ? result : instance
+  return typeof result === 'function' || typeof result === 'object'
+    ? result
+    : instance
 }

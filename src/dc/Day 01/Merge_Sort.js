@@ -10,7 +10,7 @@
 
 function resolve(arr, left, right) {
   if (left < right) {
-    let mid = (left + right) >> 1
+    const mid = (left + right) >> 1
 
     resolve(arr, left, mid)
 
@@ -21,13 +21,14 @@ function resolve(arr, left, right) {
 }
 
 function merge(arr, left, mid, right) {
-  let temp = []
+  const temp = []
   let posl = left
   let posr = mid + 1
   let low = left
 
   while (posl <= mid && posr <= right) {
-    if (arr[posl] < arr[posr]) temp[left++] = arr[posl++]
+    if (arr[posl] < arr[posr])
+      temp[left++] = arr[posl++]
     else temp[left++] = arr[posr++]
   }
 

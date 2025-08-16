@@ -18,14 +18,15 @@ export default function mergeSort(arr) {
     if (typeof arrRight === 'number') {
       arrRight = [arrRight]
     }
-    let resArr = []
+    const resArr = []
     let left = 0
     let right = 0
     while (left < arrLeft.length && right < arrRight.length) {
       if (arrLeft[left] < arrRight[right]) {
         resArr.push(arrLeft[left])
         left++
-      } else {
+      }
+      else {
         resArr.push(arrRight[right])
         right++
       }
@@ -43,11 +44,12 @@ export default function mergeSort(arr) {
   function catArr(arr) {
     let alternate = 1
     let pendingArr = []
-    let resArr = []
+    const resArr = []
     arr.forEach((element) => {
       if (alternate % 2) {
         pendingArr = element
-      } else {
+      }
+      else {
         resArr.push(concatSortedArr(pendingArr, element))
         pendingArr = []
       }

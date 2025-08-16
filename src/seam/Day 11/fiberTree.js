@@ -9,10 +9,12 @@ export function commitNestedComponent(root, onCommitUnmount) {
       continue
     }
 
-    if (dep === root) return
+    if (dep === root)
+      return
 
     while (!dep.sibling) {
-      if (!dep.return || dep.return === root) return
+      if (!dep.return || dep.return === root)
+        return
       dep = dep.return
     }
 

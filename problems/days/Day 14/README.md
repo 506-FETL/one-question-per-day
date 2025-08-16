@@ -5,15 +5,15 @@ Observable 决定了values如何传递给Observer，Observer本质上就是一�
 ```js
 const observer = {
   next: (value) => {
-    console.log('we got a value', value)
+    console.log("we got a value", value);
   },
   error: (error) => {
-    console.log('we got an error', error)
+    console.log("we got an error", error);
   },
   complete: () => {
-    console.log('ok, no more values')
+    console.log("ok, no more values");
   },
-}
+};
 ```
 
 上面就是一个Observer，很明显就是3个callback而已。
@@ -22,14 +22,14 @@ const observer = {
 
 ```js
 const observable = new Observable((subscriber) => {
-  subscriber.next(1)
-  subscriber.next(2)
+  subscriber.next(1);
+  subscriber.next(2);
   setTimeout(() => {
-    subscriber.next(3)
-    subscriber.next(4)
-    subscriber.complete()
-  }, 100)
-})
+    subscriber.next(3);
+    subscriber.next(4);
+    subscriber.complete();
+  }, 100);
+});
 ```
 
 上面的代码是在说，当一个subscriber订阅的时候：
@@ -44,7 +44,7 @@ const observable = new Observable((subscriber) => {
 如果我们现在把上面的observer 订阅给上述observable的话，next 和 complete 会被顺序调用。(注意到 2 和 3之间有些delay)
 
 ```js
-const sub = observable.subscribe(subscriber)
+const sub = observable.subscribe(subscriber);
 // we got a value 1
 // we got a value 2
 // we got a value 3
@@ -55,11 +55,11 @@ const sub = observable.subscribe(subscriber)
 注意subscribe() 返回的是一个Subscription ，这个subscription可以用来取消订阅。
 
 ```js
-const sub = observable.subscribe(subscriber)
+const sub = observable.subscribe(subscriber);
 setTimeout(() => {
   // ok we only subscribe for 100ms
-  sub.unsubscribe()
-}, 100)
+  sub.unsubscribe();
+}, 100);
 ```
 
 以上就是基本的Observable 和 Observer，后续会有更多有意思的题目，但是该题目就到这里了。

@@ -9,12 +9,15 @@
  * @throws {TypeError} 如果提供的 `mapFn` 不是函数，抛出类型错误。
  */
 export default function myFrom(arrayLike, mapFn, thisArg) {
-  const isCallable = (fn) =>
-    typeof fn === 'function' || Object.prototype.toString.call(fn) === '[object Function]'
+  const isCallable = fn =>
+    typeof fn === 'function'
+    || Object.prototype.toString.call(fn) === '[object Function]'
   const toInteger = (v) => {
     const _v = Number(v)
-    if (isNaN(_v)) return 0
-    if (v === 0 || !isFinite(_v)) return _v
+    if (Number.isNaN(_v))
+      return 0
+    if (v === 0 || !Number.isFinite(_v))
+      return _v
 
     return (_v > 0 ? 1 : -1) * Math.floor(Math.abs(_v))
   }
@@ -22,40 +25,44 @@ export default function myFrom(arrayLike, mapFn, thisArg) {
   const maxSafeInteger = Number.MAX_SAFE_INTEGER
   const toLength = (v) => {
     const n = toInteger(v)
-    if (n > maxSafeInteger) throw new RangeError('length exceeds MAX_SAFE_INTEGER')
+    if (n > maxSafeInteger)
+      throw new RangeError('length exceeds MAX_SAFE_INTEGER')
 
     return Math.max(0, n)
   }
 
-  if (arrayLike == null)
+  if (arrayLike == null) {
     throw new TypeError(
       `provided arrayLike must be an array-like object - not null/undefined`,
     )
+  }
 
-  const items =
-    arrayLike instanceof Set || arrayLike instanceof Map
+  const items
+    = arrayLike instanceof Set || arrayLike instanceof Map
       ? [...arrayLike]
-      : Object(arrayLike)
+      : new Object(arrayLike)
 
   if (typeof mapFn !== 'undefined') {
-    if (!isCallable(mapFn)) throw new TypeError(`provided mapFn must be a function`)
+    if (!isCallable(mapFn))
+      throw new TypeError(`provided mapFn must be a function`)
   }
 
   const len = toLength(items.length)
   const arr = new Array(len)
 
-  let i = 0,
-    current
+  let i = 0
+  let current
 
   while (i < len) {
     current = items[i]
 
     if (mapFn) {
-      arr[i] =
-        typeof thisArg === 'undefined'
+      arr[i]
+        = typeof thisArg === 'undefined'
           ? mapFn(current, i)
           : mapFn.call(thisArg, current, i)
-    } else {
+    }
+    else {
       arr[i] = current
     }
     i += 1

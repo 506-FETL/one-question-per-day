@@ -7,17 +7,21 @@ class Observable {
     const subscriberWrapper = {
       unsubscribed: false,
       next(value) {
-        if (this.unsubscribed) return
-        if (subscriber instanceof Function) return subscriber(value)
+        if (this.unsubscribed)
+          return
+        if (typeof subscriber === 'function')
+          return subscriber(value)
         return subscriber.next ? subscriber.next(value) : null
       },
       error(value) {
-        if (this.unsubscribed) return
+        if (this.unsubscribed)
+          return
         this.unsubscribe()
         return subscriber.error ? subscriber.error(value) : null
       },
       complete() {
-        if (this.unsubscribed) return
+        if (this.unsubscribed)
+          return
         this.unsubscribe()
         return subscriber.complete ? subscriber.complete() : null
       },
@@ -25,7 +29,8 @@ class Observable {
         this.unsubscribed = true
       },
     }
-    if (!subscriber) return
+    if (!subscriber)
+      return
 
     this._setup(subscriberWrapper)
     return subscriberWrapper

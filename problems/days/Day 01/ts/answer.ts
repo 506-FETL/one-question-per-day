@@ -10,7 +10,8 @@ export default function mergeSort(arr: number[]): void {
   const r = arr.length - 1
 
   const _merge = (arr: number[], l: number, r: number): void => {
-    if (l >= r) return
+    if (l >= r)
+      return
     const mid = (l + r) >> 1
 
     _merge(arr, l, mid)
@@ -23,7 +24,8 @@ export default function mergeSort(arr: number[]): void {
     while (i <= mid && j <= r) {
       if (arr[i] < arr[j]) {
         tmp.push(arr[i++])
-      } else {
+      }
+      else {
         tmp.push(arr[j++])
       }
     }

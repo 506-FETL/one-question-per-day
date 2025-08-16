@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { effect, reactive } from './reactive_vue'
 
-describe('Vue 简化响应式系统测试', () => {
+describe('vue 简化响应式系统测试', () => {
   it('应在副作用中访问初始值', () => {
     const obj = reactive({ count: 0 })
     let dummy
@@ -47,7 +47,7 @@ describe('Vue 简化响应式系统测试', () => {
 
   it('应支持多次修改后仍保持响应', () => {
     const obj = reactive({ n: 0 })
-    let log = []
+    const log = []
     effect(() => {
       log.push(obj.n)
     })

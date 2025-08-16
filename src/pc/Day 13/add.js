@@ -6,7 +6,7 @@ function proxiedArray(value = 0) {
       if (prop === Symbol.toPrimitive) {
         return () => target.value
       }
-      return proxiedArray(value + parseInt(prop))
+      return proxiedArray(value + Number.parseInt(prop))
     },
     set(target, prop, value) {
       // 拦截数组元素的设置
@@ -16,6 +16,6 @@ function proxiedArray(value = 0) {
   })
 }
 
-let add = proxiedArray()
+const add = proxiedArray()
 
 export default add

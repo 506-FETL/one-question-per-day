@@ -16,7 +16,8 @@ export default function myFrom(arrayLike, mapFn, thisArg) {
   if (arrayLike == null || (mapFn && typeof mapFn !== 'function'))
     throw new TypeError('告诉你坝你的类型对吗?')
 
-  if (!isArr && !isArrLike && !isIterable) return []
+  if (!isArr && !isArrLike && !isIterable)
+    return []
 
   if (mapFn && thisArg) {
     mapFn = mapFn.bind(thisArg)
@@ -28,23 +29,26 @@ export default function myFrom(arrayLike, mapFn, thisArg) {
       throw new RangeError('too long')
     }
     for (; index < arrayLike.length; index++) {
-      if (!mapFn) arr[index] = arrayLike[index]
+      if (!mapFn)
+        arr[index] = arrayLike[index]
       else arr[index] = mapFn(arrayLike[index], index)
     }
-  } else if (isIterable) {
-    for (let value of arrayLike) {
-      if (!mapFn) arr[index++] = value
+  }
+  else if (isIterable) {
+    for (const value of arrayLike) {
+      if (!mapFn)
+        arr[index++] = value
       else arr[index] = mapFn(arrayLike[index], index++)
     }
   }
   return arr
 }
-const isArrayLike = (obj) => {
+function isArrayLike(obj) {
   if (
-    (typeof obj === 'object' || typeof obj === 'string') &&
-    obj.length &&
-    obj.length >= 0 &&
-    isFinite(obj.length)
+    (typeof obj === 'object' || typeof obj === 'string')
+    && obj.length
+    && obj.length >= 0
+    && isFinite(obj.length)
   ) {
     return true
   }

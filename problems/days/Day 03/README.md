@@ -15,7 +15,7 @@
 ```javascript
 /**
  * 创建响应式对象
- * @param {Object} obj - 需要变成响应式的对象
+ * @param {object} obj - 需要变成响应式的对象
  * @returns {Proxy} 响应式对象
  */
 function reactive(obj) {
@@ -34,13 +34,13 @@ function effect(fn) {
 #### 示例
 
 ```javascript
-const user = reactive({ name: 'Tom', age: 20 })
+const user = reactive({ name: "Tom", age: 20 });
 
 effect(() => {
-  console.log('Name is', user.name)
-})
+  console.log("Name is", user.name);
+});
 
-user.name = 'Jerry'
+user.name = "Jerry";
 // 输出：Name is Jerry
 ```
 

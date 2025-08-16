@@ -9,25 +9,29 @@ class Observable {
     complete: () => {},
     unsubscribe: () => {},
   }
+
   observeWrapper = (observe) => {
     if (!observe) {
       return this.nullObserve
     }
     return {
       next: (...args) => {
-        if (observe instanceof Function) return observe(...args)
-        if (observe.next) return observe.next(...args)
-        return
+        if (typeof observe === 'function')
+          return observe(...args)
+        if (observe.next)
+          return observe.next(...args)
       },
       error: (...args) => {
-        let res = new Error()
-        if (observe.error) res = observe.error(...args)
+        let res = new Error('error')
+        if (observe.error)
+          res = observe.error(...args)
         observe = this.nullObserve
         return res
       },
       complete: (...args) => {
         let res
-        if (observe.complete) res = observe.complete(...args)
+        if (observe.complete)
+          res = observe.complete(...args)
         observe = this.nullObserve
         return res
       },
@@ -36,6 +40,7 @@ class Observable {
       },
     }
   }
+
   subscribe(subscriber) {
     subscriber = this.observeWrapper(subscriber)
     this.execute(subscriber)

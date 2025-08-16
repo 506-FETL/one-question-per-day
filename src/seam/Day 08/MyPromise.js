@@ -17,13 +17,15 @@ export default class MyPromise {
 
     try {
       executor(resolve, reject)
-    } catch (error) {
+    }
+    catch (error) {
       reject(error)
     }
   }
 
   #changeState(state, data) {
-    if (this.#state !== PENDING) return
+    if (this.#state !== PENDING)
+      return
 
     this.#state = state
     this.#value = data
@@ -31,33 +33,39 @@ export default class MyPromise {
   }
 
   #run() {
-    if (this.#state === PENDING) return
+    if (this.#state === PENDING)
+      return
 
     while (this.#handlers.length) {
-      const { onFulfilled, onRejected, resolve, reject } = this.#handlers.shift()
+      const { onFulfilled, onRejected, resolve, reject }
+        = this.#handlers.shift()
 
       if (this.#state === FULFILLED) {
         this.#runOne(onFulfilled, resolve, reject)
-      } else {
+      }
+      else {
         this.#runOne(onRejected, resolve, reject)
       }
     }
   }
+
   #runOne(callback, resolve, reject) {
     this.#runMicroTask(() => {
       if (typeof callback !== 'function') {
         const settled = this.#state === FULFILLED ? resolve : reject
         settled(this.#value)
-        return
-      } else {
+      }
+      else {
         try {
           const data = callback(this.#value)
           if (this.isPromiseLike(data)) {
             data.then(resolve, reject)
-          } else {
+          }
+          else {
             resolve(data)
           }
-        } catch (err) {
+        }
+        catch (err) {
           reject(err)
         }
       }
@@ -67,18 +75,23 @@ export default class MyPromise {
   #runMicroTask(func) {
     if (typeof process === 'object' && typeof process.nextTick === 'function') {
       process.nextTick(func)
-    } else if (typeof MutationObserver === 'function') {
+    }
+    else if (typeof MutationObserver === 'function') {
       const ob = new MutationObserver(func)
       const txtNode = document.createTextNode('1')
       ob.observe(txtNode, { characterData: true })
       txtNode.data = '2'
-    } else {
+    }
+    else {
       setTimeout(func, 0)
     }
   }
 
   isPromiseLike(value) {
-    if (value !== null && (typeof value === 'object' || typeof value === 'function')) {
+    if (
+      value !== null
+      && (typeof value === 'object' || typeof value === 'function')
+    ) {
       return typeof value.then === 'function'
     }
 
@@ -110,7 +123,8 @@ export default class MyPromise {
   }
 
   static resolve(value) {
-    if (value instanceof MyPromise) return value
+    if (value instanceof MyPromise)
+      return value
 
     let _resolve, _reject
     const p = new MyPromise((resolve, reject) => {
@@ -120,7 +134,8 @@ export default class MyPromise {
 
     if (p.isPromiseLike(value)) {
       value.then(_resolve, _reject)
-    } else {
+    }
+    else {
       _resolve(value)
     }
 

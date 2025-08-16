@@ -16,7 +16,8 @@ export default function mergeSort(arr) {
       if (left[i] < right[j]) {
         arr[k] = left[i]
         i++
-      } else {
+      }
+      else {
         arr[k] = right[j]
         j++
       }

@@ -1,4 +1,4 @@
-import { describe, expect, it, beforeEach } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { commitNestedComponent } from './fiberTree.js'
 
 // The arr array is module-level in answer.js, we need to access it
@@ -17,14 +17,16 @@ export class FiberNode {
 
   // 添加子节点
   addChild(childNode) {
-    if (!childNode) return this
+    if (!childNode)
+      return this
 
     childNode.return = this
 
     if (!this.child) {
       // 如果没有子节点，直接添加
       this.child = childNode
-    } else {
+    }
+    else {
       // 如果已有子节点，添加为最后一个兄弟
       let lastChild = this.child
       while (lastChild.sibling) {
@@ -37,7 +39,7 @@ export class FiberNode {
   }
 }
 
-describe('Day 11 - Fiber Tree Traversal', () => {
+describe('day 11 - Fiber Tree Traversal', () => {
   // Reset the global arr before each test
   beforeEach(() => {
     // Since arr is not exported, we'll create a new fiber tree and check

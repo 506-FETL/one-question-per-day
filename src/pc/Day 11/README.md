@@ -21,15 +21,15 @@
 
 ```typescript
 class FiberNode {
-  key: number
-  child: FiberNode | null // 第一个子节点
-  sibling: FiberNode | null // 下一个兄弟节点
-  return: FiberNode | null // 父节点
+  key: number;
+  child: FiberNode | null; // 第一个子节点
+  sibling: FiberNode | null; // 下一个兄弟节点
+  return: FiberNode | null; // 父节点
 
   constructor(tag: number, stateNode: any) {
-    this.child = null
-    this.sibling = null
-    this.return = null
+    this.child = null;
+    this.sibling = null;
+    this.return = null;
   }
 }
 ```

@@ -8,17 +8,21 @@
  * 时间空间复杂度是多少？是否是稳定的排序？
  */
 export default function mergeSort(arr) {
-  let l = 0
-  let r = arr.length - 1
+  const l = 0
+  const r = arr.length - 1
   function merge(arr, l, r) {
-    if (l >= r) return
+    if (l >= r)
+      return
     const mid = (l + r) >> 1
-    merge(arr, l, mid), merge(arr, mid + 1, r)
+    merge(arr, l, mid)
+    merge(arr, mid + 1, r)
+
     let i = l
     let j = mid + 1
     const temp = []
     while (i <= mid && j <= r) {
-      if (arr[i] < arr[j]) temp.push(arr[i++])
+      if (arr[i] < arr[j])
+        temp.push(arr[i++])
       else temp.push(arr[j++])
     }
     while (i <= mid) temp.push(arr[i++])

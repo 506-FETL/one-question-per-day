@@ -48,7 +48,7 @@ export function reactive(obj) {
       if (depsMap) {
         const deps = depsMap.get(key)
         if (deps) {
-          deps.forEach((fn) => fn())
+          deps.forEach(fn => fn())
         }
       }
 

@@ -1,7 +1,7 @@
 import { describe, expect, it, suite, vi } from 'vitest'
 import MyPromise from './MyPromise'
 
-describe('MyPromise', () => {
+describe('myPromise', () => {
   suite('基本功能', () => {
     it('应该创建处于pending状态的promise', () => {
       const promise = new MyPromise(() => {})
@@ -62,8 +62,8 @@ describe('MyPromise', () => {
       return new MyPromise((resolve) => {
         resolve(1)
       })
-        .then((value) => value + 1)
-        .then((value) => value + 1)
+        .then(value => value + 1)
+        .then(value => value + 1)
         .then((value) => {
           expect(value).toBe(3)
         })

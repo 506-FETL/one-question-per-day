@@ -1,15 +1,15 @@
-let reactiveStack = new WeakMap()
+const reactiveStack = new WeakMap()
 let activateFn = null
 /**
  * 创建响应式对象
- * @param {Object} obj - 需要变成响应式的对象
+ * @param {object} obj - 需要变成响应式的对象
  * @returns {Proxy} 响应式对象
  */
 export function reactive(obj) {
   // 实现内容
   return new Proxy(obj, {
     get(target, key) {
-      let effects = getEffects(target, key)
+      const effects = getEffects(target, key)
       if (activateFn) {
         effects.push(activateFn)
         reactiveStack.get(target).set(key, effects)
@@ -17,7 +17,7 @@ export function reactive(obj) {
       return Reflect.get(target, key)
     },
     set(target, key, value) {
-      let effects = getEffects(target, key)
+      const effects = getEffects(target, key)
       const result = Reflect.set(target, key, value)
       effects.forEach((effect) => {
         effect()

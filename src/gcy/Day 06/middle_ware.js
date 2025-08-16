@@ -5,9 +5,11 @@ export default class Middleware {
   constructor() {
     this.middlewares = []
   }
+
   use(func) {
     this.middlewares.push(func)
   }
+
   /**
    * @param {Request} req
    */
@@ -16,22 +18,27 @@ export default class Middleware {
     let index = 0
     const next = async (err) => {
       const middleware = middlewares[index++]
-      if (!middleware) return
+      if (!middleware)
+        return
       try {
         if (err) {
           if (middleware.length === 3) {
             await middleware(err, req, next)
-          } else {
+          }
+          else {
             await next(err)
           }
-        } else {
+        }
+        else {
           if (middleware.length < 3) {
             await middleware(req, next)
-          } else {
+          }
+          else {
             await next()
           }
         }
-      } catch (newErr) {
+      }
+      catch (newErr) {
         await next(newErr)
       }
     }

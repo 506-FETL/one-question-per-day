@@ -5,7 +5,7 @@ Function.prototype.mycall = function (thisArg, ...args) {
     thisArg = window
   }
   if (typeof thisArg !== 'object') {
-    thisArg = Object(thisArg)
+    thisArg = new Object(thisArg)
   }
   thisArg.thisFunction = thisFunction
   const res = thisArg.thisFunction(...args)

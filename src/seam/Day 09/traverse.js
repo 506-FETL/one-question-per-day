@@ -12,13 +12,15 @@ export class Node {
  * @returns {number[]}
  */
 export default function traverse(root) {
-  if (root === null) return []
+  if (root === null)
+    return []
 
   const tramap = {}
   const result = []
 
   function dfs(root, line, deep, parentLine) {
-    if (root === null) return
+    if (root === null)
+      return
 
     const value = root.value
     if (!Object.hasOwn(tramap, line)) {

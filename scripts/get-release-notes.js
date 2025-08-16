@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-import { readFileSync, existsSync } from 'fs'
+import { existsSync, readFileSync } from 'node:fs'
 
 /**
  * GitHub Release Notes Hook
  * 读取自动生成的 RELEASE_NOTES.md 文件内容，用于 GitHub Release
  */
 
-const getReleaseNotes = () => {
+function getReleaseNotes() {
   const releaseNotesPath = './RELEASE_NOTES.md'
 
   if (!existsSync(releaseNotesPath)) {
@@ -26,7 +26,8 @@ Please check the [CHANGELOG.md](./CHANGELOG.md) for detailed changes.
   try {
     const releaseNotes = readFileSync(releaseNotesPath, 'utf8')
     return releaseNotes.trim()
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error reading release notes:', error.message)
     return `## 🎉 New Release!
 

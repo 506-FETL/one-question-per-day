@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import add from './add'
 
-describe('Day 13 -- add', () => {
+describe('day 13 -- add', () => {
   it('应该正常简单相加', () => {
     const result = add[100]
     expect(result + 1).toBe(101)

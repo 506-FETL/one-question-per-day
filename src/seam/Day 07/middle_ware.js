@@ -3,13 +3,15 @@ export default class Middleware {
   errHandlers = []
 
   use(func) {
-    if (func.length === 2) this.cbHandlers.push(func)
-    if (func.length === 3) this.errHandlers.push(func)
+    if (func.length === 2)
+      this.cbHandlers.push(func)
+    if (func.length === 3)
+      this.errHandlers.push(func)
   }
 
   start(req) {
-    let idx = 0,
-      errIdx = 0
+    let idx = 0
+    let errIdx = 0
     const that = this
 
     function next(nextErr) {
@@ -19,12 +21,14 @@ export default class Middleware {
       if (nextErr) {
         func = that.errHandlers[errIdx++]
         args.unshift(nextErr)
-      } else {
+      }
+      else {
         func = that.cbHandlers[idx++]
       }
       try {
-        func && Promise.resolve(func(...args)).catch((error) => next(error))
-      } catch (error) {
+        func && Promise.resolve(func(...args)).catch(error => next(error))
+      }
+      catch (error) {
         next(error)
       }
     }

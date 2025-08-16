@@ -4,19 +4,19 @@
  */
 
 export default function addComma(num) {
-  num = '' + num
+  num = `${num}`
   const { code, getWrapperCode } = getCode(num)
   let res = ''
   for (let i = code.length - 1, j = 1; i >= 0; i--, j++) {
     if (j % 3 === 0 && i !== 0) {
-      res = ',' + code[i] + res
+      res = `,${code[i]}${res}`
       continue
     }
     res = code[i] + res
   }
   return getWrapperCode(res)
 }
-const getCode = (content) => {
+function getCode(content) {
   let front = ''
   let end = ''
 
@@ -24,7 +24,7 @@ const getCode = (content) => {
     return front + code + end
   }
   function setFrontAndEnd(code) {
-    code = '' + code
+    code = `${code}`
     if (code[0] === '-') {
       front = '-'
       code = code.slice(1)

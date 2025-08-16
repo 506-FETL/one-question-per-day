@@ -7,7 +7,7 @@ export default function addComma(num) {
   const str = String(Math.abs(num))
   let result = ''
 
-  let [integer, decimal] = str.split('.')
+  const [integer, decimal] = str.split('.')
 
   const fixedInteger = integer
     .split('')
@@ -25,8 +25,10 @@ export default function addComma(num) {
     .join('')
 
   result = fixedInteger.startsWith(',') ? fixedInteger.slice(1) : fixedInteger
-  if (decimal) result += `.${decimal}`
-  if (isNegative) result = '-' + result
+  if (decimal)
+    result += `.${decimal}`
+  if (isNegative)
+    result = `-${result}`
 
   return result
 }

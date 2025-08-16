@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import addComma from './addComma.js'
 
 describe('addComma 数字格式化测试', () => {

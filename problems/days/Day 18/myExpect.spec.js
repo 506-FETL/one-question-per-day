@@ -1,8 +1,7 @@
-import { describe, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import myExpect from './myExpect'
-import { expect } from 'vitest'
 
-describe('Day18-myExpect', () => {
+describe('day18-myExpect', () => {
   const theSameObject = {}
 
   it.each([
@@ -24,7 +23,10 @@ describe('Day18-myExpect', () => {
     [Symbol.for(1), Symbol.for(1), false],
     [{}, {}, true],
     [theSameObject, theSameObject, false],
-  ])('myExpect(%s).not.toBe(%s) 的结果应为 %s', (received, expected, result) => {
-    expect(myExpect(received).not.toBe(expected)).toBe(result)
-  })
+  ])(
+    'myExpect(%s).not.toBe(%s) 的结果应为 %s',
+    (received, expected, result) => {
+      expect(myExpect(received).not.toBe(expected)).toBe(result)
+    },
+  )
 })

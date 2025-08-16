@@ -3,7 +3,7 @@ let currentEffect = null
 
 /**
  * 创建响应式对象
- * @param {Object} obj - 需要变成响应式的对象
+ * @param {object} obj - 需要变成响应式的对象
  * @returns {Proxy} 响应式对象
  */
 export function reactive(obj) {
@@ -22,7 +22,7 @@ export function reactive(obj) {
       const effects = getEffects(target, p)
       const result = Reflect.set(target, p, newValue, receiver)
 
-      effects.forEach((cb) => cb())
+      effects.forEach(cb => cb())
 
       return result
     },

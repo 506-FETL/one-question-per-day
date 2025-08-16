@@ -8,7 +8,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       include: ['src/**'],
-      exclude: ['**/answer.*'],
+      exclude: ['**/answer.*', 'src/index.ts'],
       enabled: true,
     },
     globals: true,

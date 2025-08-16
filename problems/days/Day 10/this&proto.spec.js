@@ -1,7 +1,7 @@
 import { describe, expect, it, suite } from 'vitest'
 import { instanceOf, selfNew } from './this&proto.js'
 
-describe('Day10 - this&proto', () => {
+describe('day10 - this&proto', () => {
   suite('自定义Call方法测试', () => {
     it('应该可以正确绑定this上下文', () => {
       function greet() {
@@ -96,7 +96,7 @@ describe('Day10 - this&proto', () => {
       expect(person.getName()).toBe('赵六')
     })
 
-    it('Bind 返回的构造函数实例的 constructor 应该指向自身', () => {
+    it('bind 返回的构造函数实例的 constructor 应该指向自身', () => {
       function Person(name) {
         this.name = name
       }

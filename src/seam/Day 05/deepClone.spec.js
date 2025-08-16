@@ -67,7 +67,7 @@ describe('deepClone function', () => {
         ]),
         set: new Set([1, 2, 3]),
         arrayWithObj: [
-          { ['1']: 'jack' },
+          { 1: 'jack' },
           2,
           3,
           { a: 1, b: 2, c: { d: /111/g, b: [1, 2, 3, Symbol(1)] } },
@@ -85,7 +85,7 @@ describe('deepClone function', () => {
   it('应在对象包含方法时正常运行，并保持方法的功能', () => {
     const objWithMethod = {
       value: 42,
-      getValue: function () {
+      getValue() {
         return this.value
       },
     }
@@ -109,7 +109,7 @@ describe('deepClone function', () => {
   it('应在对象包含方法时正常运行，并保持方法的功能以及方法的属性', () => {
     const objWithMethod = {
       value: 42,
-      getValue: function () {
+      getValue() {
         return this.value
       },
     }

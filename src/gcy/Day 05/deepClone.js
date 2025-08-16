@@ -9,28 +9,35 @@ export default function deepClone(obj, cache = new WeakMap()) {
     return cache.get(obj)
   }
   if (obj instanceof Date) {
-    let copy = new Date(obj.getTime())
+    const copy = new Date(obj.getTime())
     return copy
-  } else if (typeof obj === 'symbol') {
+  }
+  else if (typeof obj === 'symbol') {
     return Symbol(obj.description)
-  } else if (obj instanceof Map) {
+  }
+  else if (obj instanceof Map) {
     return new Set(obj)
-  } else if (obj instanceof Set) {
+  }
+  else if (obj instanceof Set) {
     return new Set(obj)
-  } else if (obj instanceof RegExp) {
+  }
+  else if (obj instanceof RegExp) {
     return new RegExp(obj.source, obj.flags)
-  } else if (obj instanceof Object && !Array.isArray(obj)) {
-    let copy = {}
+  }
+  else if (obj instanceof Object && !Array.isArray(obj)) {
+    const copy = {}
     cache.set(obj, copy)
     for (const key of Object.getOwnPropertyNames(obj)) {
       if (!Object.prototype.hasOwnProperty.call(obj, key)) {
         continue
       }
-      if (obj[key] instanceof Function) {
+      if (typeof obj[key] === 'function') {
         copy[key] = obj[key]
-      } else if (obj[key] instanceof Object) {
+      }
+      else if (obj[key] instanceof Object) {
         copy[key] = deepClone(obj[key], cache)
-      } else {
+      }
+      else {
         copy[key] = obj[key]
       }
     }
@@ -39,18 +46,21 @@ export default function deepClone(obj, cache = new WeakMap()) {
       copy[sym] = deepClone(value, cache)
     }
     return copy
-  } else if (obj instanceof Array) {
-    let copy = []
+  }
+  else if (Array.isArray(obj)) {
+    const copy = []
     for (let i = 0; i < obj.length; i++) {
       const value = obj[i]
       if (Array.isArray(value) || value instanceof Object) {
         copy[i] = deepClone(value, cache)
-      } else {
+      }
+      else {
         copy[i] = value
       }
     }
     return copy
-  } else {
+  }
+  else {
     return obj
   }
 }

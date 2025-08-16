@@ -12,6 +12,6 @@ function createProxy(value = 0) {
   )
 }
 
-let add = createProxy()
+const add = createProxy()
 
 export default add

@@ -9,7 +9,7 @@ export default function compose(fns) {
     const firstFunc = fns.shift()
     const res = fns.reduce(
       (pre, item) => {
-        return pre.then((res) => item(res))
+        return pre.then(res => item(res))
       },
       Promise.resolve(firstFunc(...args)),
     )

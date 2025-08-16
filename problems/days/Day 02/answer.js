@@ -27,12 +27,15 @@ export default function generatorToAsync(func) {
 
           if (done) {
             resolve(value)
-          } else if (isPromiseLike(value)) {
+          }
+          else if (isPromiseLike(value)) {
             value.then(step, reject)
-          } else {
+          }
+          else {
             step(value)
           }
-        } catch (error) {
+        }
+        catch (error) {
           reject(error)
         }
       }

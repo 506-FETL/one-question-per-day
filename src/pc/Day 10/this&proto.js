@@ -3,7 +3,7 @@ Function.prototype.Call = function (context, ...args) {
   if (context == null) {
     context = window
   }
-  context = Object(context)
+  context = new Object(context)
   const func = Symbol('func')
   context[func] = this
   const res = context[func](...args)
@@ -19,10 +19,14 @@ Function.prototype.Apply = function (context, args) {
   // 处理 args 参数
   if (args == null) {
     args = []
-  } else if (!Array.isArray(args) && !(typeof args === 'object' && 'length' in args)) {
+  }
+  else if (
+    !Array.isArray(args)
+    && !(typeof args === 'object' && 'length' in args)
+  ) {
     throw new TypeError('CreateListFromArrayLike called on non-object')
   }
-  context = Object(context)
+  context = new Object(context)
   const func = Symbol('func')
   context[func] = this
   const res = context[func](...args)
@@ -40,7 +44,8 @@ Function.prototype.Bind = function (context, ...args) {
     if (this instanceof _this) {
       // 被new调用,自动设置了prototype为returnFunc
       return _this.apply(this, [...args, ...newArgs])
-    } else {
+    }
+    else {
       return _this.apply(context, [...args, ...newArgs])
     }
   }
@@ -51,13 +56,15 @@ Function.prototype.Bind = function (context, ...args) {
   return returnFunc
 }
 export function instanceOf(obj, fn) {
-  if (obj.__proto__ == null) return false
+  if (obj.__proto__ == null)
+    return false
   if (typeof fn !== 'function') {
-    throw new TypeError("Right-hand side of 'instanceof' is not callable")
+    throw new TypeError('Right-hand side of \'instanceof\' is not callable')
   }
   if (obj.__proto__.constructor !== fn) {
     return instanceOf(obj.__proto__, fn)
-  } else {
+  }
+  else {
     return true
   }
 }
@@ -65,7 +72,8 @@ export function instanceOf(obj, fn) {
 export function selfNew(fn, ...args) {
   const newThis = new Object()
   const res = fn.call(newThis, ...args)
-  if (res instanceof Object) return res
+  if (res instanceof Object)
+    return res
   Object.setPrototypeOf(newThis, fn.prototype)
   return newThis
 }
