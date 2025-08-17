@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.5.0](https://github.com/506-FETL/one-question-per-day/compare/v1.4.0...v1.5.0) (2025-08-17)
+
+
+### Features
+
+* 添加 Vite 配置以构建和拷贝题目资源，更新发布说明下载链接格式，移除不再使用的 index.ts 文件 ([e66df1d](https://github.com/506-FETL/one-question-per-day/commit/e66df1d167a9093986a05ee50c2eea136f63aa0d))
+
 所有重要的更改都将记录在此文件中。
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，并且此项目遵循 [语义化版本控制](https://semver.org/lang/zh-CN/)。
