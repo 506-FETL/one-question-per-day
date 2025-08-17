@@ -6,6 +6,7 @@
   "packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac",
   "scripts": {
     "dev": "run-s type-check lint:fix lint test",
+    "build:problems": "vite build && cd dist && zip -r problems.zip problems >/dev/null && cd ..",
     "lint": "eslint --config eslint.config.ts",
     "lint:fix": "eslint --fix",
     "test": "vitest run --config vitest.config.ts",
@@ -33,6 +34,7 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^3.5.3",
     "release-it": "^19.0.4",
+    "rollup-plugin-copy": "^3.5.0",
     "typescript": "^5.9.2",
     "vite": "^6.2.6",
     "vitest": "^3.1.1"
