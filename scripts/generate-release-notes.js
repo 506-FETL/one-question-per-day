@@ -29,11 +29,23 @@ function getLatestChangelogEntry(version) {
     )
     const match = changelog.match(versionRegex)
 
-    if (!match || match.length === 0) {
-      return null
-    }
+    if (match && match.length > 0)
+      return match[0].trim()
 
-    return match[0].trim()
+    // 兜底：未找到对应版本时，提取“最新的一段版本分节”（第一个版本标题开始至下一个版本标题前）
+    const lines = changelog.split(/\r?\n/)
+    const headerIdx = lines.findIndex(l => /^#{1,2}\s*\[?\d+\.\d+\.\d+\]?/.test(l))
+    if (headerIdx === -1)
+      return null
+
+    let endIdx = lines.length
+    for (let i = headerIdx + 1; i < lines.length; i++) {
+      if (/^#{1,2}\s*\[?\d+\.\d+\.\d+\]?/.test(lines[i])) {
+        endIdx = i
+        break
+      }
+    }
+    return lines.slice(headerIdx, endIdx).join('\n').trim()
   }
   catch (error) {
     console.error('无法读取 CHANGELOG.md:', error.message)
@@ -66,7 +78,7 @@ function formatReleaseNotes(changelogEntry, version) {
 
   // 添加头部说明
   const header = `## 🎉 Release v${version}\n\n`
-  const downloadSection = `\n\n## 📥 下载\n\n- **📦 完整项目**: 通过 GitHub Release 自动生成的源码压缩包\n- **📁 题目合集**: \`dist/problems.zip\` - 仅包含每日题目和复习资料\n- **🔗 在线浏览**: 直接浏览仓库获取最新内容\n\n> 💡 **推荐**: 如果你只需要题目文件，下载 \`dist/problems.zip\` 即可。`
+  const downloadSection = `\n\n## 📥 下载\n\n- **📦 完整项目**: 通过 GitHub Release 自动生成的源码压缩包\n- **📁 题目合集**: \`problems.zip\` - 仅包含每日题目和复习资料\n- **🔗 在线浏览**: 直接浏览仓库获取最新内容\n\n> 💡 **推荐**: 如果你只需要题目文件，下载 \`problems.zip\` 即可。`
   const footer = `\n\n---\n\n💡 **完整更改日志**: [CHANGELOG.md](./CHANGELOG.md)\n📦 **安装**: \`git clone\` 或下载最新版本\n🐛 **发现问题?** 请提交 [Issue](../../issues)`
 
   return header + notes + downloadSection + footer

@@ -23,7 +23,10 @@
   },
   "hooks": {
     "before:init": ["pnpm run dev"],
-    "before:github:release": "pnpm run build:problems",
+    "before:github:release": [
+      "pnpm run build:problems",
+      "node scripts/generate-release-notes.js"
+    ],
     "after:bump": ["node scripts/generate-release-notes.js"],
     "after:git:release": "echo 🎉 Release v${version} completed!",
     "after:github:release": "echo 📦 GitHub release created!"
