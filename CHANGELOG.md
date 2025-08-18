@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.5.0](https://github.com/506-FETL/one-question-per-day/compare/v1.4.5...v1.5.0) (2025-08-18)
+
+
+### Features
+
+* BREAKING CHANGE 禁用 GitHub 网页发布功能 ([771a234](https://github.com/506-FETL/one-question-per-day/commit/771a23413122ff572654dd3c26c915462d416f37))
+
 ## [1.4.5](https://github.com/506-FETL/one-question-per-day/compare/v1.4.4...v1.4.5) (2025-08-18)
 
 * chore: update release notes (8fdaa13)
