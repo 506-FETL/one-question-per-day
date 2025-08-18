@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.4.5](https://github.com/506-FETL/one-question-per-day/compare/v1.4.4...v1.4.5) (2025-08-18)
+
 * chore: update release notes (8fdaa13)
 
 * chore: 更新 get-release-notes.js，添加 writeFileSync 以输出发布说明至文件 (13d4e6e)
