@@ -19,20 +19,11 @@ function getCurrentVersion() {
   }
 }
 
-function getLatestChangelogEntry(version) {
+function getLatestChangelogEntry() {
   try {
     const changelog = readFileSync('CHANGELOG.md', 'utf8')
-    // 匹配版本号，支持多种格式：## [1.3.5], # [1.3.0], ## 1.3.5, # 1.3.0
-    const versionRegex = new RegExp(
-      `^#{1,2}\\s*\\[?${version.replace(/\./g, '\\.')}\\]?[\\s\\S]*?(?=^#{1,2}\\s*\\[?\\d|$)`,
-      'gm',
-    )
-    const match = changelog.match(versionRegex)
 
-    if (match && match.length > 0)
-      return match[0].trim()
-
-    // 兜底：未找到对应版本时，提取“最新的一段版本分节”（第一个版本标题开始至下一个版本标题前）
+    // 直接提取第一个版本分节（release-it 总是把最新版本放在最前面）
     const lines = changelog.split(/\r?\n/)
     const headerIdx = lines.findIndex(l => /^#{1,2}\s*\[?\d+\.\d+\.\d+\]?/.test(l))
     if (headerIdx === -1)
@@ -90,7 +81,7 @@ function generateReleaseNotes() {
   const version = getCurrentVersion()
   console.log(`📋 当前版本: v${version}`)
 
-  const changelogEntry = getLatestChangelogEntry(version)
+  const changelogEntry = getLatestChangelogEntry()
   const releaseNotes = formatReleaseNotes(changelogEntry, version)
 
   // 将发布说明保存到文件

@@ -30,9 +30,12 @@ export default antfu(
     },
   },
   {
-    files: ['**/*.{test,spec}.{js,ts}', 'scripts/**/*.js'],
+    files: ['**/*.{test,spec}.{js,ts}', 'scripts/**/*.js', 'problems/**'],
     rules: {
       'no-console': 'off',
+      'no-unused-vars': 'off',
+      'ts/no-unused-vars': 'off',
+      'unused-imports/no-unused-vars': 'off',
     },
   },
 )
