@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { readFileSync } from 'node:fs'
+import { readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 /**
@@ -71,9 +71,21 @@ function formatReleaseNotes(changelogData) {
   return notes + downloadSection + footer
 }
 
-// 主逻辑
-const changelogData = getLatestChangelogEntry()
-const releaseNotes = formatReleaseNotes(changelogData)
+function generateReleaseNotes() {
+  console.log('🚀 正在生成发布说明...')
 
-// 输出到 stdout 供 release-it 使用
-console.log(releaseNotes)
+  const changelogData = getLatestChangelogEntry()
+  const releaseNotes = formatReleaseNotes(changelogData)
+  const outputPath = join(process.cwd(), 'RELEASE_NOTES.md')
+  writeFileSync(outputPath, releaseNotes, 'utf8')
+
+  console.log(`✅ 发布说明已生成: ${outputPath}`)
+  console.log('\n预览:')
+  console.log('─'.repeat(50))
+  console.log(releaseNotes)
+  console.log('─'.repeat(50))
+
+  return releaseNotes
+}
+
+generateReleaseNotes()
