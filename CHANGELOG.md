@@ -1,17 +1,5 @@
 # Changelog
 
-* chore: 禁用 GitHub 网页发布功能 (5ad6aec)
-
-## [1.5.1](https://github.com/506-FETL/one-question-per-day/compare/v1.5.0...v1.5.1) (2025-08-18)
-
-# [1.5.0](https://github.com/506-FETL/one-question-per-day/compare/v1.4.0...v1.5.0) (2025-08-17)
-
-
-### Features
-
-* 添加 Vite 配置以构建和拷贝题目资源，更新发布说明下载链接格式，移除不再使用的 index.ts 文件 ([e66df1d](https://github.com/506-FETL/one-question-per-day/commit/e66df1d167a9093986a05ee50c2eea136f63aa0d))
-
-
 # [1.4.0](https://github.com/506-FETL/one-question-per-day/compare/v1.3.5...v1.4.0) (2025-08-15)
 
 
