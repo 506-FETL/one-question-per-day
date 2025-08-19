@@ -1,4 +1,4 @@
-import type { ErrorMiddlewareFunction, MiddlewareFunction } from './middle_ware'
+import type { ErrorMiddlewareFunction, MiddlewareFunction } from './types'
 import { describe, expect, it } from 'vitest'
 import Middleware from './middle_ware'
 
