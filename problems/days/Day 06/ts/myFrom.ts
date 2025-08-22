@@ -20,6 +20,4 @@ export default function myFrom<T, U = T>(
   arrayLike: ArrayLike<T> | Iterable<T> | null | undefined,
   mapFn?: MapFunction<T, U>,
   thisArg?: any,
-): U[] {
-  return []
-}
+): U[] {}

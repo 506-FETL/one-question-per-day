@@ -7,8 +7,6 @@ import type { GeneratorToAsyncFunction } from './types'
  * @returns 一个返回 Promise 的异步函数。
  * @throws TypeError 如果传入的参数不是生成器函数。
  */
-const generatorToAsync: GeneratorToAsyncFunction = (func) => {
-  return () => Promise.resolve(undefined as never)
-}
+const generatorToAsync: GeneratorToAsyncFunction = (func) => {}
 
 export default generatorToAsync
