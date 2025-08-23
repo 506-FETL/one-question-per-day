@@ -1,3 +1,11 @@
+---
+tags: [测试,断言]
+difficulty: easy
+next:
+  text: 复盘
+  link: review
+---
+
 # Day 18
 
 # 模拟 Jest 测试
@@ -20,8 +28,48 @@ expect(4).not.toBe(3); // ✅
 
 **✨ 如果考虑到代码的健壮性，如何避免硬编码？**
 
-## 代码
+## 测试代码
 
-| 类型    | 路径                           |
-| ------- | ------------------------------ |
-| JS 答案 | problems/days/Day 18/answer.js |
+```js
+import { describe, expect, it } from 'vitest'
+import myExpect from './myExpect'
+
+describe('day18-myExpect', () => {
+  const theSameObject = {}
+
+  it.each([
+    [3, 3, true],
+    [1, 1, true],
+    [Symbol(1), Symbol(1), false],
+    [Symbol.for(1), Symbol.for(1), true],
+    [+0, -0, false],
+    [{}, {}, false],
+    [theSameObject, theSameObject, true],
+  ])('myExpect(%s).toBe(%s) 的结果应为 %s', (received, expected, result) => {
+    expect(myExpect(received).toBe(expected)).toBe(result)
+  })
+
+  it.each([
+    [3, 3, false],
+    [1, 1, false],
+    [Symbol(1), Symbol(1), true],
+    [Symbol.for(1), Symbol.for(1), false],
+    [{}, {}, true],
+    [theSameObject, theSameObject, false],
+  ])(
+    'myExpect(%s).not.toBe(%s) 的结果应为 %s',
+    (received, expected, result) => {
+      expect(myExpect(received).not.toBe(expected)).toBe(result)
+    },
+  )
+})
+
+```
+
+## 答案
+
+| 类型    | 路径                                                                                                                                |
+| ------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| JS 版本 | [problems/days/Day 18/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2018/answer.js)       |
+| TS 版本 | [problems/days/Day 18/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2018/ts/answer.ts) |
+| Review  | [18.md](/review/18)                                                                                                                 |

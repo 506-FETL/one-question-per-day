@@ -80,9 +80,6 @@ function buildNumberedSidebarItems(options: BuildNumberedItemsOptions) {
 // 站点配置：聚焦每日一题 / 测试驱动 / 自动化发布
 export default defineConfig({
   srcDir: 'problems/docs',
-  // GitHub Pages 项目页需要设置 base 为仓库名，否则静态资源以根路径 /assets 加载导致 404
-  // 若将来使用自定义域名或放在根用户页，可改为 '/'
-  base: '/one-question-per-day/',
   title: 'one-question-per-day',
   description: '506 实验室「每日一题」：数据结构 / 算法 / JS 原理 / 工程实践。测试驱动 + 版本化积累。',
   lang: 'zh-CN',
@@ -100,13 +97,7 @@ export default defineConfig({
       {
         text: '指南 Guide',
         items: [
-          { text: '快速开始', link: '/#🏁-快速开始' },
-          { text: '目录结构', link: '/#📂-目录结构' },
-          { text: '题目类型', link: '/#🧠-题目类型' },
-          { text: '版本与发布', link: '/#🔄-版本与发布' },
-          { text: '贡献约定', link: '/#🤝-贡献约定' },
-          { text: '常见命令', link: '/#🧩-常见命令' },
-          { text: '后续规划', link: '/#🗺-后续规划' },
+          { text: '快速开始', link: '/#快速开始' },
         ],
       },
       // 题目天数索引（静态占位，实际页面 /days/index 里自动汇总）
@@ -130,7 +121,7 @@ export default defineConfig({
     },
     outline: { label: '本页导航' },
     editLink: {
-      pattern: 'https://github.com/506-FETL/one-question-per-day/edit/main/:path',
+      pattern: 'https://github.com/506-FETL/one-question-per-day/tree/main/problems/docs/:path',
       text: '在 GitHub 上编辑此页',
     },
     search: {

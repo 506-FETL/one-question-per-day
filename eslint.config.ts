@@ -4,7 +4,7 @@ export default antfu(
   {
     formatters: true,
     vue: true,
-    react: true,
+    react: false,
     typescript: true,
     markdown: false,
     rules: {

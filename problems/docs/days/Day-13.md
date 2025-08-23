@@ -1,3 +1,8 @@
+---
+tags: [Proxy,ToPrimitive]
+difficulty: medium
+---
+
 # Day 13
 
 # add
@@ -11,8 +16,38 @@ console.log(value[200][300] + 100); // 701
 console.log(add[100][200][300] - 300); // 300
 ```
 
-## 代码
+## 测试代码
 
-| 类型    | 路径                           |
-| ------- | ------------------------------ |
-| JS 答案 | problems/days/Day 13/answer.js |
+```js
+import { describe, expect, it } from 'vitest'
+import add from './add'
+
+describe('day 13 -- add', () => {
+  it('应该正常简单相加', () => {
+    const result = add[100]
+    expect(result + 1).toBe(101)
+  })
+
+  it('应该能连续调用', () => {
+    expect(add[100][200] + 100).toBe(400)
+  })
+
+  it('应该能保存状态', () => {
+    const foo = add[100]
+    const result = foo[200]
+
+    expect(foo + 200).toBe(300)
+    expect(result[-100] - 100).toBe(100)
+    expect(result - 200).toBe(100)
+  })
+})
+
+```
+
+## 答案
+
+| 类型    | 路径                                                                                                                                |
+| ------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| JS 版本 | [problems/days/Day 13/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2013/answer.js)       |
+| TS 版本 | [problems/days/Day 13/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2013/ts/answer.ts) |
+| Review  | [13.md](/review/13)                                                                                                                 |
