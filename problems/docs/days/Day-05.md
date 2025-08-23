@@ -19,9 +19,27 @@ a.self = a; // 循环引用
 const b = deepClone(a);
 console.log(b); // 输出: { name: 'Alice', self: [Circular] }
 /*
-console.log 的输出结果中包含 [Circular] 是因为 JavaScript 的控制台会检测到对象中的循环引用，并用这个标记来表示，避免陷入无限循环。
-事实上，我们的 deepClone 函数并不会在实际对象数据结构中插入 [Circular] 这类标记，它只是一个视觉化的提示，帮助我们理解输出结果。
+console.log 的输出结果中包含 [Circular],
+这是因为 JavaScript 的控制台会检测到对象中的循环引用，
+并用这个标记来表示，避免陷入无限循环。
+事实上，我们的 deepClone 函数并不会在实际对象数据结构中插入 [Circular] 这类标记，
+它只是一个视觉化的提示，帮助我们理解输出结果。
  */
+```
+
+## 题目模版
+
+```js
+/**
+ * 深拷贝一个对象或数组。
+ *
+ * @param {any} obj - 要深拷贝的对象或数组。
+ * @param {Map} [cache] - 用于存储已拷贝对象的缓存，防止循环引用。
+ * @returns {any} 返回深拷贝后的对象或数组。
+ */
+export default function deepClone(obj, cache = new Map()) {
+
+}
 ```
 
 ## 测试代码

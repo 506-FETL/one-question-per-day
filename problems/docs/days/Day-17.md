@@ -11,6 +11,17 @@ difficulty: easy
 
 请直接修改传入的数组。顺序不影响结果判定。
 
+## 题目模版
+
+```js
+/**
+ * @param {any[]} arr
+ */
+export default function deduplicate(arr) {
+
+}
+```
+
 ## 测试代码
 
 ```js

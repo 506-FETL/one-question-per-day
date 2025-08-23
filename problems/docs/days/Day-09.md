@@ -19,6 +19,28 @@ difficulty: medium
 上述二叉树的垂直遍历结果为：
 [7, 2, 5, 8, 12, 1, 4, 6, 10, 11, 3, 9, 13]
 
+## 题目模版
+
+```js
+// This is the class for the node
+// you can use this directly as it is bundled with your code
+export class Node {
+  constructor(val) {
+    this.value = val
+    this.left = null
+    this.right = null
+  }
+}
+// }
+/**
+ * @param {Node} root
+ * @returns {number[]}
+ */
+export default function traverse(root) {
+
+}
+```
+
 ## 测试代码
 
 ```js

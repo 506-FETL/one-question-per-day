@@ -17,6 +17,14 @@ difficulty: medium
 
 Function.prototype.call/apply/bind和 [Reflect.apply](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect/apply) 可以了解，但请不要在这里使用。
 
+## 题目模版
+
+```js
+Function.prototype.mycall = function (thisArg, ...args) {
+
+}
+```
+
 ## 测试代码
 
 ```js

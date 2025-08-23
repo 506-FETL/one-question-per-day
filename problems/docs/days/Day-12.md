@@ -15,6 +15,20 @@ difficulty: easy
 
 **compose 函数要求：可执行同步方法，也可执行异步方法，两者都可以兼容**
 
+## 题目模版
+
+```js
+/**
+ * 组合多个函数，返回一个新的函数，按从右到左的顺序依次执行这些函数，并支持异步操作。
+ *
+ * @param {Function[]} fns - 要组合的函数数组。每个函数接收上一个函数的返回值作为参数，可以返回 Promise 或普通值。
+ * @returns {Function} 返回一个新的函数，接收任意参数，依次执行组合的函数，返回最终的 Promise。
+ */
+export default function compose(fns) {
+
+}
+```
+
 ## 测试代码
 
 ```js

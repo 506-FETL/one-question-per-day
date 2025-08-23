@@ -28,6 +28,18 @@ expect(4).not.toBe(3); // ✅
 
 **✨ 如果考虑到代码的健壮性，如何避免硬编码？**
 
+## 题目模版
+
+```js
+/**
+ * @param {any} input
+ * @returns {true | false}
+ */
+export default function myExpect(input) {
+
+}
+```
+
 ## 测试代码
 
 ```js

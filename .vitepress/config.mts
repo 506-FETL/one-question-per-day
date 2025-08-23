@@ -90,7 +90,7 @@ export default defineConfig({
     nav: [
       { text: '首页', link: '/' },
       { text: '题目', link: '/days/index' },
-      { text: '复盘', link: '/review/index' },
+      { text: '复习', link: '/review/index' },
       { text: '发布说明', link: 'https://github.com/506-FETL/one-question-per-day/blob/main/RELEASE_NOTES.md' },
       { text: 'Changelog', link: 'https://github.com/506-FETL/one-question-per-day/blob/main/CHANGELOG.md' },
     ],
@@ -108,7 +108,7 @@ export default defineConfig({
         items: buildNumberedSidebarItems({ dir: 'days', routeBase: '/days', linkStyle: 'day' }),
       },
       {
-        text: '复盘 (Reviews)',
+        text: '复习 (Reviews)',
         collapsed: true,
         items: buildNumberedSidebarItems({ dir: 'review', routeBase: '/review', linkStyle: 'plain', requireReadmeForDir: false }),
       },

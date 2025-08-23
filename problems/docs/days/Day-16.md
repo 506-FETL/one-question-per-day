@@ -16,6 +16,18 @@ addComma(12345678.12345); // '12,345,678.12345'
 
 传入的都是有效的数字，不用担心非法的输入。
 
+## 题目模版
+
+```js
+/**
+ * @param {number} num
+ * @return {string}
+ */
+export default function addComma(num) {
+
+}
+```
+
 ## 测试代码
 
 ```js

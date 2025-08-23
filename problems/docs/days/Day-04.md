@@ -29,6 +29,18 @@ sum(1)()(2) == 3; // true
 - 可以连续调用
 - 如果不传入参数，默认为 0
 
+## 题目模版
+
+```js
+/**
+ * @param {number} v 传入的值
+ */
+export default function sum(v = 0) {
+
+}
+
+```
+
 ## 测试代码
 
 ```js

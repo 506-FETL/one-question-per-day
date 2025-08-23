@@ -139,6 +139,16 @@ difficulty: hard
 - 错误捕获、透传与链式调用的完善对接；
 - 对“类 Promise 对象”的处理，确保静态方法的语义一致性。
 
+## 题目模版
+
+```js
+/* global process */
+
+export default class MyPromise {
+  constructor(executor) {}
+}
+```
+
 ## 测试代码
 
 ```js

@@ -89,6 +89,14 @@ middleware.start({});
 // {a: 1}
 ```
 
+## 题目模版
+
+```js
+export default class Middleware {
+
+}
+```
+
 ## 测试代码
 
 ```js

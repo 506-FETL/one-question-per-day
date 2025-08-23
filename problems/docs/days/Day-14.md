@@ -81,6 +81,18 @@ setTimeout(() => {
 2. 在订阅的时候next/error/complete需要都不是必须。如果传入的是一个函数，这个函数需要被默认为next。
 3. 需要支持多个订阅。
 
+## 题目模版
+
+```js
+class Observable {
+  constructor(setup) {}
+
+  subscribe(subscriber) {}
+}
+
+export default Observable
+```
+
 ## 测试代码
 
 ```js

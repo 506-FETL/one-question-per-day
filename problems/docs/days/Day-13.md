@@ -16,6 +16,16 @@ console.log(value[200][300] + 100); // 701
 console.log(add[100][200][300] - 300); // 300
 ```
 
+## 题目模版
+
+```js
+// free to code
+
+const add = null
+
+export default add
+```
+
 ## 测试代码
 
 ```js
