@@ -28,7 +28,6 @@ jobs:
 
       - name: Run dev
         run: pnpm run dev
-    
 
   build:
     name: Build docs
