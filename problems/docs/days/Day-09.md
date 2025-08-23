@@ -8,7 +8,7 @@ difficulty: medium
 # 二叉树的垂直遍历
 
 从左到右，从上到下遍历二叉树。二叉树的节点的值为整数。
-![alt text](../assets/image.png)
+![alt text](/image.png)
 
 上述二叉树的垂直遍历结果为：[6,4,2,7,1,9,10,3,8,5]
 
