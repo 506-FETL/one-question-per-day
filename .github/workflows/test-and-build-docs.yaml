@@ -1,4 +1,4 @@
-name: Run Dev -- Lint Format And Test
+name: Run Test And Build -- Lint Format Test then Build Docs
 
 on:
   pull_request:

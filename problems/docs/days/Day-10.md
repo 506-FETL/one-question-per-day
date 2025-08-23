@@ -1,3 +1,8 @@
+---
+tags: [this,原型链]
+difficulty: medium
+---
+
 # Day 10
 
 # 手写 call、apply、bind、instanceof 和 new
@@ -21,15 +26,11 @@
 5. **手写 new 操作符**
    实现一个函数 `selfNew(Fn, ...args)`，模拟 `new Fn(...args)` 的行为，返回一个新对象，并正确处理构造函数返回对象的情况。
 
----
-
 ## 要求
 
 - 不允许直接使用原生的 `call`、`apply`、`bind`、`instanceof`、`new`。
 - 代码需考虑边界情况和兼容性。
 - 每个方法请用注释说明实现思路。
-
----
 
 ## 示例
 
@@ -47,10 +48,10 @@ const dog = selfNew(Animal);
 console.log(instanceOf(dog, Animal)); // true
 ```
 
----
+## 答案
 
-## 代码
-
-| 类型    | 路径                           |
-| ------- | ------------------------------ |
-| JS 答案 | problems/days/Day 10/answer.js |
+| 类型    | 路径                                                                                                                                |
+| ------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| JS 版本 | [problems/days/Day 10/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2010/answer.js)       |
+| TS 版本 | [problems/days/Day 10/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2010/ts/answer.ts) |
+| Review  | [10.md](/review/10)                                                                                                                 |

@@ -1,3 +1,8 @@
+---
+tags: [异步封装,generator]
+difficulty: medium
+---
+
 # Day 02
 
 # 将生成器函数转换为异步函数
@@ -72,14 +77,69 @@ asyncFunctionError().catch((err) => console.error(err.message)); // 输出 "Test
 - 考虑如何验证传入的 `func` 是否是一个生成器函数。
 - 优化代码结构，使其更易读和易维护。
 
----
+## 测试代码
 
-## 代码
+```js
+import { describe, expect, it } from 'vitest'
+import generatorToAsync from './GeneratorToAsync'
 
-| 类型    | 路径                                             |
-| ------- | ------------------------------------------------ |
-| JS 答案 | problems/days/Day 02/answer.js                   |
-| TS 答案 | problems/days/Day 02/ts/answer.ts                |
-| 模板    | problems/days/Day 02/ts/GeneratorToAsync.ts      |
-| 模板    | problems/days/Day 02/ts/types.ts                 |
-| 测试    | problems/days/Day 02/ts/GeneratorToAsync.spec.ts |
+describe('04.17--default.将生成器函数转换成异步函数', () => {
+  it('应将生成器函数转换为异步函数', async () => {
+    function* generatorFunction() {
+      const value1 = yield Promise.resolve(1)
+      const value2 = yield Promise.resolve(value1 + 1)
+      return value2 + 1
+    }
+
+    const asyncFunction = generatorToAsync(generatorFunction)
+    const result = await asyncFunction()
+    expect(result).toBe(3)
+  })
+
+  it('如果输入不是一个生成器函数,应抛出 TypeError', () => {
+    expect(() => generatorToAsync(() => {})).toThrow(TypeError)
+    expect(() => generatorToAsync(null)).toThrow(TypeError)
+    expect(() => generatorToAsync(123)).toThrow(TypeError)
+  })
+
+  it('应处理生成器函数中的同步值', async () => {
+    function* generatorFunction() {
+      const value1 = yield 1
+      const value2 = yield value1 + 1
+      return value2 + 1
+    }
+
+    const asyncFunction = generatorToAsync(generatorFunction)
+    const result = await asyncFunction()
+    expect(result).toBe(3)
+  })
+
+  it('如果返回的Promise被reject,应返回reject的报错值', async () => {
+    function* generatorFunction() {
+      yield Promise.reject(new Error('Test error'))
+    }
+
+    const asyncFunction = generatorToAsync(generatorFunction)
+    await expect(asyncFunction()).rejects.toThrow('Test error')
+  })
+
+  it('如果内部抛出错误，应直接reject', async () => {
+    function* generatorFunction() {
+      yield 2
+      throw new Error('error')
+    }
+
+    const asyncFunction = generatorToAsync(generatorFunction)
+    await expect(asyncFunction()).rejects.toThrow('error')
+  })
+})
+
+```
+
+## 答案
+
+| 类型    | 路径                                                                                                                                |
+| ------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| JS 版本 | [problems/days/Day 02/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2002/answer.js)       |
+| TS 版本 | [problems/days/Day 02/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2002/ts/answer.ts) |
+| Review  | [02.md](/review/02)                                                                                                                 |
