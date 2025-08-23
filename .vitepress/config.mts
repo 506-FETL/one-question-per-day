@@ -80,6 +80,7 @@ function buildNumberedSidebarItems(options: BuildNumberedItemsOptions) {
 // 站点配置：聚焦每日一题 / 测试驱动 / 自动化发布
 export default defineConfig({
   srcDir: 'problems/docs',
+  base: '/one-question-per-day/',
   title: 'one-question-per-day',
   description: '506 实验室「每日一题」：数据结构 / 算法 / JS 原理 / 工程实践。测试驱动 + 版本化积累。',
   lang: 'zh-CN',
