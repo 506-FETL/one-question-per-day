@@ -1,5 +1,13 @@
 # Changelog
 
+# [1.6.0](https://github.com/506-FETL/one-question-per-day/compare/v1.5.0...v1.6.0) (2025-08-23)
+
+
+### Features
+
+* 添加 Day 09 ts版本 ([acfa46a](https://github.com/506-FETL/one-question-per-day/commit/acfa46aff36926b4da7cd097f54aff49accfac99))
+* 添加MyPromise ts 版本 ([0dbf2f6](https://github.com/506-FETL/one-question-per-day/commit/0dbf2f620248c042dac4584a12c977770dad229f))
+
 # [1.5.0](https://github.com/506-FETL/one-question-per-day/compare/v1.4.5...v1.5.0) (2025-08-18)
 
 
