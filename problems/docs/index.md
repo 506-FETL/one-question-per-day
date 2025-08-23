@@ -7,8 +7,8 @@ hero:
   text: 506 实验室 · 每日一题
   tagline: 聚焦数据结构 / 算法 / JS 基础实现 / 工程化实践。坚持小步快跑，统一测试驱动，持续版本发布与复盘。
   image:
-    light: ./assets/hero.svg
-    dark: ./assets/hero-dark.svg
+    light: /hero.svg
+    dark: /hero-dark.svg
     alt: 每日一题
     width: 620  # 自定义属性（主题不识别也无妨，仅做文档标注）
   actions:
@@ -45,7 +45,7 @@ features:
 
 本仓库是 506 实验室每日一题的代码仓库，旨在通过每日编程题目提升实验室成员的编程能力和解决问题的能力。每位成员需要根据每日更新的题目完成自己的解法，并通过对应的单元测试后提交代码。
 
-![diagram](/assets/diagram.png)
+![diagram](/diagram.png)
 
 ## 项目结构
 
