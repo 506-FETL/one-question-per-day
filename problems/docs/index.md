@@ -289,7 +289,7 @@ pnpm install
   - GitHub Actions 页面手动触发（推荐）
   - 本地脚本发布 (`pnpm release`)
 
-> 💡 **提示**: 查看 [Release 文档](./docs/RELEASE.md) 了解详细的版本管理流程。
+> 💡 **提示**: 查看 [Release 文档](./others/RELEASE_NOTES_TEMPLATE.md) 了解详细的版本管理流程。
 
 ### 🚀 自动发布说明
 
@@ -308,7 +308,7 @@ pnpm run release
 pnpm run generate-release-notes
 ```
 
-> 📚 **详细文档**: 查看 [自动发布说明文档](./docs/AUTO_RELEASE_NOTES.md) 了解完整使用指南。
+> 📚 **详细文档**: 查看 [自动发布说明文档](./others/AUTO_RELEASE_NOTES.md) 了解完整使用指南。
 
 ### 📦 Problems 压缩包
 
@@ -324,7 +324,7 @@ pnpm run generate-release-notes
 pnpm run create-problems-archive
 ```
 
-> 📚 **详细说明**: 查看 [Problems 压缩包文档](./docs/PROBLEMS_ARCHIVE.md) 了解完整功能。
+> 📚 **详细说明**: 查看 [Problems 压缩包文档](./others/PROBLEMS_ARCHIVE.md) 了解完整功能。
 
 ## 注意事项
 
