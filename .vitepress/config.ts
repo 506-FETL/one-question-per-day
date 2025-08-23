@@ -80,6 +80,9 @@ function buildNumberedSidebarItems(options: BuildNumberedItemsOptions) {
 // 站点配置：聚焦每日一题 / 测试驱动 / 自动化发布
 export default defineConfig({
   srcDir: 'problems/docs',
+  // GitHub Pages 项目页需要设置 base 为仓库名，否则静态资源以根路径 /assets 加载导致 404
+  // 若将来使用自定义域名或放在根用户页，可改为 '/'
+  base: '/one-question-per-day/',
   title: 'one-question-per-day',
   description: '506 实验室「每日一题」：数据结构 / 算法 / JS 原理 / 工程实践。测试驱动 + 版本化积累。',
   lang: 'zh-CN',
