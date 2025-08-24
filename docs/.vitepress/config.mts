@@ -3,7 +3,6 @@ import { buildNumberedSidebarItems } from './util'
 
 // 站点配置：聚焦每日一题 / 测试驱动 / 自动化发布
 export default defineConfig({
-  srcDir: 'docs',
   title: 'one-question-per-day',
   base: '/one-question-per-day/',
   description: '506 实验室「每日一题」：数据结构 / 算法 / JS 原理 / 工程实践。测试驱动 + 版本化积累。',
@@ -20,7 +19,7 @@ export default defineConfig({
       alt: 'logo',
     },
     nav: [
-      { text: '首页', link: '/' },
+      { text: '首页', link: '/index.md' },
       { text: '题目', link: '/days/index' },
       { text: '复习', link: '/review/index' },
       { text: '发布说明', link: 'https://github.com/506-FETL/one-question-per-day/blob/main/RELEASE_NOTES.md' },

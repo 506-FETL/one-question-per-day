@@ -21,7 +21,9 @@ difficulty: medium
 
 ## 函数签名
 
-```javascript
+::: code-group
+
+```js [generatorToAsync.js]
 /**
  * 将生成器函数转换为异步函数。
  *
@@ -34,9 +36,45 @@ function generatorToAsync(func) {
 }
 ```
 
+```ts [generatorToAsync.ts]
+import type { GeneratorToAsyncFunction } from './types'
+
+/**
+ * 将生成器函数转换为异步函数。
+ *
+ * @param func - 一个生成器函数。
+ * @returns 一个返回 Promise 的异步函数。
+ * @throws TypeError 如果传入的参数不是生成器函数。
+ */
+const generatorToAsync: GeneratorToAsyncFunction = (func) => {}
+
+export default generatorToAsync
+
+```
+
+```ts [types.ts]
+// 生成器函数类型
+export interface GeneratorFunction<TReturn = unknown> {
+  (): Generator<unknown, TReturn, unknown>
+}
+
+// 异步函数类型
+export interface AsyncFunction<TReturn = unknown> {
+  (): Promise<TReturn>
+}
+
+// 生成器转异步函数的主函数类型
+export interface GeneratorToAsyncFunction {
+  <TReturn = unknown>(func: GeneratorFunction<TReturn>): AsyncFunction<TReturn>
+}
+
+```
+
+:::
+
 ## 示例
 
-```javascript
+```js
 // 示例 1：处理异步操作
 function* generatorFunction() {
   const value1 = yield Promise.resolve(1);

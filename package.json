@@ -14,9 +14,9 @@
     "type-check": "tsc --noEmit",
     "generate-release-notes": "node scripts/generate-release-notes.js",
     "release": "dotenv -f .env run -- release-it",
-    "docs:dev": "vitepress dev",
-    "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
     "vue": "^3.5.19"

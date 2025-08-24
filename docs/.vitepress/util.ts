@@ -22,7 +22,7 @@ export function buildNumberedSidebarItems(options: BuildNumberedItemsOptions) {
     requireReadmeForDir = true,
     padWidth = 2,
   } = options
-  const absDir = path.resolve(__dirname, '../docs', dir)
+  const absDir = path.resolve(__dirname, '../', dir)
   let entries: string[] = []
   try {
     entries = fs.readdirSync(absDir)
