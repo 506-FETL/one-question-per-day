@@ -5,9 +5,6 @@
     "baseUrl": ".",
     "module": "ESNext",
     "moduleResolution": "Node",
-    "paths": {
-      "@/*": ["src/*"]
-    },
     "types": ["vitest/globals", "node"],
     "allowJs": true,
     "checkJs": false,

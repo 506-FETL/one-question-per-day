@@ -41,11 +41,125 @@ features:
 
 ---
 
-## 项目简介
+<script setup>
+import {
+  VPTeamPage,
+  VPTeamPageTitle,
+  VPTeamMembers
+} from 'vitepress/theme'
+import { useData } from 'vitepress'
 
-本仓库是 506 实验室每日一题的代码仓库，旨在通过每日编程题目提升实验室成员的编程能力和解决问题的能力。每位成员需要根据每日更新的题目完成自己的解法，并通过对应的单元测试后提交代码。
+const { isDark } = useData()
+const members = [
+  {
+    avatar: 'https://avatars.githubusercontent.com/u/87215099?v=4',
+    name: 'lll',
+    title: '斯人若彩虹，遇上方知有',
+    links: [
+      { icon: 'github', link: 'https://github.com/seaeam' },
+      {icon: 'bilibili', link: 'https://space.bilibili.com/158284800?spm_id_from=333.1007.0.0'},
+      {icon: 'x', link: 'https://x.com/wozhenbenz5112'}
+    ]
+  },
+  {
+    avatar: 'https://avatars.githubusercontent.com/u/104177657?v=4',
+    name: 'peng chang',
+    title: '好想进大厂',
+    links: [{ icon: 'github', link: 'https://github.com/pcppp' },]
+  },
+  {
+    avatar: 'https://avatars.githubusercontent.com/u/74220172?v=4',
+    name: 'Gong Che Yu',
+    title: 'xiersiki',
+    links: [{ icon: 'github', link: 'https://github.com/xiersiki' },]
+  },
+  {
+    avatar: 'https://avatars.githubusercontent.com/u/103992756?v=4',
+    name: 'Dc9309',
+    title: 'Dc9309',
+    links: [{ icon: 'github', link: 'https://github.com/Dc9309' },]
+  },
+  {
+    avatar: 'https://avatars.githubusercontent.com/u/105473589?v=4',
+    name: 'Peng Liang',
+    title: 'I am a graduate student from Chongqing University of Posts and Telecommunications, majoring in computer science and technology',
+    links: [{ icon: 'github', link: 'https://github.com/notshine' },]
+  },
+  {
+    avatar: 'https://avatars.githubusercontent.com/u/126050206?v=4',
+    name: 'wang-danni',
+    title: 'Chongqing University of Posts and Telecommunications major in computer technology',
+    links: [{ icon: 'github', link: 'https://github.com/wang-danni' },]
+  }
+]
 
-![diagram](/diagram.png)
+const ELEMENTS = [
+  {
+    id: "1",
+    isSelectable: true,
+    name: "root",
+    children: [
+      {
+        id: "2",
+        isSelectable: true,
+        name: "components",
+        children: [
+          {
+            id: "3",
+            isSelectable: true,
+            name: "ui",
+            children: [
+              { id: "4", isSelectable: true, name: "Button.vue" },
+              { id: "5", isSelectable: true, name: "Card.vue" },
+              { id: "6", isSelectable: true, name: "Input.vue" },
+            ],
+          },
+          { id: "7", isSelectable: true, name: "Header.vue" },
+          { id: "8", isSelectable: true, name: "Footer.vue" },
+        ],
+      },
+      {
+        id: "9",
+        isSelectable: true,
+        name: "composables",
+        children: [
+          { id: "10", isSelectable: false, name: "useAuth.ts" },
+          { id: "11", isSelectable: true, name: "useTheme.ts" },
+        ],
+      },
+      {
+        id: "12",
+        isSelectable: true,
+        name: "layouts",
+        children: [
+          { id: "13", isSelectable: true, name: "default.vue" },
+          { id: "14", isSelectable: false, name: "auth.vue" },
+        ],
+      },
+      {
+        id: "15",
+        isSelectable: true,
+        name: "pages",
+        children: [
+          { id: "16", isSelectable: true, name: "index.vue" },
+          { id: "17", isSelectable: true, name: "about.vue" },
+          {
+            id: "18",
+            isSelectable: false,
+            name: "auth",
+            children: [
+              { id: "19", isSelectable: true, name: "login.vue" },
+              { id: "20", isSelectable: true, name: "register.vue" },
+            ],
+          },
+        ],
+      },
+      { id: "21", isSelectable: true, name: "app.vue" },
+      { id: "22", isSelectable: true, name: "nuxt.config.ts" },
+    ],
+  },
+];
+</script>
 
 ## 项目结构
 
@@ -332,55 +446,14 @@ pnpm run create-problems-archive
 2. **测试通过**：提交代码前，必须确保所有单元测试通过。
 3. **每日更新**：请及时完成每日题目，保持代码仓库的活跃性。
 
-## 贡献者
-
-<!-- readme: contributors -start -->
-<table>
-  <tbody>
-    <tr>
-      <td align="center">
-        <a href="https://github.com/seaeam">
-          <img src="https://avatars.githubusercontent.com/u/87215099?v=4" width="100;" alt="seaeam" />
-          <br />
-          <sub><b>lll</b></sub>
-        </a>
-      </td>
-      <td align="center">
-        <a href="https://github.com/pcppp">
-          <img src="https://avatars.githubusercontent.com/u/104177657?v=4" width="100;" alt="pcppp" />
-          <br />
-          <sub><b>peng chang</b></sub>
-        </a>
-      </td>
-      <td align="center">
-        <a href="https://github.com/xiersiki">
-          <img src="https://avatars.githubusercontent.com/u/74220172?v=4" width="100;" alt="xiersiki" />
-          <br />
-          <sub><b>Gong Che Yu</b></sub>
-        </a>
-      </td>
-      <td align="center">
-        <a href="https://github.com/Dc9309">
-          <img src="https://avatars.githubusercontent.com/u/103992756?v=4" width="100;" alt="Dc9309" />
-          <br />
-          <sub><b>Dc9309</b></sub>
-        </a>
-      </td>
-      <td align="center">
-        <a href="https://github.com/notshine">
-          <img src="https://avatars.githubusercontent.com/u/105473589?v=4" width="100;" alt="notshine" />
-          <br />
-          <sub><b>Peng Liang</b></sub>
-        </a>
-      </td>
-      <td align="center">
-        <a href="https://github.com/wang-danni">
-          <img src="https://avatars.githubusercontent.com/u/126050206?v=4" width="100;" alt="wang-danni" />
-          <br />
-          <sub><b>wang-danni</b></sub>
-        </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<!-- readme: contributors -end -->
+<VPTeamPage>
+  <VPTeamPageTitle>
+    <template #title>
+      Solver
+    </template>
+    <template #lead>
+      由 506 实验室多位成员协作维护
+    </template>
+  </VPTeamPageTitle>
+  <VPTeamMembers size="small" :members />
+</VPTeamPage>

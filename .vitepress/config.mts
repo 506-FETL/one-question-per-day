@@ -86,7 +86,15 @@ export default defineConfig({
   lang: 'zh-CN',
   lastUpdated: true,
   cleanUrls: true,
+  head: [
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/one-question-per-day/hero.svg' }],
+  ],
   themeConfig: {
+    logo: {
+      light: '/hero.svg',
+      dark: '/hero-dark.svg',
+      alt: 'logo',
+    },
     nav: [
       { text: '首页', link: '/' },
       { text: '题目', link: '/days/index' },
