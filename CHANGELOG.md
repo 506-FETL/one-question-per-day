@@ -1,5 +1,21 @@
 # Changelog
 
+# [1.7.0](https://github.com/506-FETL/one-question-per-day/compare/v1.6.0...v1.7.0) (2025-08-24)
+
+
+### Bug Fixes
+
+* 更新文档链接，指向新的 RELEASE_NOTES_TEMPLATE 和 AUTO_RELEASE_NOTES 文档 ([f99d204](https://github.com/506-FETL/one-question-per-day/commit/f99d204671bb314fa37577c5ee8d5d7058168cb2))
+* 删除空的主题索引文件 ([ca7e1e2](https://github.com/506-FETL/one-question-per-day/commit/ca7e1e2673b7da30b98a4f315e666aea4e33d8bf))
+* 修复站点配置中的 base 路径设置 ([d7a5afc](https://github.com/506-FETL/one-question-per-day/commit/d7a5afc4f5c90ba9c28da54fa1bc2fbcdc068455))
+* 修复站点配置中的 base 路径设置 ([68e38c9](https://github.com/506-FETL/one-question-per-day/commit/68e38c91fafa90fe7b2722d786dd528656046b34))
+
+
+### Features
+
+* 添加 GitHub Pages 配置，设置 base 为仓库名 ([5b5f640](https://github.com/506-FETL/one-question-per-day/commit/5b5f64001254c5bfa6d355102f81ca1162f60a23))
+* 添加文档构建工作流并更新相关文档模板 ([330be82](https://github.com/506-FETL/one-question-per-day/commit/330be822b0727fdde9cb5682d7817b6fa8fc9439))
+
 # [1.6.0](https://github.com/506-FETL/one-question-per-day/compare/v1.5.0...v1.6.0) (2025-08-23)
 
 
