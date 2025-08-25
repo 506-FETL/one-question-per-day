@@ -107,8 +107,8 @@ describe('addComma 数字格式化测试', () => {
 
 ## 答案
 
-| 类型    | 路径                                                                                                                                |
-| ------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| JS 版本 | [problems/days/Day 16/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2016/answer.js)       |
-| TS 版本 | [problems/days/Day 16/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2016/ts/answer.ts) |
-| Review  | [16.md](/review/16)                                                                                                                 |
+| 类型    | 路径                                                                                                                      |
+| ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| JS 版本 | [problems/Day 16/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2016/answer.js)       |
+| TS 版本 | [problems/Day 16/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2016/ts/answer.ts) |
+| Review  | [16.md](/review/16)                                                                                                       |

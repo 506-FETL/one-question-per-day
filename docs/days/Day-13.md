@@ -56,8 +56,8 @@ describe('day 13 -- add', () => {
 
 ## 答案
 
-| 类型    | 路径                                                                                                                                |
-| ------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| JS 版本 | [problems/days/Day 13/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2013/answer.js)       |
-| TS 版本 | [problems/days/Day 13/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2013/ts/answer.ts) |
-| Review  | [13.md](/review/13)                                                                                                                 |
+| 类型    | 路径                                                                                                                      |
+| ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| JS 版本 | [problems/Day 13/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2013/answer.js)       |
+| TS 版本 | [problems/Day 13/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2013/ts/answer.ts) |
+| Review  | [13.md](/review/13)                                                                                                       |

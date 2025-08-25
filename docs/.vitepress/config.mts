@@ -1,7 +1,10 @@
 import { defineConfig } from 'vitepress'
+import {
+  groupIconMdPlugin,
+  groupIconVitePlugin,
+} from 'vitepress-plugin-group-icons'
 import { buildNumberedSidebarItems } from './util'
 
-// 站点配置：聚焦每日一题 / 测试驱动 / 自动化发布
 export default defineConfig({
   title: 'one-question-per-day',
   base: '/one-question-per-day/',
@@ -12,6 +15,13 @@ export default defineConfig({
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/one-question-per-day/hero.svg' }],
   ],
+  markdown: {
+    config(md) {
+      md.use(groupIconMdPlugin, {
+        titleBar: { includeSnippet: true },
+      })
+    },
+  },
   themeConfig: {
     logo: {
       light: '/hero.svg',
@@ -59,5 +69,10 @@ export default defineConfig({
     search: {
       provider: 'local',
     },
+  },
+  vite: {
+    plugins: [
+      groupIconVitePlugin() as any,
+    ],
   },
 })

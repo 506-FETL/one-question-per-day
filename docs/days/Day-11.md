@@ -305,8 +305,8 @@ function getTraversalResult(root) {
 
 ## 答案
 
-| 类型    | 路径                                                                                                                                |
-| ------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| JS 版本 | [problems/days/Day 11/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2011/answer.js)       |
-| TS 版本 | [problems/days/Day 11/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2011/ts/answer.ts) |
-| Review  | [11.md](/review/11)                                                                                                                 |
+| 类型    | 路径                                                                                                                      |
+| ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| JS 版本 | [problems/Day 11/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2011/answer.js)       |
+| TS 版本 | [problems/Day 11/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2011/ts/answer.ts) |
+| Review  | [11.md](/review/11)                                                                                                       |

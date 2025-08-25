@@ -3,6 +3,10 @@ tags: [Polyfill,迭代协议]
 difficulty: medium
 ---
 
+<Badge type="warning" text="medium" />
+<Badge type="info" text="Polyfill" />
+<Badge type="info" text="迭代协议" />
+
 # Day 06
 
 # 实现一个名为 `myFrom` 的函数
@@ -55,7 +59,9 @@ difficulty: medium
 
 ## 题目模版
 
-```js
+::: code-group
+
+```js [myFrom.js]
 /**
  * 自定义实现 Array.from 方法，将类数组对象或可迭代对象转换为数组。
  *
@@ -71,9 +77,41 @@ export default function myFrom(arrayLike, mapFn, thisArg) {
 }
 ```
 
+```js [myFrom.ts]
+// 类型定义
+interface ArrayLike<T> {
+  readonly length: number
+  readonly [n: number]: T
+}
+
+type MapFunction<T, U> = (value: T, index: number) => U
+
+/**
+ * 自定义实现 Array.from 方法，将类数组对象或可迭代对象转换为数组。
+ *
+ * @param arrayLike - 类数组对象或可迭代对象。
+ * @param mapFn - 可选的映射函数，用于对每个元素进行处理。
+ * @param thisArg - 可选的上下文对象，用于绑定 `mapFn` 的 `this` 值。
+ * @returns 返回一个新数组，包含从 `arrayLike` 转换而来的元素。
+ * @throws 如果 `arrayLike` 为 null 或 undefined，抛出类型错误。
+ * @throws 如果提供的 `mapFn` 不是函数，抛出类型错误。
+ */
+export default function myFrom<T, U = T>(
+  arrayLike: ArrayLike<T> | Iterable<T> | null | undefined,
+  mapFn?: MapFunction<T, U>,
+  thisArg?: any,
+): U[] {
+
+}
+```
+
+:::
+
 ## 测试代码
 
-```js
+::: code-group
+
+```js [myFrom.spec.js]
 import { describe, expect, it } from 'vitest'
 import myFrom from './myFrom'
 
@@ -219,10 +257,154 @@ describe('myFrom function', () => {
 
 ```
 
+```ts [myFrom.spec.ts]
+import { describe, expect, it } from 'vitest'
+import myFrom from './myFrom'
+
+describe('myFrom function', () => {
+  it('应正确处理基本的数组类对象', () => {
+    const arrayLike = { 0: 'a', 1: 'b', 2: 'c', length: 3 }
+    const result = myFrom(arrayLike)
+    expect(result).toEqual(['a', 'b', 'c'])
+  })
+  it('应正确处理 length 为负数的情况', () => {
+    const arrayLike = { 0: 'a', 1: 'b', 2: 'c', length: -1 }
+    const result = myFrom(arrayLike)
+    expect(result).toEqual([])
+  })
+
+  it('应正确处理字符串', () => {
+    const result = myFrom('abc')
+    expect(result).toEqual(['a', 'b', 'c'])
+  })
+
+  it('应正确处理空的数组类对象', () => {
+    const arrayLike = { length: 0 }
+    const result = myFrom(arrayLike)
+    expect(result).toEqual([])
+  })
+
+  it('应正确应用mapFn', () => {
+    const arrayLike = { 0: 1, 1: 2, 2: 3, length: 3 }
+    const result = myFrom(arrayLike, (value: number) => value * 2)
+    expect(result).toEqual([2, 4, 6])
+  })
+
+  it('应正确处理thisArg', () => {
+    const arrayLike = { 0: 1, 1: 2, 2: 3, length: 3 }
+    const context = { multiplier: 3 }
+    const result = myFrom(
+      arrayLike,
+      function (this: { multiplier: number }, value: number) {
+        return value * this.multiplier
+      },
+      context,
+    )
+    expect(result).toEqual([3, 6, 9])
+  })
+
+  it('应抛出错误，当arrayLike为null或undefined时', () => {
+    expect(() => myFrom(null)).toThrow(TypeError)
+    expect(() => myFrom(undefined)).toThrow(TypeError)
+  })
+
+  it('应抛出错误，当mapFn不是函数时', () => {
+    const arrayLike = { 0: 1, 1: 2, length: 2 }
+    expect(() => myFrom(arrayLike, 123 as any)).toThrow(TypeError)
+  })
+
+  it('应正确处理稀疏数组类对象', () => {
+    const arrayLike = { 0: 'a', 2: 'c', length: 4 }
+    const result = myFrom(arrayLike)
+    expect(result).toEqual(['a', undefined, 'c', undefined])
+    expect(result.length).toBe(4)
+  })
+
+  it('应正确处理长度超出Number.MAX_SAFE_INTEGER的情况', () => {
+    const arrayLike = { length: Number.MAX_SAFE_INTEGER + 1 }
+    expect(() => myFrom(arrayLike)).toThrow(RangeError)
+  })
+
+  it('应正确处理负数长度', () => {
+    const arrayLike = { length: -5 }
+    const result = myFrom(arrayLike)
+    expect(result).toEqual([])
+    expect(result.length).toBe(0)
+  })
+
+  it('应正确处理可迭代对象（如Set）', () => {
+    const set = new Set([1, 2, 3])
+    const result = myFrom(set)
+    expect(result).toEqual([1, 2, 3])
+  })
+
+  it('应正确处理可迭代对象（如Map）', () => {
+    const map = new Map([
+      ['a', 1],
+      ['b', 2],
+    ])
+    const result = myFrom(map)
+    expect(result).toEqual([
+      ['a', 1],
+      ['b', 2],
+    ])
+  })
+
+  it('应正确处理带有非数字length属性的对象', () => {
+    const arrayLike = { 0: 'a', 1: 'b', length: '2' as any }
+    const result = myFrom(arrayLike)
+    expect(result).toEqual(['a', 'b'])
+  })
+
+  it('应正确处理length为NaN的情况', () => {
+    const arrayLike = { 0: 'a', length: Number.NaN }
+    const result = myFrom(arrayLike)
+    expect(result).toEqual([])
+  })
+
+  it('应正确处理mapFn的第二个参数index', () => {
+    const arrayLike = { 0: 10, 1: 20, length: 2 }
+    const result = myFrom(arrayLike, (v, i) => i)
+    expect(result).toEqual([0, 1])
+  })
+
+  it('应正确处理mapFn返回undefined的情况', () => {
+    const arrayLike = { 0: 1, 1: 2, length: 2 }
+    const result = myFrom(arrayLike, () => undefined)
+    expect(result).toEqual([undefined, undefined])
+  })
+
+  it('应正确处理thisArg为null的情况', () => {
+    const arrayLike = { 0: 2, 1: 4, length: 2 }
+    function fn(this: { x?: number } | null, v: number): number {
+      return this ? (this.x || 1) * v : v
+    }
+    const result = myFrom(arrayLike, fn, null)
+    expect(result).toEqual([2, 4])
+  })
+
+  it('应正确处理mapFn为箭头函数时的this', () => {
+    const arrayLike = { 0: 2, 1: 4, length: 2 }
+    const context = { x: 10 }
+    // 箭头函数不绑定this，即使传入thisArg也无效
+    const result = myFrom(arrayLike, (v: number) => v, context)
+    expect(result).toEqual([2, 4])
+  })
+
+  it('应正确处理对象没有length属性的情况', () => {
+    const obj = { 0: 'a', 1: 'b' } as any
+    const result = myFrom(obj)
+    expect(result).toEqual([])
+  })
+})
+```
+
+:::
+
 ## 答案
 
-| 类型    | 路径                                                                                                                                |
-| ------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| JS 版本 | [problems/days/Day 06/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2006/answer.js)       |
-| TS 版本 | [problems/days/Day 06/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2006/ts/answer.ts) |
-| Review  | [06.md](/review/06)                                                                                                                 |
+| 类型    | 路径                                                                                                                      |
+| ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| JS 版本 | [problems/Day 06/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2006/answer.js)       |
+| TS 版本 | [problems/Day 06/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2006/ts/answer.ts) |
+| Review  | [06.md](/review/06)                                                                                                       |

@@ -3,6 +3,10 @@ tags: [Proxy,依赖收集]
 difficulty: medium
 ---
 
+<Badge type="warning" text="medium" />
+<Badge type="info" text="Proxy" />
+<Badge type="info" text="依赖收集" />
+
 # Day 03
 
 # 实现一个简化版的 Vue 响应式系统
@@ -17,9 +21,11 @@ difficulty: medium
 1. 实现一个函数 reactive(obj)，将一个普通的对象变成响应式对象
 2. 实现一个函数 effect(fn)，接收一个回调函数 fn，当响应式对象中的属性发生改变时，自动重新执行 fn。
 
-## 函数签名
+## 题目模版
 
-```javascript
+::: code-group
+
+```js [reactive_vue.js]
 /**
  * 创建响应式对象
  * @param {object} obj - 需要变成响应式的对象
@@ -37,6 +43,33 @@ function effect(fn) {
   // 实现内容
 }
 ```
+
+```ts [reactive_vue.ts]
+import type { EffectFunc, ReactiveFunc } from './types'
+
+export const effect: EffectFunc = (fn) => {}
+
+export const reactive: ReactiveFunc = (obj) => {}
+
+```
+
+```ts [types.ts]
+// 副作用函数类型
+export type EffectFunction = () => void
+
+// effect函数接口
+export interface EffectFunc {
+  (fn: EffectFunction): void
+}
+
+// reactive函数接口
+export interface ReactiveFunc {
+  <T extends Record<string, unknown>>(obj: T): T
+}
+
+```
+
+:::
 
 ## 示例
 
@@ -69,7 +102,9 @@ user.name = "Jerry";
 
 ## 测试代码
 
-```js
+::: code-group
+
+```js [reactive_vue.spec.js]
 import { describe, expect, it } from 'vitest'
 import { effect, reactive } from './reactive_vue'
 
@@ -131,10 +166,74 @@ describe('vue 简化响应式系统测试', () => {
 
 ```
 
+```ts [reactive_vue.spec.ts]
+import { describe, expect, it } from 'vitest'
+import { effect, reactive } from './reactive_vue'
+
+describe('vue 简化响应式系统测试', () => {
+  it('应在副作用中访问初始值', () => {
+    const obj = reactive({ count: 0 })
+    let dummy
+    effect(() => {
+      dummy = obj.count
+    })
+    expect(dummy).toBe(0)
+  })
+
+  it('数据变化应重新触发 effect 执行', () => {
+    const obj = reactive({ count: 1 })
+    let dummy
+    effect(() => {
+      dummy = obj.count
+    })
+    obj.count = 10
+    expect(dummy).toBe(10)
+  })
+
+  it('多个属性应独立触发各自的 effect', () => {
+    const obj = reactive({ a: 1, b: 2 })
+    let dummyA, dummyB
+    effect(() => {
+      dummyA = obj.a
+    })
+    effect(() => {
+      dummyB = obj.b
+    })
+    obj.a = 100
+    expect(dummyA).toBe(100)
+    expect(dummyB).toBe(2)
+  })
+
+  it('修改无关属性不应影响 effect', () => {
+    const obj = reactive({ foo: 1, bar: 2 })
+    let dummy = 0
+    effect(() => {
+      dummy = obj.foo
+    })
+    obj.bar++ // 改 bar 不应触发 dummy 更新
+    expect(dummy).toBe(1)
+  })
+
+  it('应支持多次修改后仍保持响应', () => {
+    const obj = reactive({ n: 0 })
+    const log: number[] = []
+    effect(() => {
+      log.push(obj.n)
+    })
+    obj.n = 1
+    obj.n = 2
+    expect(log).toEqual([0, 1, 2])
+  })
+})
+
+```
+
+:::
+
 ## 答案
 
-| 类型    | 路径                                                                                                                                |
-| ------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| JS 版本 | [problems/days/Day 03/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2003/answer.js)       |
-| TS 版本 | [problems/days/Day 03/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/days/Day%2003/ts/answer.ts) |
-| Review  | [03.md](/review/03)                                                                                                                 |
+| 类型    | 路径                                                                                                                      |
+| ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| JS 版本 | [problems/Day 03/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2003/answer.js)       |
+| TS 版本 | [problems/Day 03/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2003/ts/answer.ts) |
+| Review  | [03.md](/review/03)                                                                                                       |
