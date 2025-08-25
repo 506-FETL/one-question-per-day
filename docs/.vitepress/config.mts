@@ -29,17 +29,18 @@ export default defineConfig({
       alt: 'logo',
     },
     nav: [
-      { text: '首页', link: '/index.md' },
-      { text: '题目', link: '/days/index' },
-      { text: '复习', link: '/review/index' },
-      { text: '发布说明', link: 'https://github.com/506-FETL/one-question-per-day/blob/main/RELEASE_NOTES.md' },
-      { text: 'Changelog', link: 'https://github.com/506-FETL/one-question-per-day/blob/main/CHANGELOG.md' },
+      // 导航：使用更贴切的 Emoji，并统一加空格提升可读性
+      { text: '🏠 首页', link: '/' },
+      { text: '🧩 题目', link: '/days/index' },
+      { text: '📖 复习', link: '/review/index' },
+      { text: '🚀 发布说明', link: 'https://github.com/506-FETL/one-question-per-day/blob/main/RELEASE_NOTES.md' },
+      { text: '🧾 Changelog', link: 'https://github.com/506-FETL/one-question-per-day/blob/main/CHANGELOG.md' },
     ],
     sidebar: [
       {
         text: '指南 Guide',
         items: [
-          { text: '快速开始', link: '/#快速开始' },
+          { text: '快速开始', link: '/days' },
         ],
       },
       // 题目天数索引（静态占位，实际页面 /days/index 里自动汇总）
@@ -63,7 +64,8 @@ export default defineConfig({
     },
     outline: { label: '本页导航' },
     editLink: {
-      pattern: 'https://github.com/506-FETL/one-question-per-day/tree/main/problems/docs/:path',
+      // 内容已迁移到 docs/ 根目录
+      pattern: 'https://github.com/506-FETL/one-question-per-day/tree/main/docs/:path',
       text: '在 GitHub 上编辑此页',
     },
     search: {

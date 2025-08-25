@@ -14,7 +14,7 @@ hero:
   actions:
     - theme: brand
       text: 🚀 快速开始
-      link: /#使用说明
+      link: /days
     - theme: alt
       text: 📂 目录结构
       link: /#项目结构
