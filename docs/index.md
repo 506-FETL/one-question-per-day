@@ -3,8 +3,8 @@
 layout: home
 
 hero:
-  name: one-question-per-day
-  text: 506 实验室 · 每日一题
+  name: one question per day
+  text: 506 实验室·每日一题
   tagline: 聚焦数据结构 / 算法 / JS 基础实现 / 工程化实践。坚持小步快跑，统一测试驱动，持续版本发布与复盘。
   image:
     light: /hero.svg
@@ -166,8 +166,8 @@ const ELEMENTS = [
 ```
 one-question-per-day/
 ├── problems/          # 题目与复习资料
-│   ├── days/          # 每日挑战题目实现
-│   └── docs/          # 文档
+│   ├── Day xx/          # 每日挑战题目实现
+│   └── ...
 ├── src/               # 成员个人解法目录
 │   ├── [成员名]/      # 各成员的解题实现
 │   └── ...

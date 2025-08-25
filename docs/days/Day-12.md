@@ -3,6 +3,9 @@ tags: [函数式管道]
 difficulty: easy
 ---
 
+<Badge type="tip" text="easy" />
+<Badge type="info" text="函数式管道" />
+
 # Day 12
 
 # 实现一个 `compose` 函数
