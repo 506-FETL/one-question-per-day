@@ -1,11 +1,8 @@
 @font-face {
-  font-family: 'MyCustomSans';
+  font-family: 'Dank Mono';
   src:
-    url('/fonts/dank-mono-italic.ttf') format('ttf'),
-    url('/fonts/dank-mono.ttf') format('ttf');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+    local('dank-mono'),
+    url('/assets/dank-mono.woff2') format('woff2');
 }
 :root {
   --vp-font-family-base: 'Dank Mono';

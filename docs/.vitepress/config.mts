@@ -12,23 +12,6 @@ export default defineConfig({
   lang: 'zh-CN',
   lastUpdated: true,
   cleanUrls: true,
-  transformHead({ assets }) {
-    const myFontFile = assets.find(file => /dank-mono\.[\w-]+\.ttf/.test(file))
-    if (myFontFile) {
-      return [
-        [
-          'link',
-          {
-            rel: 'preload',
-            href: myFontFile,
-            as: 'font',
-            type: 'font/ttf',
-            crossorigin: '',
-          },
-        ],
-      ]
-    }
-  },
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/one-question-per-day/hero.svg' }],
   ],

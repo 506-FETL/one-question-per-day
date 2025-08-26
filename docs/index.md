@@ -3,8 +3,8 @@
 layout: home
 
 hero:
-  name: one question per day
-  text: 506 实验室·每日一题
+  name: OneQuestionPerDay
+  text: 506 · 每日一题
   tagline: 聚焦数据结构 / 算法 / JS 基础实现 / 工程化实践。坚持小步快跑，统一测试驱动，持续版本发布与复盘。
   image:
     light: /hero.svg
