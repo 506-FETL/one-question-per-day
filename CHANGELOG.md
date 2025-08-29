@@ -1,5 +1,23 @@
 # Changelog
 
+# [2.0.0](https://github.com/506-FETL/one-question-per-day/compare/v1.8.0...v2.0.0) (2025-08-29)
+
+
+* feat!: update project structure and configuration ([9a0e5f5](https://github.com/506-FETL/one-question-per-day/commit/9a0e5f5a85bded2fd5435c8ff1a5173860df5d3c))
+
+
+### Bug Fixes
+
+* review文档修复 ([d83343b](https://github.com/506-FETL/one-question-per-day/commit/d83343baae74d12336574d5447155c27a38eaa73))
+
+
+### BREAKING CHANGES
+
+* - Add pnpm workspace configuration to manage packages.
+- Modify TypeScript configuration to include specific package directories.
+- Update Vite configuration to adjust entry points and output paths for builds.
+- Refactor Vitest configuration to exclude and include appropriate test directories.
+
 # [1.8.0](https://github.com/506-FETL/one-question-per-day/compare/v1.7.0...v1.8.0) (2025-08-29)
 
 
