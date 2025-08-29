@@ -251,6 +251,6 @@ describe('04.17--default.将生成器函数转换成异步函数', () => {
 
 | 类型    | 路径                                                                                                                      |
 | ------- | ------------------------------------------------------------------------------------------------------------------------- |
-| JS 版本 | [problems/Day 02/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2002/answer.js)       |
-| TS 版本 | [problems/Day 02/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2002/ts/answer.ts) |
+| JS 版本 | [problems/Day 02/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2002/answer.js)       |
+| TS 版本 | [problems/Day 02/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2002/ts/answer.ts) |
 | Review  | [02.md](/review/02)                                                                                                       |

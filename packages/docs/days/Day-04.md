@@ -226,6 +226,6 @@ describe('04.21--default.实现一个sum()方法', () => {
 
 | 类型    | 路径                                                                                                                      |
 | ------- | ------------------------------------------------------------------------------------------------------------------------- |
-| JS 版本 | [problems/Day 04/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2004/answer.js)       |
-| TS 版本 | [problems/Day 04/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2004/ts/answer.ts) |
+| JS 版本 | [problems/Day 04/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2004/answer.js)       |
+| TS 版本 | [problems/Day 04/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2004/ts/answer.ts) |
 | Review  | [04.md](/review/04)                                                                                                       |

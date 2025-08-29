@@ -238,6 +238,6 @@ describe('compose函数', () => {
 
 | 类型    | 路径                                                                                                                      |
 | ------- | ------------------------------------------------------------------------------------------------------------------------- |
-| JS 版本 | [problems/Day 12/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2012/answer.js)       |
-| TS 版本 | [problems/Day 12/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2012/ts/answer.ts) |
+| JS 版本 | [problems/Day 12/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2012/answer.js)       |
+| TS 版本 | [problems/Day 12/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2012/ts/answer.ts) |
 | Review  | [12.md](/review/12)                                                                                                       |

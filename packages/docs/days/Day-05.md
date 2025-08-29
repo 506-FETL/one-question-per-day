@@ -384,6 +384,6 @@ describe('deepClone function', () => {
 
 | 类型    | 路径                                                                                                                      |
 | ------- | ------------------------------------------------------------------------------------------------------------------------- |
-| JS 版本 | [problems/Day 05/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2005/answer.js)       |
-| TS 版本 | [problems/Day 05/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2005/ts/answer.ts) |
+| JS 版本 | [problems/Day 05/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2005/answer.js)       |
+| TS 版本 | [problems/Day 05/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2005/ts/answer.ts) |
 | Review  | [05.md](/review/05)                                                                                                       |

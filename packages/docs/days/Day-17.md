@@ -476,8 +476,8 @@ describe('deduplicate', () => {
 
 | 类型    | 路径                                                                                                                      |
 | ------- | ------------------------------------------------------------------------------------------------------------------------- |
-| JS 版本 | [problems/Day 17/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2017/answer.js)       |
-| TS 版本 | [problems/Day 17/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2017/ts/answer.ts) |
+| JS 版本 | [problems/Day 17/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2017/answer.js)       |
+| TS 版本 | [problems/Day 17/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2017/ts/answer.ts) |
 | Review  | [17.md](/review/17)                                                                                                       |
 
 ```

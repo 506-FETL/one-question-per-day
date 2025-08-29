@@ -235,5 +235,5 @@ describe('day10 - this&proto', () => {
 
 | 类型    | 路径                                                                                                                |
 | ------- | ------------------------------------------------------------------------------------------------------------------- |
-| JS 版本 | [problems/Day 10/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2010/answer.js) |
+| JS 版本 | [problems/Day 10/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2010/answer.js) |
 | Review  | [10.md](/review/10)                                                                                                 |

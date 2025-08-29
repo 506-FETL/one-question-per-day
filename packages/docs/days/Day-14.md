@@ -441,6 +441,6 @@ describe('observable 基本行为', () => {
 
 | 类型    | 路径                                                                                                                      |
 | ------- | ------------------------------------------------------------------------------------------------------------------------- |
-| JS 版本 | [problems/Day 14/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2014/answer.js)       |
-| TS 版本 | [problems/Day 14/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/problems/Day%2014/ts/answer.ts) |
+| JS 版本 | [problems/Day 14/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2014/answer.js)       |
+| TS 版本 | [problems/Day 14/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2014/ts/answer.ts) |
 | Review  | [14.md](/review/14)                                                                                                       |
