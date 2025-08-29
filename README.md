@@ -98,38 +98,44 @@ pnpm vitest run packages/problems/**/Day\ 10/*.spec.*
 		<tr>
             <td align="center">
                 <a href="https://github.com/seaeam">
-                    <img src="https://avatars.githubusercontent.com/u/87215099?v=4" width="90" alt="seaeam"/>
-                    <br /><sub><b>lll</b></sub>
+                    <img src="https://avatars.githubusercontent.com/u/87215099?v=4" width="100;" alt="seaeam"/>
+                    <br />
+                    <sub><b>lll</b></sub>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/pcppp">
-                    <img src="https://avatars.githubusercontent.com/u/104177657?v=4" width="90" alt="pcppp"/>
-                    <br /><sub><b>peng chang</b></sub>
+                    <img src="https://avatars.githubusercontent.com/u/104177657?v=4" width="100;" alt="pcppp"/>
+                    <br />
+                    <sub><b>peng chang</b></sub>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/xiersiki">
-                    <img src="https://avatars.githubusercontent.com/u/74220172?v=4" width="90" alt="xiersiki"/>
-                    <br /><sub><b>Gong Che Yu</b></sub>
+                    <img src="https://avatars.githubusercontent.com/u/74220172?v=4" width="100;" alt="xiersiki"/>
+                    <br />
+                    <sub><b>Gong Che Yu</b></sub>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/Dc9309">
-                    <img src="https://avatars.githubusercontent.com/u/103992756?v=4" width="90" alt="Dc9309"/>
-                    <br /><sub><b>Dc9309</b></sub>
+                    <img src="https://avatars.githubusercontent.com/u/103992756?v=4" width="100;" alt="Dc9309"/>
+                    <br />
+                    <sub><b>Dc9309</b></sub>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/notshine">
-                    <img src="https://avatars.githubusercontent.com/u/105473589?v=4" width="90" alt="notshine"/>
-                    <br /><sub><b>Peng Liang</b></sub>
+                    <img src="https://avatars.githubusercontent.com/u/105473589?v=4" width="100;" alt="notshine"/>
+                    <br />
+                    <sub><b>Peng Liang</b></sub>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/wang-danni">
-                    <img src="https://avatars.githubusercontent.com/u/126050206?v=4" width="90" alt="wang-danni"/>
-                    <br /><sub><b>wang-danni</b></sub>
+                    <img src="https://avatars.githubusercontent.com/u/126050206?v=4" width="100;" alt="wang-danni"/>
+                    <br />
+                    <sub><b>wang-danni</b></sub>
                 </a>
             </td>
 		</tr>
