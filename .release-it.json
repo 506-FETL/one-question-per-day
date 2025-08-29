@@ -1,7 +1,7 @@
 {
   "$schema": "https://unpkg.com/release-it/schema/release-it.json",
   "git": {
-    "requireCleanWorkingDir": false,
+    "requireCleanWorkingDir": true,
     "requireUpstream": false,
     "commitMessage": "chore: release v${version}",
     "tagName": "v${version}",
@@ -13,7 +13,6 @@
   "github": {
     "release": true,
     "releaseName": "Release v${version}",
-    "releaseNotes": "node scripts/get-release-notes.js",
     "autoGenerate": true,
     "tokenRef": "GITHUB_TOKEN",
     "web": false,
@@ -31,8 +30,6 @@
     "@release-it/conventional-changelog": {
       "preset": "angular",
       "infile": "CHANGELOG.md",
-      "header": "# Changelog",
-      "releaseCommitMessageFormat": "chore: release v{{currentTag}}",
       "context": {
         "linkCompare": true,
         "linkReferences": true

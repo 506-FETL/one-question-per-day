@@ -4,7 +4,7 @@ export default antfu(
   {
     formatters: true,
     vue: true,
-    react: false,
+    react: true,
     typescript: true,
     markdown: false,
     rules: {
@@ -31,7 +31,7 @@ export default antfu(
     },
   },
   {
-    files: ['**/*.{test,spec}.{js,ts}', 'scripts/**/*.js', 'problems/**'],
+    files: ['**/*.{test,spec}.{js,ts}', 'packages/utils/**/*.js', 'packages/problems/**/*'],
     rules: {
       'no-console': 'off',
       'no-unused-vars': 'off',
