@@ -3,10 +3,6 @@ tags: [Polyfill,迭代协议]
 difficulty: medium
 ---
 
-<Badge type="warning" text="medium" />
-<Badge type="info" text="Polyfill" />
-<Badge type="info" text="迭代协议" />
-
 # Day 06
 
 # 实现一个名为 `myFrom` 的函数

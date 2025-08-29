@@ -3,10 +3,6 @@ tags: [复制,引用处理]
 difficulty: hard
 ---
 
-<Badge type="danger" text="hard" />
-<Badge type="info" text="复制" />
-<Badge type="info" text="引用处理" />
-
 # Day 05
 
 # 实现一个 深拷贝

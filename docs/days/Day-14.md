@@ -3,9 +3,6 @@ tags: [观察者模式]
 difficulty: easy
 ---
 
-<Badge type="tip" text="easy" />
-<Badge type="info" text="观察者模式" />
-
 # Day 14
 
 # Observable

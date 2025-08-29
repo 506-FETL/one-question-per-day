@@ -3,10 +3,6 @@ tags: [设计模式,控制流]
 difficulty: easy
 ---
 
-<Badge type="tip" text="easy" />
-<Badge type="info" text="设计模式" />
-<Badge type="info" text="控制流" />
-
 # Day 07
 
 # 实现 middleware

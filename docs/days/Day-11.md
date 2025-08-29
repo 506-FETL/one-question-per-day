@@ -3,10 +3,6 @@ tags: [Fiber,深度遍历]
 difficulty: medium
 ---
 
-<Badge type="warning" text="medium" />
-<Badge type="info" text="Fiber" />
-<Badge type="info" text="深度遍历" />
-
 # Day 11
 
 # Fiber 树遍历（提交阶段副作用收集模拟）

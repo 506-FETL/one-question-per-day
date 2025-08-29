@@ -3,10 +3,6 @@ tags: [this,原型链]
 difficulty: medium
 ---
 
-<Badge type="warning" text="medium" />
-<Badge type="info" text="this" />
-<Badge type="info" text="原型链" />
-
 # Day 10
 
 # 手写 call、apply、bind、instanceof 和 new

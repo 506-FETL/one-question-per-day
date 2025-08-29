@@ -3,9 +3,6 @@ tags: [this,绑定规则]
 difficulty: medium
 ---
 
-<Badge type="warning" text="medium" />
-<Badge type="info" text="this" />
-<Badge type="info" text="绑定规则" />
 # Day 15
 
 # Function.prototype.call

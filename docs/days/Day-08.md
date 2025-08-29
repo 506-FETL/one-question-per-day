@@ -3,10 +3,6 @@ tags: [异步,状态机]
 difficulty: hard
 ---
 
-<Badge type="danger" text="hard" />
-<Badge type="info" text="异步" />
-<Badge type="info" text="状态机" />
-
 # Day 08
 
 # 自定义实现 Promise

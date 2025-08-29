@@ -3,10 +3,6 @@ tags: [Proxy,依赖收集]
 difficulty: medium
 ---
 
-<Badge type="warning" text="medium" />
-<Badge type="info" text="Proxy" />
-<Badge type="info" text="依赖收集" />
-
 # Day 03
 
 # 实现一个简化版的 Vue 响应式系统

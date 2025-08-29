@@ -3,10 +3,6 @@ tags: [柯里化,隐式转换]
 difficulty: medium
 ---
 
-<Badge type="warning" text="medium" />
-<Badge type="info" text="柯里化" />
-<Badge type="info" text="隐式转换" />
-
 # Day 04
 
 # 实现一个 sum() 使得如下判断成立。

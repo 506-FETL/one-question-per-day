@@ -6,10 +6,6 @@ prev:
   link: days
 ---
 
-<Badge type="tip" text="easy" />
-<Badge type="info" text="排序" />
-<Badge type="info" text="分治" />
-
 # Day 01
 
 # 🎉实现一个 js 版本的归并排序

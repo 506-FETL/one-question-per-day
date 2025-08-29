@@ -3,10 +3,6 @@ tags: [异步封装,generator]
 difficulty: medium
 ---
 
-<Badge type="warning" text="medium" />
-<Badge type="info" text="异步封装" />
-<Badge type="info" text="generator" />
-
 # Day 02
 
 # 将生成器函数转换为异步函数

@@ -3,10 +3,6 @@ tags: [树,坐标排序]
 difficulty: medium
 ---
 
-<Badge type="warning" text="medium" />
-<Badge type="info" text="树" />
-<Badge type="info" text="坐标排序" />
-
 # Day 09
 
 # 二叉树的垂直遍历

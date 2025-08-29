@@ -3,10 +3,6 @@ tags: [Proxy,ToPrimitive]
 difficulty: medium
 ---
 
-<Badge type="warning" text="medium" />
-<Badge type="info" text="Proxy" />
-<Badge type="info" text="ToPrimitive" />
-
 # Day 13
 
 # add
