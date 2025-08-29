@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 import {
   groupIconMdPlugin,
   groupIconVitePlugin,
+  localIconLoader,
 } from 'vitepress-plugin-group-icons'
 import { buildNumberedSidebarItems } from './util'
 
@@ -74,7 +75,12 @@ export default defineConfig({
   },
   vite: {
     plugins: [
-      groupIconVitePlugin() as any,
+      groupIconVitePlugin({
+        customIcon: {
+          '.spec.js': localIconLoader(import.meta.url, '../assets/test-js.svg'),
+          '.spec.ts': localIconLoader(import.meta.url, '../assets/test-ts.svg'),
+        },
+      }) as any,
     ],
   },
 })

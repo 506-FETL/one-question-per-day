@@ -1,8 +1,5 @@
-/**
- * @param {any[]} arr
- */
-export default function deduplicate(arr) {
-  const uniqueElements = []
+export default function deduplicate<T>(arr: T[]) {
+  const uniqueElements: T[] = []
 
   arr.forEach((el) => {
     if (!uniqueElements.includes(el))
@@ -18,6 +15,6 @@ export default function deduplicate(arr) {
     : uniqueElements.length
 }
 
-function isSparse(arr) {
+function isSparse<T>(arr: T[]) {
   return Object.keys(arr).length < arr.length
 }

@@ -1,0 +1,16 @@
+export default function myExpect<T>(input: T) {
+  let isReserved = false
+
+  return {
+    toBe<K>(checker: K) {
+      const isEqual = Object.is(input, checker)
+      if ((isReserved && isEqual) || (!isReserved && !isEqual))
+        return false
+      else return true
+    },
+    get not() {
+      isReserved = !isReserved
+      return this
+    },
+  }
+}
