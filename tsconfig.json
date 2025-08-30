@@ -22,6 +22,11 @@
     "verbatimModuleSyntax": true,
     "skipLibCheck": true
   },
-  "include": ["packages/core/**/*", "packages/problems/**/*"],
+  "include": [
+    "packages/core/**/*",
+    "packages/problems/**/*",
+    "packages/playground/**/*",
+    "packages/docs/**/*"
+  ],
   "exclude": ["node_modules", "coverage", "**/*.config.js", "**/*.config.ts"]
 }

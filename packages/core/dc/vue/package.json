@@ -1,5 +1,5 @@
 {
-  "name": "@one-question-per-day/dc-vue",
+  "name": "dc-vue",
   "type": "module",
   "version": "0.0.0",
   "private": true,

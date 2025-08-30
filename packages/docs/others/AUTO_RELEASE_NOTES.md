@@ -150,12 +150,10 @@ graph TD
 ### 常见问题
 
 1. **发布说明为空**
-
    - 确保使用了 conventional commits 格式
    - 检查 CHANGELOG.md 是否正确生成
 
 2. **GitHub Token 问题**
-
    - 确保 `.env` 文件中的 `GITHUB_TOKEN` 正确设置
    - Token 需要 `repo` 权限
 

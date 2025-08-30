@@ -1,5 +1,5 @@
 {
-  "name": "@one-question-per-day/wdn-vue",
+  "name": "wdn-vue",
   "type": "module",
   "version": "0.0.0",
   "private": true,

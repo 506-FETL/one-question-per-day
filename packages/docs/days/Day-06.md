@@ -21,17 +21,14 @@ difficulty: medium
 ## 题目要求
 
 1. **输入验证**
-
    - 当 `arrayLike` 为 `null` 或 `undefined` 时，抛出 `TypeError` 异常，提示 `"Array.from requires an array-like object - not null or undefined"`。
    - 当提供了 `mapFn` 参数，但其类型不是函数时，抛出 `TypeError` 异常，提示 `"Array.from when provided mapFn must be a function"`。
 
 2. **辅助函数**
-
    - 实现 `toInteger(value)`，将传入值转换为数值，并按照要求返回整数。要求对 `NaN` 返回 `0`，对无穷大或 0 直接返回其值，否则返回带符号的向下取整结果。
    - 实现 `toLength(value)`，利用 `toInteger` 保证返回值在 `[0, Number.MAX_SAFE_INTEGER]` 之间。
 
 3. **数组转换**
-
    - 使用 `Object(arrayLike)` 获取输入的对象副本，并通过 `toLength` 得到合法的长度，创建一个新的数组（或数组状对象）。
    - 遍历 `arrayLike` 每个索引的位置，对于每个元素：
      - 如果存在 `mapFn`，则：

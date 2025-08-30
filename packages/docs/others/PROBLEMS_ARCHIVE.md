@@ -189,13 +189,11 @@ export default defineConfig({
 ### 常见问题
 
 1. **压缩包生成失败**
-
    - 确保系统有 `zip` 命令
    - 检查 `problems/` 文件夹是否存在
    - 确保有写入 `dist/` 目录的权限
 
 2. **GitHub Release 上传失败**
-
    - 检查 GitHub Token 权限
    - 确保压缩包文件存在
    - 查看 release-it 日志
