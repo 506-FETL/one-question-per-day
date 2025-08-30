@@ -34,13 +34,13 @@ function effect(fn) {
 #### 示例
 
 ```javascript
-const user = reactive({ name: "Tom", age: 20 });
+const user = reactive({ name: 'Tom', age: 20 })
 
 effect(() => {
-  console.log("Name is", user.name);
-});
+  console.log('Name is', user.name)
+})
 
-user.name = "Jerry";
+user.name = 'Jerry'
 // 输出：Name is Jerry
 ```
 

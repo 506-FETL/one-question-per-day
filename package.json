@@ -15,7 +15,6 @@
     "test": "vitest --config vitest.config.ts",
     "test:run": "vitest run --config vitest.config.ts",
     "type-check": "tsc --noEmit",
-    "generate-release-notes": "node scripts/generate-release-notes.js",
     "release": "dotenv -f .env run -- release-it",
     "docs:dev": "pnpm --filter @one-question-per-day/docs dev",
     "docs:build": "pnpm --filter @one-question-per-day/docs build",

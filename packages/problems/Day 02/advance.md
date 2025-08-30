@@ -4,37 +4,40 @@
 
 ```js
 export default function generatorToAsync(func) {
-  if (typeof func !== "function" || !("next" in func())) {
-    throw new TypeError(`传入的${func}必须是生成器函数`);
+  if (typeof func !== 'function' || !('next' in func())) {
+    throw new TypeError(`传入的${func}必须是生成器函数`)
   }
 
-  const iterator = func();
+  const iterator = func()
   const isPromiseLike = (v) => {
-    if (v !== null && (typeof v === "function" || typeof v === "object")) {
-      return typeof v.then === "function";
+    if (v !== null && (typeof v === 'function' || typeof v === 'object')) {
+      return typeof v.then === 'function'
     }
-    return false;
-  };
+    return false
+  }
 
   return () =>
     new Promise((resolve, reject) => {
       function step(prev) {
         try {
-          const { value, done } = iterator.next(prev);
+          const { value, done } = iterator.next(prev)
 
           if (done) {
-            resolve(value);
-          } else if (isPromiseLike(value)) {
-            value.then(step, reject);
-          } else {
-            step(value);
+            resolve(value)
           }
-        } catch (error) {
-          reject(error);
+          else if (isPromiseLike(value)) {
+            value.then(step, reject)
+          }
+          else {
+            step(value)
+          }
+        }
+        catch (error) {
+          reject(error)
         }
       }
-      step();
-    });
+      step()
+    })
 }
 ```
 
@@ -60,8 +63,8 @@ export default function generatorToAsync(func) {
 ```js
 function isGeneratorFunction(func) {
   return (
-    func && func.constructor && func.constructor.name === "GeneratorFunction"
-  );
+    func && func.constructor && func.constructor.name === 'GeneratorFunction'
+  )
 }
 
 /**
@@ -71,44 +74,47 @@ function isGeneratorFunction(func) {
  */
 export default function generatorToAsync(func) {
   if (!isGeneratorFunction(func)) {
-    throw new TypeError(`${func} is not a generator function`);
+    throw new TypeError(`${func} is not a generator function`)
   }
 
   return function (...args) {
-    const iterator = func(...args);
+    const iterator = func(...args)
 
     function isPromiseLike(v) {
       return (
-        v &&
-        (typeof v === "object" || typeof v === "function") &&
-        typeof v.then === "function"
-      );
+        v
+        && (typeof v === 'object' || typeof v === 'function')
+        && typeof v.then === 'function'
+      )
     }
 
     return new Promise((resolve, reject) => {
       function step(nextF, arg) {
-        let result;
+        let result
         try {
-          result = nextF(arg);
-        } catch (err) {
-          return reject(err);
+          result = nextF(arg)
+        }
+        catch (err) {
+          return reject(err)
         }
 
-        const { value, done } = result;
+        const { value, done } = result
 
-        if (done) return resolve(value);
+        if (done)
+          return resolve(value)
         if (isPromiseLike(value)) {
           value.then(
-            (val) => step(iterator.next.bind(iterator), val),
-            (err) => step(iterator.throw.bind(iterator), err),
-          );
-        } else {
-          step(iterator.next.bind(iterator), value);
+            val => step(iterator.next.bind(iterator), val),
+            err => step(iterator.throw.bind(iterator), err),
+          )
+        }
+        else {
+          step(iterator.next.bind(iterator), value)
         }
       }
-      step(iterator.next.bind(iterator));
-    });
-  };
+      step(iterator.next.bind(iterator))
+    })
+  }
 }
 ```
 
@@ -122,26 +128,29 @@ export default function generatorToAsync(func) {
 
 ```js
 function step(nextF, arg) {
-  let result;
+  let result
   try {
-    result = nextF(arg);
-  } catch (err) {
-    return reject(err);
+    result = nextF(arg)
+  }
+  catch (err) {
+    return reject(err)
   }
 
-  const { value, done } = result;
+  const { value, done } = result
 
-  if (done) return resolve(value);
+  if (done)
+    return resolve(value)
   if (isPromiseLike(value)) {
     value.then(
-      (val) => step(iterator.next.bind(iterator), val),
-      (err) => step(iterator.throw.bind(iterator), err),
-    );
-  } else {
-    step(iterator.next.bind(iterator), value);
+      val => step(iterator.next.bind(iterator), val),
+      err => step(iterator.throw.bind(iterator), err),
+    )
+  }
+  else {
+    step(iterator.next.bind(iterator), value)
   }
 }
-step(iterator.next.bind(iterator));
+step(iterator.next.bind(iterator))
 ```
 
 那么**为什么要用 `.bind(iterator)`？**
@@ -156,10 +165,10 @@ step(iterator.next.bind(iterator));
 - 否则，`this` 会丢失，导致内部出错。
 
 ```js
-const it = gen();
+const it = gen()
 // it.next(1)  // 正确
-const n = it.next;
-n(1); // 错误！this 丢失
+const n = it.next
+n(1) // 错误！this 丢失
 ```
 
 ### 2. bind 的作用
@@ -180,8 +189,8 @@ n(1); // 错误！this 丢失
 假如直接传递 `iterator.next`，然后调用 `nextF(val)`，其实等价于：
 
 ```js
-const nextF = iterator.next; // 没有 this
-nextF(val); // 'this' 不是 iterator
+const nextF = iterator.next // 没有 this
+nextF(val) // 'this' 不是 iterator
 ```
 
 这时 `this` 是 `undefined`（严格模式），会导致运行时错误。
@@ -189,8 +198,8 @@ nextF(val); // 'this' 不是 iterator
 而使用 `.bind(iterator)` 后：
 
 ```js
-const nextF = iterator.next.bind(iterator);
-nextF(val); // 'this' 正确指向 iterator
+const nextF = iterator.next.bind(iterator)
+nextF(val) // 'this' 正确指向 iterator
 ```
 
 ---
@@ -205,20 +214,21 @@ nextF(val); // 'this' 正确指向 iterator
 
 ```js
 function* g() {
-  yield 1;
+  yield 1
 }
 
-const it = g();
-const n = it.next;
+const it = g()
+const n = it.next
 
 try {
-  n(); // 报错：TypeError: this is not a generator
-} catch (e) {
-  console.log(e.message);
+  n() // 报错：TypeError: this is not a generator
+}
+catch (e) {
+  console.log(e.message)
 }
 
-const n2 = it.next.bind(it);
-console.log(n2()); // { value: 1, done: false }
+const n2 = it.next.bind(it)
+console.log(n2()) // { value: 1, done: false }
 ```
 
 ---

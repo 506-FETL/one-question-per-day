@@ -10,6 +10,6 @@ export class Node {
 // }
 /**
  * @param {Node} root
- * @returns {number[]}
+ * @returns {number[]} result
  */
 export default function traverse(root) {}

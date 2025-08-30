@@ -33,14 +33,14 @@
 
 ```js
 function Person(name) {
-  this.name = name;
+  this.name = name
 }
-const obj = {};
+const obj = {}
 
-Person.Call(obj, "Tom");
-console.log(obj.name); // 'Tom'
+Person.Call(obj, 'Tom')
+console.log(obj.name) // 'Tom'
 
 function Animal() {}
-const dog = selfNew(Animal);
-console.log(instanceOf(dog, Animal)); // true
+const dog = selfNew(Animal)
+console.log(instanceOf(dog, Animal)) // true
 ```

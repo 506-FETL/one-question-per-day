@@ -46,7 +46,6 @@ import type { EffectFunc, ReactiveFunc } from './types'
 export const effect: EffectFunc = (fn) => {}
 
 export const reactive: ReactiveFunc = (obj) => {}
-
 ```
 
 ```ts [types.ts]
@@ -62,7 +61,6 @@ export interface EffectFunc {
 export interface ReactiveFunc {
   <T extends Record<string, unknown>>(obj: T): T
 }
-
 ```
 
 :::
@@ -70,13 +68,13 @@ export interface ReactiveFunc {
 ## 示例
 
 ```javascript
-const user = reactive({ name: "Tom", age: 20 });
+const user = reactive({ name: 'Tom', age: 20 })
 
 effect(() => {
-  console.log("Name is", user.name);
-});
+  console.log('Name is', user.name)
+})
 
-user.name = "Jerry";
+user.name = 'Jerry'
 // 输出：Name is Jerry
 ```
 
@@ -159,7 +157,6 @@ describe('vue 简化响应式系统测试', () => {
     expect(log).toEqual([0, 1, 2])
   })
 })
-
 ```
 
 ```ts [reactive_vue.spec.ts]
@@ -221,15 +218,14 @@ describe('vue 简化响应式系统测试', () => {
     expect(log).toEqual([0, 1, 2])
   })
 })
-
 ```
 
 :::
 
 ## 答案
 
-| 类型    | 路径                                                                                                                      |
-| ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 类型    | 路径                                                                                                                               |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | JS 版本 | [problems/Day 03/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2003/answer.js)       |
 | TS 版本 | [problems/Day 03/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2003/ts/answer.ts) |
-| Review  | [03.md](/review/03)                                                                                                       |
+| Review  | [03.md](/review/03)                                                                                                                |

@@ -46,7 +46,6 @@ export function commitNestedComponent(
   root: FiberNode,
   onCommitUnmount: (node: FiberNode) => void,
 ): void {}
-
 ```
 
 ```ts [types.ts]
@@ -122,16 +121,17 @@ let current: FiberNode | null = root
 while (current) {
   onCommitUnmount(current)
 
-  if (current.child) {            // 1. 先深入子节点
+  if (current.child) { // 1. 先深入子节点
     current = current.child
     continue
   }
 
   // 2. 没子节点，寻找同层兄弟或向上回溯
   while (current && !current.sibling) {
-    current = current.return       // 回溯
+    current = current.return // 回溯
   }
-  if (current) current = current.sibling // 兄弟继续
+  if (current)
+    current = current.sibling // 兄弟继续
 }
 ```
 
@@ -332,7 +332,6 @@ function getTraversalResult(root) {
   commitNestedComponent(root, cbFunc)
   return arr
 }
-
 ```
 
 ```ts [fiberTree.spec.ts]
@@ -485,15 +484,14 @@ function getTraversalResult(root: FiberNode): string[] {
   commitNestedComponent(root, cbFunc)
   return arr
 }
-
 ```
 
 :::
 
 ## 答案
 
-| 类型    | 路径                                                                                                                      |
-| ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 类型    | 路径                                                                                                                               |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | JS 版本 | [problems/Day 11/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2011/answer.js)       |
 | TS 版本 | [problems/Day 11/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2011/ts/answer.ts) |
-| Review  | [11.md](/review/11)                                                                                                       |
+| Review  | [11.md](/review/11)                                                                                                                |

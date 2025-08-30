@@ -41,7 +41,6 @@ export default function compose(fns) {
 export default function compose(fns: ((...args: any[]) => void)[]) {
 
 }
-
 ```
 
 :::
@@ -138,7 +137,6 @@ describe('compose函数', () => {
     await expect(composed(5)).rejects.toThrow('测试错误')
   })
 })
-
 ```
 
 ```ts [compose.spec.ts]
@@ -229,15 +227,14 @@ describe('compose函数', () => {
     await expect(composed(5)).rejects.toThrow('测试错误')
   })
 })
-
 ```
 
 :::
 
 ## 答案
 
-| 类型    | 路径                                                                                                                      |
-| ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 类型    | 路径                                                                                                                               |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | JS 版本 | [problems/Day 12/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2012/answer.js)       |
 | TS 版本 | [problems/Day 12/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2012/ts/answer.ts) |
-| Review  | [12.md](/review/12)                                                                                                       |
+| Review  | [12.md](/review/12)                                                                                                                |

@@ -85,16 +85,17 @@ let current: FiberNode | null = root
 while (current) {
   onCommitUnmount(current)
 
-  if (current.child) {            // 1. 先深入子节点
+  if (current.child) { // 1. 先深入子节点
     current = current.child
     continue
   }
 
   // 2. 没子节点，寻找同层兄弟或向上回溯
   while (current && !current.sibling) {
-    current = current.return       // 回溯
+    current = current.return // 回溯
   }
-  if (current) current = current.sibling // 兄弟继续
+  if (current)
+    current = current.sibling // 兄弟继续
 }
 ```
 

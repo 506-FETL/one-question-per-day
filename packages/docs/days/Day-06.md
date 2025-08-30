@@ -46,9 +46,9 @@ difficulty: medium
    - 输入：
      ```js
      function addIndex(el, i) {
-       return el + i;
+       return el + i
      }
-     myFrom({ 0: "a", 1: "b", length: 2 }, addIndex);
+     myFrom({ 0: 'a', 1: 'b', length: 2 }, addIndex)
      ```
      应返回 `['a0', 'b1']`。
    - 输入：若 `mapFn` 存在但其类型不是函数，则抛出相应错误。
@@ -250,7 +250,6 @@ describe('myFrom function', () => {
     expect(result).toEqual([])
   })
 })
-
 ```
 
 ```ts [myFrom.spec.ts]
@@ -399,8 +398,8 @@ describe('myFrom function', () => {
 
 ## 答案
 
-| 类型    | 路径                                                                                                                      |
-| ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 类型    | 路径                                                                                                                               |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | JS 版本 | [problems/Day 06/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2006/answer.js)       |
 | TS 版本 | [problems/Day 06/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2006/ts/answer.ts) |
-| Review  | [06.md](/review/06)                                                                                                       |
+| Review  | [06.md](/review/06)                                                                                                                |

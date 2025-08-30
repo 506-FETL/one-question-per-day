@@ -496,7 +496,6 @@ describe('myPromise', () => {
     })
   })
 })
-
 ```
 
 ```ts [MyPromise.spec.ts]
@@ -819,8 +818,8 @@ describe('myPromise', () => {
 
 ## 答案
 
-| 类型    | 路径                                                                                                                      |
-| ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 类型    | 路径                                                                                                                               |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | JS 版本 | [problems/Day 08/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2008/answer.js)       |
 | TS 版本 | [problems/Day 08/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2008/ts/answer.ts) |
-| Review  | [08.md](/review/08)                                                                                                       |
+| Review  | [08.md](/review/08)                                                                                                                |

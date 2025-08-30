@@ -13,11 +13,11 @@ difficulty: hard
 
 ```js
 // 测试代码
-const a = { name: "Alice" };
-a.self = a; // 循环引用
+const a = { name: 'Alice' }
+a.self = a // 循环引用
 
-const b = deepClone(a);
-console.log(b); // 输出: { name: 'Alice', self: [Circular] }
+const b = deepClone(a)
+console.log(b) // 输出: { name: 'Alice', self: [Circular] }
 /*
 console.log 的输出结果中包含 [Circular],
 这是因为 JavaScript 的控制台会检测到对象中的循环引用，
@@ -215,7 +215,6 @@ describe('deepClone function', () => {
     expect(clone[symKey]).toBe('symbolValue')
   })
 })
-
 ```
 
 ```ts [deepClone.spec.ts]
@@ -375,15 +374,14 @@ describe('deepClone function', () => {
     expect(clone[symKey]).toBe('symbolValue')
   })
 })
-
 ```
 
 :::
 
 ## 答案
 
-| 类型    | 路径                                                                                                                      |
-| ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 类型    | 路径                                                                                                                               |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | JS 版本 | [problems/Day 05/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2005/answer.js)       |
 | TS 版本 | [problems/Day 05/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2005/ts/answer.ts) |
-| Review  | [05.md](/review/05)                                                                                                       |
+| Review  | [05.md](/review/05)                                                                                                                |

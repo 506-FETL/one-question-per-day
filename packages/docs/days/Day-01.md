@@ -111,7 +111,6 @@ describe('4.16.seam--手写归并排序', () => {
     expect(arr).toEqual(result)
   })
 })
-
 ```
 
 ```ts [Merge_Sort.spec.ts]
@@ -177,7 +176,6 @@ describe('4.16.seam--手写归并排序', () => {
     expect(arr).toEqual(result)
   })
 })
-
 ```
 
 :::

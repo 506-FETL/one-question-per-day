@@ -10,10 +10,10 @@ difficulty: medium
 实现一个 add 要求能达到以下效果：
 
 ```js
-const value = add[100] + 1;
-console.log(value); // 101
-console.log(value[200][300] + 100); // 701
-console.log(add[100][200][300] - 300); // 300
+const value = add[100] + 1
+console.log(value) // 101
+console.log(value[200][300] + 100) // 701
+console.log(add[100][200][300] - 300) // 300
 ```
 
 ## 需求细化
@@ -103,12 +103,11 @@ describe('day 13 -- add', () => {
     expect(result - 200).toBe(100)
   })
 })
-
 ```
 
 ## 答案
 
-| 类型    | 路径                                                                                                                |
-| ------- | ------------------------------------------------------------------------------------------------------------------- |
+| 类型    | 路径                                                                                                                         |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | JS 版本 | [problems/Day 13/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2013/answer.js) |
-| Review  | [13.md](/review/13)                                                                                                 |
+| Review  | [13.md](/review/13)                                                                                                          |

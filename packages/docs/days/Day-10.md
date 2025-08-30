@@ -36,16 +36,16 @@ difficulty: medium
 
 ```js
 function Person(name) {
-  this.name = name;
+  this.name = name
 }
-const obj = {};
+const obj = {}
 
-Person.Call(obj, "Tom");
-console.log(obj.name); // 'Tom'
+Person.Call(obj, 'Tom')
+console.log(obj.name) // 'Tom'
 
 function Animal() {}
-const dog = selfNew(Animal);
-console.log(instanceOf(dog, Animal)); // true
+const dog = selfNew(Animal)
+console.log(instanceOf(dog, Animal)) // true
 ```
 
 ## 题目模版
@@ -228,12 +228,11 @@ describe('day10 - this&proto', () => {
     })
   })
 })
-
 ```
 
 ## 答案
 
-| 类型    | 路径                                                                                                                |
-| ------- | ------------------------------------------------------------------------------------------------------------------- |
+| 类型    | 路径                                                                                                                         |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | JS 版本 | [problems/Day 10/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2010/answer.js) |
-| Review  | [10.md](/review/10)                                                                                                 |
+| Review  | [10.md](/review/10)                                                                                                          |

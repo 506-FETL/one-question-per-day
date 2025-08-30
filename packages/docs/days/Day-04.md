@@ -10,19 +10,19 @@ difficulty: medium
 ## 示例
 
 ```js
-const sum1 = sum(1);
-const _sum = sum();
+const sum1 = sum(1)
+const _sum = sum()
 
-sum1 == 1; // true
-_sum == 0; // true
+sum1 == 1 // true
+_sum == 0 // true
 
-sum1(2) == 3; // true
-sum1(3) == 4; // true
+sum1(2) == 3 // true
+sum1(3) == 4 // true
 
-sum(1)(2)(3) == 6; // true
-sum(5)(-1)(2) == 6; // true
-sum(1)(2)() == 3; // true
-sum(1)()(2) == 3; // true
+sum(1)(2)(3) == 6 // true
+sum(5)(-1)(2) == 6 // true
+sum(1)(2)() == 3 // true
+sum(1)()(2) == 3 // true
 ```
 
 - 注意是 `==` 而不是 `===`
@@ -40,7 +40,6 @@ sum(1)()(2) == 3; // true
 export default function sum(v = 0) {
 
 }
-
 ```
 
 ```ts [sum.ts]
@@ -142,7 +141,6 @@ describe('04.21--default.实现一个sum()方法', () => {
     expect(sum3(4) == 7).toBeTruthy()
   })
 })
-
 ```
 
 ```ts [sum.spec.ts]
@@ -224,8 +222,8 @@ describe('04.21--default.实现一个sum()方法', () => {
 
 ## 答案
 
-| 类型    | 路径                                                                                                                      |
-| ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 类型    | 路径                                                                                                                               |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | JS 版本 | [problems/Day 04/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2004/answer.js)       |
 | TS 版本 | [problems/Day 04/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2004/ts/answer.ts) |
-| Review  | [04.md](/review/04)                                                                                                       |
+| Review  | [04.md](/review/04)                                                                                                                |

@@ -41,9 +41,9 @@
    - 输入：
      ```js
      function addIndex(el, i) {
-       return el + i;
+       return el + i
      }
-     myFrom({ 0: "a", 1: "b", length: 2 }, addIndex);
+     myFrom({ 0: 'a', 1: 'b', length: 2 }, addIndex)
      ```
      应返回 `['a0', 'b1']`。
    - 输入：若 `mapFn` 存在但其类型不是函数，则抛出相应错误。

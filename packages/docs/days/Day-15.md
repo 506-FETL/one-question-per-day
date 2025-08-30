@@ -128,7 +128,6 @@ describe('function.prototype.mycall', () => {
     expect(returnThis.mycall('1').valueOf()).toBe('1')
   })
 })
-
 ```
 
 ```ts [call.spec.ts]
@@ -214,15 +213,14 @@ describe('function.prototype.mycall', () => {
     expect(returnThis.mycall('1').valueOf()).toBe('1')
   })
 })
-
 ```
 
 :::
 
 ## 答案
 
-| 类型    | 路径                                                                                                                      |
-| ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 类型    | 路径                                                                                                                               |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | JS 版本 | [problems/Day 15/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2015/answer.js)       |
 | TS 版本 | [problems/Day 15/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2015/ts/answer.ts) |
-| Review  | [15.md](/review/15)                                                                                                       |
+| Review  | [15.md](/review/15)                                                                                                                |

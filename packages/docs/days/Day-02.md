@@ -49,7 +49,6 @@ import type { GeneratorToAsyncFunction } from './types'
 const generatorToAsync: GeneratorToAsyncFunction = (func) => {}
 
 export default generatorToAsync
-
 ```
 
 ```ts [types.ts]
@@ -67,7 +66,6 @@ export interface AsyncFunction<TReturn = unknown> {
 export interface GeneratorToAsyncFunction {
   <TReturn = unknown>(func: GeneratorFunction<TReturn>): AsyncFunction<TReturn>
 }
-
 ```
 
 :::
@@ -77,31 +75,31 @@ export interface GeneratorToAsyncFunction {
 ```js
 // 示例 1：处理异步操作
 function* generatorFunction() {
-  const value1 = yield Promise.resolve(1);
-  const value2 = yield Promise.resolve(value1 + 1);
-  return value2 + 1;
+  const value1 = yield Promise.resolve(1)
+  const value2 = yield Promise.resolve(value1 + 1)
+  return value2 + 1
 }
 
-const asyncFunction = generatorToAsync(generatorFunction);
-asyncFunction().then(console.log); // 输出 3
+const asyncFunction = generatorToAsync(generatorFunction)
+asyncFunction().then(console.log) // 输出 3
 
 // 示例 2：处理同步值
 function* generatorFunctionSync() {
-  const value1 = yield 1;
-  const value2 = yield value1 + 1;
-  return value2 + 1;
+  const value1 = yield 1
+  const value2 = yield value1 + 1
+  return value2 + 1
 }
 
-const asyncFunctionSync = generatorToAsync(generatorFunctionSync);
-asyncFunctionSync().then(console.log); // 输出 3
+const asyncFunctionSync = generatorToAsync(generatorFunctionSync)
+asyncFunctionSync().then(console.log) // 输出 3
 
 // 示例 3：处理错误
 function* generatorFunctionError() {
-  yield Promise.reject(new Error("Test error"));
+  yield Promise.reject(new Error('Test error'))
 }
 
-const asyncFunctionError = generatorToAsync(generatorFunctionError);
-asyncFunctionError().catch((err) => console.error(err.message)); // 输出 "Test error"
+const asyncFunctionError = generatorToAsync(generatorFunctionError)
+asyncFunctionError().catch(err => console.error(err.message)) // 输出 "Test error"
 ```
 
 ## 提示
@@ -173,7 +171,6 @@ describe('04.17--default.将生成器函数转换成异步函数', () => {
     await expect(asyncFunction()).rejects.toThrow('error')
   })
 })
-
 ```
 
 ```ts [GeneratorToAsync.spec.ts]
@@ -242,15 +239,14 @@ describe('04.17--default.将生成器函数转换成异步函数', () => {
     await expect(asyncFunction()).rejects.toThrow('error')
   })
 })
-
 ```
 
 :::
 
 ## 答案
 
-| 类型    | 路径                                                                                                                      |
-| ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 类型    | 路径                                                                                                                               |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | JS 版本 | [problems/Day 02/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2002/answer.js)       |
 | TS 版本 | [problems/Day 02/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2002/ts/answer.ts) |
-| Review  | [02.md](/review/02)                                                                                                       |
+| Review  | [02.md](/review/02)                                                                                                                |

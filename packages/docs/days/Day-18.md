@@ -13,15 +13,15 @@ next:
 以下是非常简单的Jest测试代码。
 
 ```js
-expect(3).toBe(3); // ✅
-expect(4).toBe(3); // ❌
+expect(3).toBe(3) // ✅
+expect(4).toBe(3) // ❌
 ```
 
 我们可以通过`not`将其反过来。
 
 ```js
-expect(3).not.toBe(3); // ❌
-expect(4).not.toBe(3); // ✅
+expect(3).not.toBe(3) // ❌
+expect(4).not.toBe(3) // ✅
 ```
 
 请实现myExpect()并支持toBe()及not.
@@ -92,7 +92,6 @@ describe('day18-myExpect', () => {
     },
   )
 })
-
 ```
 
 ```ts [myExpect.spec.ts]
@@ -135,8 +134,8 @@ describe('day18-myExpect', () => {
 
 ## 答案
 
-| 类型    | 路径                                                                                                                      |
-| ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 类型    | 路径                                                                                                                               |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | JS 版本 | [problems/Day 18/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2018/answer.js)       |
 | TS 版本 | [problems/Day 18/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2018/ts/answer.ts) |
-| Review  | [18.md](/review/18)                                                                                                       |
+| Review  | [18.md](/review/18)                                                                                                                |

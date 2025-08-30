@@ -8,10 +8,10 @@ difficulty: easy
 # 请实现一个给数字添加千位分隔符的函数。
 
 ```js
-addComma(1); // '1'
-addComma(1000); // '1,000'
-addComma(-12345678); // '-12,345,678'
-addComma(12345678.12345); // '12,345,678.12345'
+addComma(1) // '1'
+addComma(1000) // '1,000'
+addComma(-12345678) // '-12,345,678'
+addComma(12345678.12345) // '12,345,678.12345'
 ```
 
 传入的都是有效的数字，不用担心非法的输入。
@@ -34,7 +34,6 @@ export default function addComma(num) {
 export default function addComma(num: number): string {
 
 }
-
 ```
 
 :::
@@ -115,7 +114,6 @@ describe('addComma 数字格式化测试', () => {
     expect(addComma(1234567890.123456)).toBe('1,234,567,890.123456')
   })
 })
-
 ```
 
 ````ts [addComma.spec.ts]

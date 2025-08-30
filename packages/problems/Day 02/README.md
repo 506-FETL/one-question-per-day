@@ -32,31 +32,31 @@ function generatorToAsync(func) {
 ```javascript
 // 示例 1：处理异步操作
 function* generatorFunction() {
-  const value1 = yield Promise.resolve(1);
-  const value2 = yield Promise.resolve(value1 + 1);
-  return value2 + 1;
+  const value1 = yield Promise.resolve(1)
+  const value2 = yield Promise.resolve(value1 + 1)
+  return value2 + 1
 }
 
-const asyncFunction = generatorToAsync(generatorFunction);
-asyncFunction().then(console.log); // 输出 3
+const asyncFunction = generatorToAsync(generatorFunction)
+asyncFunction().then(console.log) // 输出 3
 
 // 示例 2：处理同步值
 function* generatorFunctionSync() {
-  const value1 = yield 1;
-  const value2 = yield value1 + 1;
-  return value2 + 1;
+  const value1 = yield 1
+  const value2 = yield value1 + 1
+  return value2 + 1
 }
 
-const asyncFunctionSync = generatorToAsync(generatorFunctionSync);
-asyncFunctionSync().then(console.log); // 输出 3
+const asyncFunctionSync = generatorToAsync(generatorFunctionSync)
+asyncFunctionSync().then(console.log) // 输出 3
 
 // 示例 3：处理错误
 function* generatorFunctionError() {
-  yield Promise.reject(new Error("Test error"));
+  yield Promise.reject(new Error('Test error'))
 }
 
-const asyncFunctionError = generatorToAsync(generatorFunctionError);
-asyncFunctionError().catch((err) => console.error(err.message)); // 输出 "Test error"
+const asyncFunctionError = generatorToAsync(generatorFunctionError)
+asyncFunctionError().catch(err => console.error(err.message)) // 输出 "Test error"
 ```
 
 #### 提示

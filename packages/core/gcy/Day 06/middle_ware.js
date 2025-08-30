@@ -1,7 +1,4 @@
 export default class Middleware {
-  /**
-   * @param {MiddlewareFunc} func
-   */
   constructor() {
     this.middlewares = []
   }
