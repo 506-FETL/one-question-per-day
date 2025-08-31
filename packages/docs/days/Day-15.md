@@ -219,8 +219,8 @@ describe('function.prototype.mycall', () => {
 
 ## 答案
 
-| 类型    | 路径                                                                                                                               |
-| ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| JS 版本 | [problems/Day 15/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2015/answer.js)       |
-| TS 版本 | [problems/Day 15/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2015/ts/answer.ts) |
-| Review  | [15.md](/review/15)                                                                                                                |
+| 类型    | 路径                                                                                                                                    |
+| ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| JS 版本 | [problems/Day 15/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/base/Day%2015/answer.js)       |
+| TS 版本 | [problems/Day 15/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/base/Day%2015/ts/answer.ts) |
+| Review  | [15.md](/review/15)                                                                                                                     |

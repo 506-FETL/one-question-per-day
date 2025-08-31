@@ -224,8 +224,8 @@ describe('vue 简化响应式系统测试', () => {
 
 ## 答案
 
-| 类型    | 路径                                                                                                                               |
-| ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| JS 版本 | [problems/Day 03/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2003/answer.js)       |
-| TS 版本 | [problems/Day 03/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2003/ts/answer.ts) |
-| Review  | [03.md](/review/03)                                                                                                                |
+| 类型    | 路径                                                                                                                                    |
+| ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| JS 版本 | [problems/Day 03/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/base/Day%2003/answer.js)       |
+| TS 版本 | [problems/Day 03/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/base/Day%2003/ts/answer.ts) |
+| Review  | [03.md](/review/03)                                                                                                                     |

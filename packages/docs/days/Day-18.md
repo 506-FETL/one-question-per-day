@@ -134,8 +134,8 @@ describe('day18-myExpect', () => {
 
 ## 答案
 
-| 类型    | 路径                                                                                                                               |
-| ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| JS 版本 | [problems/Day 18/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2018/answer.js)       |
-| TS 版本 | [problems/Day 18/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2018/ts/answer.ts) |
-| Review  | [18.md](/review/18)                                                                                                                |
+| 类型    | 路径                                                                                                                                    |
+| ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| JS 版本 | [problems/Day 18/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/base/Day%2018/answer.js)       |
+| TS 版本 | [problems/Day 18/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/base/Day%2018/ts/answer.ts) |
+| Review  | [18.md](/review/18)                                                                                                                     |

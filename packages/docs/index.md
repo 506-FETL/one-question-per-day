@@ -84,7 +84,6 @@ one-question-per-day/
 │   │   ├── review/          # 复盘 / 思路演进记录
 │   │   └── others/          # 发布 / 约定说明
 │   ├── core/                # 成员个性实现聚合（按成员分子目录）
-│   ├── playground/          # React / Vue 等交互实验
 │   ├── utils/               # 辅助脚本（发布 / 生成等）
 │   └── (未来扩展...)
 ├── assets/                  # 仓库级静态资源（文档引用）

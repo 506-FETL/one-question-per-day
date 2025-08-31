@@ -395,8 +395,8 @@ describe('myFrom function', () => {
 
 ## 答案
 
-| 类型    | 路径                                                                                                                               |
-| ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| JS 版本 | [problems/Day 06/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2006/answer.js)       |
-| TS 版本 | [problems/Day 06/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/Day%2006/ts/answer.ts) |
-| Review  | [06.md](/review/06)                                                                                                                |
+| 类型    | 路径                                                                                                                                    |
+| ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| JS 版本 | [problems/Day 06/answer.js](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/base/Day%2006/answer.js)       |
+| TS 版本 | [problems/Day 06/ts/answer.ts](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/base/Day%2006/ts/answer.ts) |
+| Review  | [06.md](/review/06)                                                                                                                     |

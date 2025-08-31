@@ -7,6 +7,7 @@ export default antfu(
     react: true,
     typescript: true,
     markdown: false,
+    ignores: ['**/ui/**', '**/magicui/**'],
     rules: {
       'no-unused-vars': 'warn',
       'ts/no-unused-vars': 'warn',
@@ -31,7 +32,7 @@ export default antfu(
     },
   },
   {
-    files: ['**/*.{test,spec}.{js,ts}', 'packages/utils/**/*.js', 'packages/problems/**/*'],
+    files: ['**/*.{test,spec}.{js,ts}', 'packages/utils/**/*.js', 'packages/problems/base/**/*'],
     rules: {
       'no-console': 'off',
       'no-unused-vars': 'off',

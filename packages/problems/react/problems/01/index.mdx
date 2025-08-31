@@ -1,0 +1,70 @@
+# Day 01
+
+## 请你实现一个 `Button` 按钮
+
+用于触发操作的基础组件，支持多种外观和尺寸，提供加载、图标与 asChild 扩展。
+
+- 基于 React、Tailwind（或自有样式）
+- 默认渲染为 button，可通过 asChild 替换宿主元素
+- API 精简，类型友好
+
+## 基础用法
+
+import {Button} from '@/components/ui/button'
+
+### Default <Button>Button</Button>
+
+### Secondary <Button variant="secondary">secondary</Button>
+
+### Destructive <Button variant="destructive">Destructive</Button>
+
+### Outline <Button variant="outline">Outline</Button>
+
+### Ghost <Button variant="ghost">Ghost</Button>
+
+### Link <Button variant="link">Link</Button>
+
+import { ChevronRightIcon } from "lucide-react"
+
+### Icon <Button variant="secondary" size="icon" className="size-8"> <ChevronRightIcon /> </Button>
+
+import { Loader2Icon } from "lucide-react"
+
+### Loading <Button size="sm" disabled> <Loader2Icon className="animate-spin" /> Please wait </Button>
+
+
+## 属性（Props）
+
+继承 `React.ButtonHTMLAttributes<HTMLButtonElement>`
+
+| 属性名 | 说明 | 类型 | 可选值 | 默认值 |
+|---|---|---|---|---|
+| variant | 外观风格 | "default" \| "secondary" \| "destructive" \| "outline" \| "ghost" \| "link" | 同左 | "default" |
+| size | 尺寸 | "sm" \| "md" \| "lg" \| "icon" | 同左 | "md" |
+| loading | 加载中（自动禁用） | boolean | true/false | false |
+| loadingText | 加载时替代文案 | string | - | - |
+| leftIcon | 左侧图标 | ReactNode | - | - |
+| rightIcon | 右侧图标 | ReactNode | - | - |
+| fullWidth | 占满整行宽度 | boolean | true/false | false |
+| className | 自定义类名 | string | - | - |
+| type | 原生类型 | "button" \| "submit" \| "reset" | 同左 | "button" |
+| disabled | 禁用 | boolean | true/false | false |
+
+
+## 类型定义（TS）
+
+```ts
+export type ButtonVariant = "default" | "secondary" | "destructive" | "outline" | "ghost" | "link";
+export type ButtonSize = "sm" | "md" | "lg" | "icon";
+
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  asChild?: boolean;
+  loading?: boolean;
+  loadingText?: string;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  fullWidth?: boolean;
+}
+```

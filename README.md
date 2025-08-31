@@ -43,8 +43,6 @@ pnpm dev              # 根脚本：lint+test（见 scripts）
 # 文档站（如果 scripts 仍为 vitepress dev docs 且内容不在 docs/ 子目录，可调整为 '.'）
 pnpm docs:dev
 
-# Vue playground（题目可视化）
-pnpm play:dev
 ```
 
 ## 🧪 测试 & 质量
@@ -70,17 +68,6 @@ pnpm vitest run packages/problems/**/Day\ 10/*.spec.*
 - `packages/docs/days/`：题目索引 / 进度概览
 
 > 🧠 建议：复盘时写下 “初始直觉 → 复杂点 → 最终取舍”。
-
-## 🕹️ Playground
-
-`@one-question-per-day/vue` 子包用于快速在浏览器中演练题目（或对比响应式实现等）。常见做法：
-
-1. 在对应 Day 目录下放置 `demo/vue/App.vue`（或约定路径）。
-2. 启动：
-   ```bash
-   pnpm play:vue
-   pnpm play:react
-   ```
 
 ## 🧬 渐进式 TS 策略
 

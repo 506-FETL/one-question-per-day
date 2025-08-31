@@ -24,8 +24,7 @@
   },
   "include": [
     "packages/core/**/*",
-    "packages/problems/**/*",
-    "packages/playground/**/*",
+    "packages/problems/base/**/*",
     "packages/docs/**/*"
   ],
   "exclude": ["node_modules", "coverage", "**/*.config.js", "**/*.config.ts"]
