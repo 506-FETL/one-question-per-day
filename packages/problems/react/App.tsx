@@ -1,5 +1,5 @@
 import { ModeToggle } from '@/components/mode-toggle'
-import Problem from './problems/01/index.mdx'
+import Problem from './problems/01/README.mdx'
 
 function App() {
   return (
