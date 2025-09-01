@@ -1,5 +1,18 @@
 # Changelog
 
+# [2.1.0](https://github.com/506-FETL/one-question-per-day/compare/v2.0.0...v2.1.0) (2025-09-01)
+
+
+### Bug Fixes
+
+* 更新按钮组件类型定义 ([da58a48](https://github.com/506-FETL/one-question-per-day/commit/da58a48d9387f007520777931df91f4203816684))
+* 更新各天文档中的 JS 和 TS 版本链接 ([5979de3](https://github.com/506-FETL/one-question-per-day/commit/5979de338606c445b3f4f76e5cbbcfc75898da1d))
+
+
+### Features
+
+* Day-18-完成Button 按钮 ([7937424](https://github.com/506-FETL/one-question-per-day/commit/79374247a9a05584c93bab26a1f7e2f2bfa1e565))
+
 # [2.0.0](https://github.com/506-FETL/one-question-per-day/compare/v1.8.0...v2.0.0) (2025-08-29)
 
 
