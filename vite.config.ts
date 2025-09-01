@@ -1,11 +1,15 @@
 import react from '@vitejs/plugin-react'
 import vue from '@vitejs/plugin-vue'
-import copy from 'rollup-plugin-copy'
 import { defineConfig } from 'vite'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig({
   publicDir: false,
-  plugins: [vue(), react()],
+  plugins: [vue(), react(), viteStaticCopy({
+    targets: [
+      { src: 'packages/problems', dest: '.' },
+    ],
+  })],
   build: {
     outDir: 'dist',
     emptyOutDir: true,
@@ -13,17 +17,6 @@ export default defineConfig({
       entry: 'packages/utils/_empty.js',
       formats: ['es'],
       fileName: () => 'noop.js',
-    },
-    rollupOptions: {
-      plugins: [
-        copy({
-          targets: [
-            { src: 'packages/problems/**', dest: 'dist' },
-          ],
-          hook: 'writeBundle',
-          flatten: false,
-        }),
-      ],
     },
   },
 })

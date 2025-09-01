@@ -79,6 +79,8 @@ export default defineConfig({
         customIcon: {
           '.spec.js': localIconLoader(import.meta.url, '../assets/test-js.svg'),
           '.spec.ts': localIconLoader(import.meta.url, '../assets/test-ts.svg'),
+          '.tsx': localIconLoader(import.meta.url, '../assets/tsx.svg'),
+          '.spec.tsx': localIconLoader(import.meta.url, '../assets/test-tsx.svg'),
         },
       }) as any,
     ],

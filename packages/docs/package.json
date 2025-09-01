@@ -8,14 +8,5 @@
     "dev": "vitepress dev .",
     "build": "vitepress build .",
     "preview": "vitepress preview ."
-  },
-  "dependencies": {
-    "vitepress-plugin-group-icons": "^1.6.3",
-    "vue": "^3.5.19"
-  },
-  "devDependencies": {
-    "jiti": "^2.5.1",
-    "vite": "^6.2.6",
-    "vitepress": "2.0.0-alpha.12"
   }
 }

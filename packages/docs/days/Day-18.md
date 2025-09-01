@@ -1,9 +1,6 @@
 ---
 tags: [测试,断言]
 difficulty: easy
-next:
-  text: 复盘
-  link: review
 ---
 
 # Day 18

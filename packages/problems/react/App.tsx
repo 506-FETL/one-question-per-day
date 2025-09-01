@@ -4,7 +4,7 @@ import Problem from './problems/01/README.mdx'
 function App() {
   return (
     <div className="relative min-h-screen bg-gradient-to-br flex flex-col">
-      <div className="p-4 z-10 fixed">
+      <div className="pt-4 pl-4 z-10">
         <ModeToggle />
       </div>
       <main className="flex-1 flex items-center justify-center">
