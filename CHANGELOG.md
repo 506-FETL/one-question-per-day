@@ -1,5 +1,13 @@
 # Changelog
 
+# [2.2.0](https://github.com/506-FETL/one-question-per-day/compare/v2.1.0...v2.2.0) (2025-09-02)
+
+
+### Features
+
+* add dropdown menu and scroll area components ([28d623d](https://github.com/506-FETL/one-question-per-day/commit/28d623d8afb58bf1a443804707d66fd92503d819))
+* new Problem-base-Day19 ([7186c55](https://github.com/506-FETL/one-question-per-day/commit/7186c551a52a68f6a2d97340f4d5acb0eb224183))
+
 # [2.1.0](https://github.com/506-FETL/one-question-per-day/compare/v2.0.0...v2.1.0) (2025-09-01)
 
 
