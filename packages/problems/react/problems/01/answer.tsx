@@ -20,7 +20,7 @@ const sizeClasses: Record<ButtonSize, string> = {
   icon: 'size-9',
 }
 
-export function Button({
+function Button({
   variant = 'default',
   size = 'lg',
   loading = false,

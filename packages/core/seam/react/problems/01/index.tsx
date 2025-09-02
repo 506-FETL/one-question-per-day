@@ -1,13 +1,7 @@
-import { AArrowDown } from 'lucide-react'
-import Button from './Button'
+import Md from './answer.mdx'
 
 export default function Problem() {
-  // 看看效果
   return (
-    <>
-      <Button size="icon">
-        <AArrowDown />
-      </Button>
-    </>
+    <Md />
   )
 }

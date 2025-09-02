@@ -85,10 +85,16 @@ icon: 'size-9',
 
 ::: code-group
 
-```ts [index.ts]
+```tsx [index.tsx]
 import Button from './Button'
 
-export default Button
+export default function Problem() {
+  return (
+    <>
+      <Button />
+    </>
+  )
+}
 ```
 
 ```tsx [Button.tsx]

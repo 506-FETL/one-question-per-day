@@ -28,5 +28,5 @@
     "skipLibCheck": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "main.tsx", "App.tsx"]
+  "include": ["src", "main.tsx", "App.tsx", "problems"]
 }

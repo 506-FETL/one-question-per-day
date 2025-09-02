@@ -10,7 +10,7 @@
 
 ## 基础用法
 
-import { Button } from '@/components/ui/button'
+import  Button  from './answer'
 import { ChevronRightIcon } from "lucide-react"
 import { Loader2Icon } from "lucide-react"
 import Code from "@/components/code-wrapper"
@@ -29,7 +29,7 @@ import Code from "@/components/code-wrapper"
 
 ### Icon <Button variant="secondary" size="icon" className="size-8"> <ChevronRightIcon /> </Button>
 
-### Loading <Button size="sm" disabled> <Loader2Icon className="animate-spin" /> Please wait </Button>
+### Loading <Button size="sm" disabled leftIcon={<Loader2Icon className="animate-spin" />}> Please wait </Button>
 
 ## 属性（Props）
 
