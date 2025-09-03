@@ -1,25 +1,22 @@
 # 506 实验室 · 每日一题🚀
 
-![diagram](assets/diagram.png)
-
-数据结构 / 算法 / JS 原理实现 / 工程实践 的“日更式”练习与复盘仓库。强调：小步快跑 · 测试驱动 · 渐进式类型 · 复盘沉淀。
+数据结构 / 算法 / JS 原理实现 / 工程实践 的练习与复盘仓库。强调：小步快跑 · 测试驱动 · 渐进式类型 · 复盘沉淀。
 
 ## 🏗️ 概览
 
 ```
 one-question-per-day/
 ├── packages/
-│   ├── problems/              # 题库（按 Day 分组）
-│   ├── core/                  # 成员个人/分路线实现（dc / pc / gcy / seam / wdn ...）
+│   ├── problems/              # 题库
+│   ├── core/                  # 成员个人/分路线实现
 │   │   └── <member>/Day XX/   # 各自的实现 & 练习
-│   ├── docs/                  # 文档站 (VitePress) + Days / Review / 发布说明
+│   ├── docs/                  # 文档站
 │   └── utils/                 # 工具脚本 / 产物打包辅助
 ├── assets/                    # 公共静态资源
-├── scripts/                   # release / 生成日志 等脚本
-├── dist/                      # 构建后产物（题库打包 zip 等）
+├── dist/                      # 构建产物
 ├── coverage/                  # 测试覆盖率报告
-├── pnpm-workspace.yaml        # Workspace 声明（多层 * 匹配）
-├── vite.config.ts             # 题库打包 / 多插件（vue + react）
+├── pnpm-workspace.yaml        # Workspace 声明
+├── vite.config.ts             # 构建配置
 ├── vitest.config.ts           # 测试配置
 ├── CHANGELOG.md / RELEASE_NOTES.md
 └── README.md
@@ -27,7 +24,7 @@ one-question-per-day/
 
 ## 🥅 目标
 
-- 高频稳定的编程练习节奏
+- 稳定的编程练习节奏
 - 测试驱动、快速反馈与安全重构
 - 多解策略对比（暴力 → 优化 / 空间换时间 / 结构变换）
 - 渐进式引入 TypeScript，沉淀抽象边界
@@ -37,28 +34,75 @@ one-question-per-day/
 
 ```bash
 pnpm install          # 安装所有 workspace 依赖
-pnpm test             # 跑所有 Vitest 测试
-pnpm dev              # 根脚本：lint+test（见 scripts）
+pnpm test             # 跑所有 Vitest 测试（仅 packages/core/** 下匹配 include 规则）
+pnpm dev              # lint:fix -> lint -> vitest run 串行执行
 
-# 文档站（如果 scripts 仍为 vitepress dev docs 且内容不在 docs/ 子目录，可调整为 '.'）
+# 文档站（packages/docs 子包，内部脚本已指向当前目录）
 pnpm docs:dev
-
 ```
 
 ## 🧪 测试 & 质量
 
-| 维度     | 工具                  | 说明                         |
-| -------- | --------------------- | ---------------------------- |
-| 单元测试 | Vitest                | 快速反馈 / 快速定位回归      |
-| 覆盖率   | `@vitest/coverage-v8` | 聚焦未测逻辑，避免盲测       |
-| 代码质量 | ESLint + Prettier     | 统一风格与潜在错误检测       |
-| 类型安全 | TypeScript 5.x        | 渐进增强，不做一口气全量重写 |
+| 维度     | 工具                                                           | 说明                    |
+| -------- | -------------------------------------------------------------- | ----------------------- |
+| 单元测试 | Vitest                                                         | 快速反馈 / 快速定位回归 |
+| 覆盖率   | `coverage-v8`                                                  | 聚焦未测逻辑，避免盲测  |
+| 代码质量 | [@antfu/eslint-config](https://github.com/antfu/eslint-config) | 统一风格与潜在错误检测  |
 
-运行局部测试：
+## 📘 使用手册
+
+### 1. 环境准备
+
+- Node.js >= 18（建议保持最新 LTS）
+- 已全局安装 pnpm（如未安装：`npm i -g pnpm`）
+- Git 工作区干净（发布需保证工作区无未提交变更）
+
+验证：
 
 ```bash
-pnpm vitest run packages/problems/**/Day\ 10/*.spec.*
+node -v
+pnpm -v
 ```
+
+### 2. 安装依赖
+
+```bash
+pnpm install
+```
+
+### 3. 常用脚本一览
+
+| 命令                  | 作用                                            | 备注                                                    |
+| --------------------- | ----------------------------------------------- | ------------------------------------------------------- |
+| `pnpm dev`            | 按序执行 lint:fix -> lint -> run vitest         | 快速本地反馈（不进入 watch）                            |
+| `pnpm test`           | 运行 Vitest（含 UI 关闭，使用配置 include）     | 仅匹配 `packages/core/**/*.{spec,test}.{js,ts,jsx,tsx}` |
+| `pnpm build:problems` | 打包题库（复制 problems → dist/problems + zip） | 构建后产物：`dist/problems.zip`                         |
+| `pnpm docs:dev`       | 启动 VitePress 文档站                           | 默认端口 5173（或空闲端口）                             |
+| `pnpm docs:build`     | 构建静态文档                                    | 产物位于 `packages/docs/.vitepress/dist`                |
+| `pnpm release`        | 自动化版本号 & 生成 CHANGELOG & GitHub Release  | 受 `.release-it.json` 驱动                              |
+| `pnpm type-check`     | 仅做 TS 类型检查                                | 渐进式引入类型时使用                                    |
+| `pnpm play:react`     | 启动 React 题目交互/可视化 Playground           | 对应 `packages/problems/react` 子包                     |
+| `pnpm play:vue`       | 启动 Vue 题目交互/可视化 Playground             | 对应 `packages/problems/vue` 子包                       |
+
+### 4. 新增一题（Day XX）
+
+以“Day 20”为例：
+
+1. 在 `packages/problems/base/` 下创建名为 `Day 20` 的目录（命名保持与其它 Day 一致，含空格）。
+2. 在该目录中新建 `README.md`，包含：
+   - 题目：一句话概述或背景描述。
+   - 要求：输入 / 输出格式、复杂度约束、边界情况（如空数组、极值、重复值等）。
+   - 示例：给出 1~2 组代表性“输入 → 输出”示例，可再补充一个边界或反例。
+3. 新建 `answer.js`：
+   - 导出一个或多个策略函数（例如 `solutionA`、`solutionB`），命名体现策略差异（暴力 / 双指针 / 递归 / DP 等）。
+   - 在文件顶部可用注释简述每个策略的时间 / 空间复杂度、适用场景或取舍。
+   - 若存在通用辅助函数，可放同目录单独文件后在 `answer.js` 中聚合导出。
+4. 若该题需要类型支持，可在同目录创建 `ts/` 子目录，并加入 `index.ts` 做类型体操 / 条件类型推导；不影响主 JS 可读性。
+5. 成员（例如 seam）准备自己的一份实现：
+   - 在 `packages/core/seam/base/` 下复制问题文件
+   - 删除 `README.md、answer.{ts,js}`(可选)
+6. 运行测试：使用 Vitest 的路径过滤或测试名过滤方式，仅执行“Day 20”相关文件，或者在根目录下直接运行`pnpm test`。
+7. 测试会监测文件变化，给出答案直到所有测试跑通
 
 ## 📖 复盘内容
 
