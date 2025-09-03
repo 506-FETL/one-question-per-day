@@ -13,10 +13,39 @@ difficulty: medium
 - 默认渲染为 `button`
 - API 精简，类型友好
 
-## 基础用法
+## 用法示例
 
-> [!TIP]
-> 待补充...
+### Default
+
+```tsx
+<Button>Button</Button>
+```
+
+### Variant
+
+```tsx
+<Button variant="secondary">Secondary</Button>
+```
+
+### Icon
+
+```tsx
+import { ChevronRightIcon } from "lucide-react"
+
+<Button size="icon">
+  <ChevronRightIcon />
+</Button>
+```
+
+### With Icon
+
+```tsx
+import { IconGitBranch } from "@tabler/icons-react"
+
+<Button leftIcon={<IconGitBranch />}>
+   New Branch
+</Button>
+```
 
 ## 属性（Props）
 
