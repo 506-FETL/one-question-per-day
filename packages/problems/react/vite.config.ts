@@ -6,6 +6,7 @@ import react from '@vitejs/plugin-react'
 import rehypeStarryNight from 'rehype-starry-night'
 import remarkGfm from 'remark-gfm'
 import { defineConfig } from 'vite'
+import Pages from 'vite-plugin-pages'
 
 function mdToJs(): Plugin {
   return {
@@ -22,7 +23,16 @@ function mdToJs(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [{ enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm], rehypePlugins: [rehypeStarryNight] }) }, react(), mdToJs(), tailwindcss()],
+  plugins: [
+    { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm], rehypePlugins: [rehypeStarryNight] }) },
+    react(),
+    mdToJs(),
+    tailwindcss(),
+    Pages({
+      dirs: 'problems',
+      exclude: ['lib', 'layout'],
+    }),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

@@ -11,7 +11,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       include: ['packages/core/**'],
-      exclude: ['**/answer.*', '**/{src/index,types,vite-env.d,vite.config,main}.{ts,tsx}', '**/{App,index}.{tsx,vue}', '**/{lib,components}/**'],
+      exclude: ['**/answer.*', '**/{src/index,types,vite-env.d,vite.config,main}.{ts,tsx}', '**/{App,index}.{tsx,vue}', '**/{lib,components}/**', '**/dist/**'],
       enabled: true,
     },
     globals: true,

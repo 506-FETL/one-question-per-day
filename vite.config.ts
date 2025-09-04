@@ -1,11 +1,9 @@
-import react from '@vitejs/plugin-react'
-import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig({
   publicDir: false,
-  plugins: [vue(), react(), viteStaticCopy({
+  plugins: [viteStaticCopy({
     targets: [
       { src: 'packages/problems', dest: '.' },
     ],
