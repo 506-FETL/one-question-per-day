@@ -81,8 +81,8 @@ pnpm install
 | `pnpm docs:build`     | 构建静态文档                                    | 产物位于 `packages/docs/.vitepress/dist`                |
 | `pnpm release`        | 自动化版本号 & 生成 CHANGELOG & GitHub Release  | 受 `.release-it.json` 驱动                              |
 | `pnpm type-check`     | 仅做 TS 类型检查                                | 渐进式引入类型时使用                                    |
-| `pnpm play:react`     | 启动 React 题目交互/可视化 Playground           | 对应 `packages/problems/react` 子包                     |
-| `pnpm play:vue`       | 启动 Vue 题目交互/可视化 Playground             | 对应 `packages/problems/vue` 子包                       |
+| `pnpm problem:react`  | 启动 React 题目交互                             | 对应 `packages/problems/react` 子包                     |
+| `pnpm problem:vue`    | 启动 Vue 题目交互                               | 对应 `packages/problems/vue` 子包                       |
 
 ### 4. 新增一题（Day XX）
 

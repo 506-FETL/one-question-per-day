@@ -1,5 +1,5 @@
 {
-  "name": "@one-question-per-day/play-vue",
+  "name": "@one-question-per-day/problem-vue",
   "type": "module",
   "version": "0.0.0",
   "private": true,
