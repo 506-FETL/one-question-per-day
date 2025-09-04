@@ -27,12 +27,6 @@ jobs:
       - name: Build docs
         run: pnpm run docs:build
 
-      - name: Build React Web
-        run: pnpm run build:react
-
-      - name: Build Vue Web
-        run: pnpm run build:vue
-
       - name: Upload docs
         uses: actions/upload-artifact@v4
         with:
