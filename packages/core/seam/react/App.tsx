@@ -20,7 +20,7 @@ function App() {
   const urlDay = localStorage.getItem('urlDay') || '/01'
 
   return (
-    <div className="relative max-h-screen flex flex-col bg-gradient-to-br">
+    <div className="relative min-h-screen flex flex-col bg-gradient-to-br">
       <div className="pt-4 pl-4 z-20 fixed">
         <ModeToggle />
       </div>
@@ -45,6 +45,7 @@ function App() {
           </SelectContent>
         </Select>
       </div>
+
       <Suspense fallback={<SkeletonCard />}>
         {useRoutes(routes)}
       </Suspense>

@@ -10,7 +10,6 @@ export default function RootRedirect() {
 export const allProblems = [
   {
     day: '01',
-    title: '请你实现一个 Button 按钮',
     url: '/01',
   },
 ]
