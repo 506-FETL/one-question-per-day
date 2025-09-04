@@ -1,8 +1,24 @@
-最新React题目：[![React 每日一题](https://img.shields.io/badge/React-每日一题-brightgreen?logo=react)](https://one-question-per-day-react-problem.vercel.app/)
-
 # 506 实验室 · 每日一题🚀
 
-数据结构 / 算法 / JS 原理实现 / 工程实践 的练习与复盘仓库。强调：小步快跑 · 测试驱动 · 渐进式类型 · 复盘沉淀。
+<br />
+
+<div align="center">
+  <div style="display: flex; justify-content: center; gap: 16px; margin-bottom: 20px;">
+    <a href="https://one-question-per-day-react-problem.vercel.app/">
+      <img src="https://img.shields.io/badge/React-每日一题-61DAFB?logo=react&logoColor=white&labelColor=61DAFB" alt="React 每日一题" />
+    </a>
+    <a href="https://one-question-per-day-vue-problem.vercel.app/">
+      <img src="https://img.shields.io/badge/Vue-每日一题-42b883?logo=vue.js&logoColor=white&labelColor=42b883" alt="Vue 每日一题" />
+    </a>
+    <a href="https://506-fetl.github.io/one-question-per-day/">
+      <img src="https://img.shields.io/badge/VitePress-文档中心-5C73E7?logo=vitepress&labelColor=5C73E7&logoColor=white" alt="VitePress 文档" />
+    </a>
+  </div>
+</div>
+
+<br />
+
+> 数据结构 / 算法 / JS 原理实现 / 工程实践 的练习与复盘仓库。强调：小步快跑 · 测试驱动 · 渐进式类型 · 复盘沉淀。
 
 ## 🏗️ 概览
 
