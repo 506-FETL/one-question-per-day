@@ -8,5 +8,8 @@
     "dev": "vitepress dev .",
     "build": "vitepress build .",
     "preview": "vitepress preview ."
+  },
+  "dependencies": {
+    "@octokit/rest": "^22.0.0"
   }
 }

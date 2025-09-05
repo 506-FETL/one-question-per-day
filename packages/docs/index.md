@@ -43,19 +43,6 @@ features:
     details: review/ 汇总思路演进、边界与常见误区。
 ---
 
-<script setup>
-import { VPTeamPage, VPTeamPageTitle, VPTeamMembers } from 'vitepress/theme'
-
-const members = [
-  { avatar: 'https://avatars.githubusercontent.com/u/87215099?v=4', name: 'lll', title: '斯人若彩虹，遇上方知有', links: [{ icon: 'github', link: 'https://github.com/seaeam' }] },
-  { avatar: 'https://avatars.githubusercontent.com/u/104177657?v=4', name: 'peng chang', title: '好想进大厂', links: [{ icon: 'github', link: 'https://github.com/pcppp' }] },
-  { avatar: 'https://avatars.githubusercontent.com/u/74220172?v=4', name: 'Gong Che Yu', title: 'xiersiki', links: [{ icon: 'github', link: 'https://github.com/xiersiki' }] },
-  { avatar: 'https://avatars.githubusercontent.com/u/103992756?v=4', name: 'Dc9309', title: 'Dc9309', links: [{ icon: 'github', link: 'https://github.com/Dc9309' }] },
-  { avatar: 'https://avatars.githubusercontent.com/u/105473589?v=4', name: 'Peng Liang', title: 'CQUPT · CS & Tech', links: [{ icon: 'github', link: 'https://github.com/notshine' }] },
-  { avatar: 'https://avatars.githubusercontent.com/u/126050206?v=4', name: 'wang-danni', title: 'CQUPT · Computer Tech', links: [{ icon: 'github', link: 'https://github.com/wang-danni' }] }
-]
-</script>
-
 ## 📚 文档总览
 
 欢迎来到每日一题文档站！本页面收录了所有题目、参考答案、复盘总结及辅助资源，助你高效查找、学习与复盘。
@@ -82,10 +69,11 @@ const members = [
 - 复盘时：查阅 review 文档，吸收常见错误与进阶经验。
 - 交流反馈：有疑问或建议欢迎在仓库 Issue 区留言。
 
-<VPTeamPage>
-  <VPTeamPageTitle>
-    <template #title>Team</template>
-    <template #lead>协作 · 对比 · 演进</template>
-  </VPTeamPageTitle>
-  <VPTeamMembers size="small" :members="members" />
-</VPTeamPage>
+<Suspense>
+    <template #default>
+      <Team />
+    </template>
+    <template #fallback>
+      <div>Loading team…</div>
+    </template>
+</Suspense>

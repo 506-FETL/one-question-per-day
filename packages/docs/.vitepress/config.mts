@@ -4,7 +4,7 @@ import {
   groupIconVitePlugin,
   localIconLoader,
 } from 'vitepress-plugin-group-icons'
-import { buildNumberedSidebarItems } from './util'
+import { buildNumberedSidebarItems } from './utils/sidebar'
 
 export default defineConfig({
   title: 'one-question-per-day',
