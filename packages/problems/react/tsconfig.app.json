@@ -28,5 +28,5 @@
     "skipLibCheck": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "main.tsx", "App.tsx", "problems", "layout"]
+  "include": ["src", "main.tsx", "App.tsx", "problems", "layout", "../vue/layout/Problems.vue"]
 }

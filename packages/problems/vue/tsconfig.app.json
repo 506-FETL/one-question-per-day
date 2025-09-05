@@ -15,5 +15,5 @@
     "erasableSyntaxOnly": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "main.ts", "problems", "App.vue"]
+  "include": ["src", "main.ts", "problems", "App.vue", "layout"]
 }
