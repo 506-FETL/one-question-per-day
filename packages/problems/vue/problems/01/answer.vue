@@ -1,3 +1,4 @@
+<!-- eslint-disable ts/no-unused-vars -->
 <script setup lang="ts">
 import type { ButtonProps, ButtonSize, ButtonVariant } from './types'
 import { computed, defineExpose, ref, useAttrs, useSlots } from 'vue'
