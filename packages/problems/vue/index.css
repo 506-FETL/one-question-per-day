@@ -250,7 +250,7 @@ th {
   padding-right: 1rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  text-align: left;
+  text-align: center;
   font-weight: 700;
 }
 th[align='center'] {
@@ -266,6 +266,7 @@ td {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   text-align: left;
+  text-align: center;
   font-weight: normal;
 }
 td[align='center'] {
@@ -298,14 +299,4 @@ li code {
   font-family: 'Dank Mono';
   font-size: 0.875rem;
   line-height: 1.25rem;
-}
-
-@media (max-width: 640px) {
-  pre {
-    padding: 0.875rem 0.875rem;
-    border-radius: 0.4rem;
-  }
-  pre[data-line-numbers] {
-    padding-left: 3rem;
-  }
 }
