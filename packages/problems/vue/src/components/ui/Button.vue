@@ -37,7 +37,6 @@ interface Props {
   as?: string
 }
 
-// eslint-disable-next-line vue/define-macros-order
 withDefaults(defineProps<Props>(), {
   as: 'button',
 })

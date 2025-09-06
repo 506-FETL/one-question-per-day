@@ -71,7 +71,7 @@ pnpm docs:dev
 
 ### 1. 环境准备
 
-- Node.js >= 18（建议保持最新 LTS）
+- Node.js >= 22.19（建议保持最新 LTS）
 - 已全局安装 pnpm（如未安装：`npm i -g pnpm`）
 - Git 工作区干净（发布需保证工作区无未提交变更）
 
