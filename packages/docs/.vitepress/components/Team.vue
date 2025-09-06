@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { VPTeamMembers, VPTeamPage, VPTeamPageTitle } from 'vitepress/theme'
 import { onMounted, ref } from 'vue'
-import { countPRAuthor, listContributors } from '../utils/octokit'
+import { countCommitAuthor, listContributors } from '../utils/octokit'
 
 // 缓存相关常量
 const CACHE_KEY = 'oqpd_team_cache_v1'
-const CACHE_TTL = 60 * 60 * 1000 // 1 小时
+const CACHE_TTL = 6 * 60 * 60 * 1000 // 6 小时
 
 interface CachedData {
   ts: number
@@ -19,7 +19,7 @@ function buildMembers(cons: any[], prs: Record<string, number>) {
   return cons.map(user => ({
     avatar: user.avatar_url,
     name: user.login,
-    title: `countPR: ${prs[user.login || ''] || '摸鱼中'}`,
+    title: `countCommit: ${prs[user.login || ''] || '摸鱼中'}`,
     links: [{ icon: 'github', link: user.html_url }],
   }))
 }
@@ -28,7 +28,7 @@ async function fetchRemote(): Promise<any[] | null> {
   try {
     const [cons, prs] = await Promise.all([
       listContributors(),
-      countPRAuthor(),
+      countCommitAuthor(),
     ])
     return buildMembers(cons, prs)
   }

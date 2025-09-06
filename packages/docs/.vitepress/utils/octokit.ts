@@ -19,15 +19,15 @@ export async function getRepo(owner: string = '506-FETL', repo: string = 'one-qu
   return data
 }
 
-export async function countPRAuthor(owner: string = '506-FETL', repo: string = 'one-question-per-day') {
-  const prs = await octokit.paginate(
-    octokit.pulls.list,
-    { owner, repo, state: 'all' as const, per_page: 100 },
+export async function countCommitAuthor(owner: string = '506-FETL', repo: string = 'one-question-per-day') {
+  const commits = await octokit.paginate(
+    octokit.repos.listCommits,
+    { owner, repo, per_page: 100 },
     res => res.data,
   )
 
-  const authorCounts = prs.reduce((acc, pr) => {
-    const login = pr.user?.login
+  const authorCounts = commits.reduce((acc, commit) => {
+    const login = commit.author?.login || commit.commit?.author?.name
     if (login && login !== 'actions-user') {
       acc[login] = (acc[login] || 0) + 1
     }
