@@ -1,7 +1,7 @@
 <!-- eslint-disable ts/no-unused-vars -->
 <script setup lang="ts">
 import type { ButtonProps, ButtonSize, ButtonVariant } from './types'
-import { computed, defineExpose, ref, useAttrs, useSlots } from 'vue'
+import { computed, ref, useAttrs, useSlots } from 'vue'
 import { cn } from '@/lib/utils'
 
 defineOptions({ name: 'UiButton' })
@@ -79,22 +79,11 @@ defineExpose({ el: buttonRef })
 
 <template>
   <button
-    ref="buttonRef"
-    :type="type"
-    :class="classes"
-    :aria-busy="loading ? 'true' : undefined"
-    :disabled="loading || disabledAttr"
-    :data-variant="variant"
-    :data-size="size"
-    :data-loading="loading ? 'true' : undefined"
-    :data-full-width="fullWidth ? 'true' : undefined"
-    v-bind="restAttrs"
+    ref="buttonRef" :type="type" :class="classes" :aria-busy="loading ? 'true' : undefined"
+    :disabled="loading || disabledAttr" :data-variant="variant" :data-size="size"
+    :data-loading="loading ? 'true' : undefined" :data-full-width="fullWidth ? 'true' : undefined" v-bind="restAttrs"
   >
-    <span
-      v-if="leftContent"
-      class="mr-2 inline-flex items-center"
-      :data-testid="loading ? undefined : 'left'"
-    >
+    <span v-if="leftContent" class="mr-2 inline-flex items-center" :data-testid="loading ? undefined : 'left'">
 
       <slot name="left" />
     </span>
@@ -108,11 +97,7 @@ defineExpose({ el: buttonRef })
       </template>
     </span>
 
-    <span
-      v-if="!loading && rightContent"
-      class="ml-2 inline-flex items-center"
-      data-testid="right"
-    >
+    <span v-if="!loading && rightContent" class="ml-2 inline-flex items-center" data-testid="right">
       <slot name="right" />
     </span>
   </button>

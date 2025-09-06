@@ -1,0 +1,12 @@
+{
+  "name": "@one-question-per-day/team-core",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "keywords": [],
+  "scripts": {
+    "test": "vitest",
+    "test:run": "vitest run"
+  }
+}

@@ -78,9 +78,11 @@ defineExpose({ el: buttonRef })
 </script>
 
 <template>
-  <button ref="buttonRef" :type="type" :class="classes" :aria-busy="loading ? 'true' : undefined"
+  <button
+    ref="buttonRef" :type="type" :class="classes" :aria-busy="loading ? 'true' : undefined"
     :disabled="loading || disabledAttr" :data-variant="variant" :data-size="size"
-    :data-loading="loading ? 'true' : undefined" :data-full-width="fullWidth ? 'true' : undefined" v-bind="restAttrs">
+    :data-loading="loading ? 'true' : undefined" :data-full-width="fullWidth ? 'true' : undefined" v-bind="restAttrs"
+  >
     <span v-if="leftContent" class="mr-2 inline-flex items-center" :data-testid="loading ? undefined : 'left'">
 
       <slot name="left" />
