@@ -304,7 +304,7 @@ describe('button 组件', () => {
 
 ## 答案
 
-| 类型   | 路径                                                                                                                         |
-| ------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| 答案   | [problems/Day 19](https://github.com/506-FETL/one-question-per-day/blob/main/packages/problems/react/problems/01/components) |
-| Review | [19.md](/review/19)                                                                                                          |
+| 类型   | 路径                                                                                                              |
+| ------ | ----------------------------------------------------------------------------------------------------------------- |
+| 答案   | [problems/Day 19](https://github.com/506-FETL/one-question-per-day/tree/main/packages/problems/react/problems/01) |
+| Review | [19.md](/review/19)                                                                                               |
