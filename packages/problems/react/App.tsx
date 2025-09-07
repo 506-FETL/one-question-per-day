@@ -13,7 +13,12 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Skeleton } from '@/components/ui/skeleton'
-import { allProblems } from './problems'
+
+const files = import.meta.glob('./problems/*/*')
+const dirs = Array.from(new Set(Object.keys(files).map(p => p.split('/')[2]))).sort()
+const allProblems = dirs.map((dir) => {
+  return { day: dir, url: `/${dir}` }
+})
 
 function App() {
   const navigate = useNavigate()

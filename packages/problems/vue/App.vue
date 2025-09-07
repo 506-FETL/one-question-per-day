@@ -14,10 +14,11 @@ import { SkeletonCard } from './layout'
 const router = useRouter()
 const urlDay = ref(localStorage.getItem('urlDay') || '/01')
 
-const allProblems = [
-  { day: '01', url: '/01' },
-  { day: '02', url: '/02' },
-]
+const files = import.meta.glob('./problems/*/*')
+const dirs = Array.from(new Set(Object.keys(files).map(p => p.split('/')[2]))).sort()
+const allProblems = dirs.map((dir) => {
+  return { day: dir, url: `/${dir}` }
+})
 
 watch(urlDay, (val, oldVal) => {
   if (val && val !== oldVal) {

@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import { Navigate } from 'react-router-dom'
 
 export default function RootRedirect() {
@@ -6,10 +5,3 @@ export default function RootRedirect() {
 
   return <Navigate to={urlDay} replace />
 }
-
-export const allProblems = [
-  {
-    day: '01',
-    url: '/01',
-  },
-]
