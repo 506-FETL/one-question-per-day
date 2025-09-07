@@ -1,5 +1,6 @@
 {
   "name": "@one-question-per-day/docs",
+  "type": "module",
   "version": "1.0.0",
   "description": "每日一题文档",
   "author": "Seaming",

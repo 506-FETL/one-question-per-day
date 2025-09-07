@@ -14,10 +14,7 @@ hero:
   actions:
     - theme: brand
       text: 🚀 快速开始
-      link: /days
-    - theme: alt
-      text: 📂 目录结构
-      link: /#📂-目录结构
+      link: /days/
     - theme: alt
       text: 🧾 复盘索引
       link: /review/

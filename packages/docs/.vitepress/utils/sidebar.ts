@@ -22,7 +22,8 @@ export function buildNumberedSidebarItems(options: BuildNumberedItemsOptions) {
     requireReadmeForDir = true,
     padWidth = 2,
   } = options
-  const absDir = path.resolve(__dirname, '../', dir)
+  // __dirname 指向 .vitepress/utils，需要回到 docs 根目录再拼接目标目录
+  const absDir = path.resolve(__dirname, '..', '..', dir)
   let entries: string[] = []
   try {
     entries = fs.readdirSync(absDir)
