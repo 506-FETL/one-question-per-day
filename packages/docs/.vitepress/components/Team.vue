@@ -5,7 +5,7 @@ import { countCommitAuthor, listContributors } from '../utils/octokit'
 
 // 缓存相关常量
 const CACHE_KEY = 'oqpd_team_cache_v1'
-const CACHE_TTL = 6 * 60 * 60 * 1000 // 6 小时
+const CACHE_TTL = 6 * 60 * 60 * 1000
 
 interface CachedData {
   ts: number
@@ -64,9 +64,6 @@ function writeCache(membersData: any[]) {
 }
 
 onMounted(async () => {
-  if (typeof window === 'undefined')
-    return
-
   const cached = readCache()
   const now = Date.now()
 

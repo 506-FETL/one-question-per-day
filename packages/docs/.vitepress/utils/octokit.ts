@@ -27,10 +27,18 @@ export async function countCommitAuthor(owner: string = '506-FETL', repo: string
   )
 
   const authorCounts = commits.reduce((acc, commit) => {
-    const login = commit.author?.login || commit.commit?.author?.name
-    if (login && login !== 'actions-user') {
-      acc[login] = (acc[login] || 0) + 1
-    }
+    const ghUser = commit.author
+    const login = ghUser?.login
+
+    if (!login)
+      return acc
+
+    // 过滤机器人和 actions 用户
+    const isBot = (ghUser.type && ghUser.type.toLowerCase() === 'bot') || /\[bot\]$/i.test(login)
+    if (isBot || login === 'actions-user')
+      return acc
+
+    acc[login] = (acc[login] || 0) + 1
     return acc
   }, {} as Record<string, number>)
 

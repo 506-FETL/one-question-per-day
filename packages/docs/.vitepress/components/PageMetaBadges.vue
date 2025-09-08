@@ -35,26 +35,23 @@ const tagBadges = computed(() => {
 </script>
 
 <template>
-  <div v-if="difficultyBadge || tagBadges.length" class="meta-badges">
-    <Badge
-      v-if="difficultyBadge"
-      :type="difficultyBadge.type"
-      :text="difficultyBadge.text"
-    />
-    <Badge
-      v-for="tag in tagBadges"
-      :key="tag.text"
-      :type="tag.type"
-      :text="tag.text"
-    />
-  </div>
+  <Badge
+    v-if="difficultyBadge"
+    :type="difficultyBadge.type"
+    :text="difficultyBadge.text"
+    class="difficultyBadge"
+  />
+  <br>
+  <Badge
+    v-for="tag in tagBadges"
+    :key="tag.text"
+    :type="tag.type"
+    :text="tag.text"
+  />
 </template>
 
 <style scoped>
-.meta-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.375rem 0.5rem;
-  margin: 0 0 1rem 0; /* 放在页面正文最上方，给下面正文留间距 */
+.difficultyBadge {
+  margin-bottom: 1%;
 }
 </style>

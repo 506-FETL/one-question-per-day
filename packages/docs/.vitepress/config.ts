@@ -32,7 +32,8 @@ export default defineConfig({
     nav: [
       // 导航：使用更贴切的 Emoji，并统一加空格提升可读性
       { text: '🏠 首页', link: '/' },
-      { text: '🧩 题目', link: '/days/index' },
+      { text: '🧩 基础题目', link: '/base/index' },
+      { text: '👾 框架题目', link: '/framework/index' },
       { text: '📖 复习', link: '/review/index' },
       { text: '🚀 发布说明', link: 'https://github.com/506-FETL/one-question-per-day/blob/main/RELEASE_NOTES.md' },
       { text: '🧾 Changelog', link: 'https://github.com/506-FETL/one-question-per-day/blob/main/CHANGELOG.md' },
@@ -41,18 +42,23 @@ export default defineConfig({
       {
         text: '指南 Guide',
         items: [
-          { text: '快速开始', link: '/days/' },
+          { text: '快速开始', link: '/base/' },
         ],
       },
       {
-        text: 'Days',
+        text: 'base',
         collapsed: true,
-        items: buildNumberedSidebarItems({ dir: 'days', routeBase: '/days', linkStyle: 'day' }),
+        items: buildNumberedSidebarItems({ dir: 'base', routeBase: '/base', linkStyle: 'plain' }),
+      },
+      {
+        text: 'framework',
+        collapsed: true,
+        items: buildNumberedSidebarItems({ dir: 'framework', routeBase: '/framework', linkStyle: 'plain' }),
       },
       {
         text: 'Reviews',
         collapsed: true,
-        items: buildNumberedSidebarItems({ dir: 'review', routeBase: '/review', linkStyle: 'plain', requireReadmeForDir: false }),
+        items: buildNumberedSidebarItems({ dir: 'review', routeBase: '/review', linkStyle: 'plain' }),
       },
     ],
     socialLinks: [
