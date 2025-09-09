@@ -10,26 +10,144 @@
 
 ## 基础用法
 
-import  Button  from './answer'
+import Button from './answer'
 import { ChevronRightIcon } from "lucide-react"
 import { Loader2Icon } from "lucide-react"
 import Code from "@/components/code-wrapper"
 
-### Default <Button>Button</Button>
+### Default
 
-### Secondary <Button variant="secondary">secondary</Button>
+<Button>Button</Button>
 
-### Destructive <Button variant="destructive">Destructive</Button>
+<Code>
+  ```jsx
+  import Button from './Button'
 
-### Outline <Button variant="outline">Outline</Button>
+  export default function App() {
+    return <Button>Button</Button>
+  }
+  ```
+</Code>
 
-### Ghost <Button variant="ghost">Ghost</Button>
+***
 
-### Link <Button variant="link">Link</Button>
+### Secondary
 
-### Icon <Button variant="secondary" size="icon" className="size-8"> <ChevronRightIcon /> </Button>
+<Button variant="secondary">secondary</Button>
 
-### Loading <Button size="sm" disabled leftIcon={<Loader2Icon className="animate-spin" />}> Please wait </Button>
+<Code>
+  ```jsx
+  import Button from './Button'
+
+  export default function App() {
+    return <Button variant="secondary">secondary</Button>
+  }
+  ```
+</Code>
+
+***
+
+### Destructive
+
+<Button variant="destructive">Destructive</Button>
+
+<Code>
+  ```jsx
+  import Button from './Button'
+
+  export default function App() {
+    return <Button variant="destructive">Destructive</Button>
+  }
+  ```
+</Code>
+
+***
+
+### Outline
+
+<Button variant="outline">Outline</Button>
+
+<Code>
+  ```jsx
+  import Button from './Button'
+
+  export default function App() {
+    return <Button variant="outline">Outline</Button>
+  }
+  ```
+</Code>
+
+***
+
+### Ghost
+
+<Button variant="ghost">Ghost</Button>
+
+<Code>
+  ```jsx
+  import Button from './Button'
+
+  export default function App() {
+    return <Button variant="ghost">Ghost</Button>
+  }
+  ```
+</Code>
+
+***
+
+### Link
+
+<Button variant="link">Link</Button>
+
+<Code>
+  ```jsx
+  import Button from './Button'
+
+  export default function App() {
+    return <Button variant="link">Link</Button>
+  }
+  ```
+</Code>
+
+### Icon
+
+<Button variant="secondary" size="icon" className="size-8">
+  <ChevronRightIcon />
+</Button>
+
+<Code>
+  ```jsx
+  import Button from './Button'
+  import { ChevronRightIcon } from "lucide-react"
+
+  export default function App() {
+    return <Button variant="secondary" size="icon" className="size-8">
+      <ChevronRightIcon />
+    </Button>
+  }
+  ```
+</Code>
+
+***
+
+### Loading
+
+<Button size="sm" disabled leftIcon={<Loader2Icon className="animate-spin" />}>
+  Please wait
+</Button>
+
+<Code>
+  ```jsx
+  import Button from './Button'
+  import { Loader2Icon } from "lucide-react"
+
+  export default function App() {
+    return <Button size="sm" disabled leftIcon={<Loader2Icon className="animate-spin" />}>
+      Please wait
+    </Button>
+  }
+  ```
+</Code>
 
 ## 属性（Props）
 
@@ -37,16 +155,16 @@ import Code from "@/components/code-wrapper"
 
 | 属性名 | 说明 | 类型 | 可选值 | 默认值 |
 |---|---|---|---|---|
-| variant | 外观风格 | default \| secondary \| destructive \| outline \| ghost \| link | 同左 | default |
-| size | 尺寸 | default \| sm \| lg \| icon | 同左 | default |
-| loading | 加载中（自动禁用） | boolean | true/false | false |
-| loadingText | 加载时替代文案 | string | - | - |
-| leftIcon | 左侧图标 | ReactNode | - | - |
-| rightIcon | 右侧图标 | ReactNode | - | - |
-| fullWidth | 占满整行宽度 | boolean | true/false | false |
-| className | 自定义类名 | string | - | - |
-| type | 原生类型 | button | submit | reset | 同左 | button |
-| disabled | 禁用 | boolean | true/false | false |
+| variant | 外观风格 | `default` `secondary` `destructive` `outline` `ghost` `link` | 同左 | default |
+| size | 尺寸 | `default` `sm` `lg` `icon` | 同左 | default |
+| loading | 加载中（自动禁用） | `boolean` | true/false | false |
+| loadingText | 加载时替代文案 | `string` | - | - |
+| leftIcon | 左侧图标 | `ReactNode` | - | - |
+| rightIcon | 右侧图标 | `ReactNode` | - | - |
+| fullWidth | 占满整行宽度 | `boolean` | true/false | false |
+| className | 自定义类名 | `string` | - | - |
+| type | 原生类型 | `button` `submit` `reset` | 同左 | button |
+| disabled | 禁用 | `boolean` | true/false | false |
 
 ## 类型定义
 

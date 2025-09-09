@@ -264,6 +264,7 @@ ul > li {
 }
 
 p code,
+table code,
 li code {
   background-color: rgba(128, 128, 128, 0.199);
   color: var(--code-color);
