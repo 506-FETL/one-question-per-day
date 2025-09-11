@@ -47,11 +47,16 @@ const tagBadges = computed(() => {
     :key="tag.text"
     :type="tag.type"
     :text="tag.text"
+    class="tagBadge"
   />
 </template>
 
 <style scoped>
 .difficultyBadge {
   margin-bottom: 1%;
+}
+
+.tagBadge {
+  margin-bottom: 2%;
 }
 </style>

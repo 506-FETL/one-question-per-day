@@ -40,25 +40,24 @@ export default defineConfig({
     ],
     sidebar: [
       {
-        text: '指南 Guide',
-        items: [
-          { text: '快速开始', link: '/base/' },
-        ],
+        text: 'problems-base',
+        collapsed: true,
+        items: buildNumberedSidebarItems({ dir: 'base' }),
       },
       {
-        text: 'base',
+        text: 'problems-framework',
         collapsed: true,
-        items: buildNumberedSidebarItems({ dir: 'base', routeBase: '/base', linkStyle: 'plain' }),
+        items: buildNumberedSidebarItems({ dir: 'framework' }),
       },
       {
-        text: 'framework',
+        text: 'reviews-basic',
         collapsed: true,
-        items: buildNumberedSidebarItems({ dir: 'framework', routeBase: '/framework', linkStyle: 'plain' }),
+        items: buildNumberedSidebarItems({ dir: 'review/base' }),
       },
       {
-        text: 'Reviews',
+        text: 'reviews-framework',
         collapsed: true,
-        items: buildNumberedSidebarItems({ dir: 'review', routeBase: '/review', linkStyle: 'plain' }),
+        items: buildNumberedSidebarItems({ dir: 'review/framework' }),
       },
     ],
     socialLinks: [
