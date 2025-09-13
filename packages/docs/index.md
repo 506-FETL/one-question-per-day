@@ -5,7 +5,7 @@ layout: home
 hero:
   name: OneQuestionPerDay
   text: 506 · 每日一题
-  tagline: 聚焦 数据结构 / 算法 / JS 基础实现 / 工程实践 · 小步快跑 + 测试驱动 + 渐进复盘
+  tagline: 算法 / JS 基础实现 / 工程实践 + 测试驱动
   image:
     light: /hero.svg
     dark: /hero-dark.svg
