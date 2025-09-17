@@ -1,5 +1,32 @@
 # Changelog
 
+# [2.3.0](https://github.com/506-FETL/one-question-per-day/compare/v2.2.0...v2.3.0) (2025-09-17)
+
+
+### Bug Fixes
+
+* 添加 Vercel 配置文件以支持重写规则 ([2fedb40](https://github.com/506-FETL/one-question-per-day/commit/2fedb40d5797073991d896964c11786f756c25e2))
+* 添加缓存 ([6d72940](https://github.com/506-FETL/one-question-per-day/commit/6d72940ef567c6e7b5b38e3948ad8a7d93da8ca1))
+* 修复死链 ([91567e4](https://github.com/506-FETL/one-question-per-day/commit/91567e40804e2b4768259acf61064ddc07e46ad3))
+* 修复文档侧边栏bug ([6936264](https://github.com/506-FETL/one-question-per-day/commit/6936264d5e1191d6ea3411b013c063da06f37e77))
+* 修复Skeleton组件样式 ([a95396c](https://github.com/506-FETL/one-question-per-day/commit/a95396ca8e2172a3c9581901bc45c803a2347641))
+* 修正构建作业名称 ([274f01c](https://github.com/506-FETL/one-question-per-day/commit/274f01c9d4985af151ca0c3122384d1e402c6094))
+* 修正组件布局和样式，优化问题描述和答案的展示 ([b1364e7](https://github.com/506-FETL/one-question-per-day/commit/b1364e7ffe2b5e692224fa3325d6031f9edb05b4))
+* dead line ([458db21](https://github.com/506-FETL/one-question-per-day/commit/458db21b6ca87f3b706693f212e6a3432b0208d2))
+* dead links ([457ecd1](https://github.com/506-FETL/one-question-per-day/commit/457ecd1f4376e4331959ba1787a1ddaa6fd3fd87))
+* package-name change ([8393b90](https://github.com/506-FETL/one-question-per-day/commit/8393b903bc4c273e9849edff7a76dc4366d2ecf7))
+* workspace ([ef1e758](https://github.com/506-FETL/one-question-per-day/commit/ef1e75806a75de1244d5c548566915697d5fa8f0))
+
+
+### Features
+
+* 更新构建工作流以支持 React 和 Vue 网站构建，添加 Vercel 配置 ([89f36b9](https://github.com/506-FETL/one-question-per-day/commit/89f36b910c7a1dc33fc21caf8a4ce11076d4258f))
+* 添加团队组件，集成 GitHub 贡献者信息和 PR 统计 ([d994f1c](https://github.com/506-FETL/one-question-per-day/commit/d994f1c8b1e44554203c8950d3c40bb812a1343d))
+* add deduplicate function for array deduplication with sparse array handling ([e7a0606](https://github.com/506-FETL/one-question-per-day/commit/e7a06066d2923f40b17a15ebda6e445f5e4256ce))
+* add layout components for problem descriptions and answers ([769122e](https://github.com/506-FETL/one-question-per-day/commit/769122ea5bfe15459e39f976d3060620a18d9645))
+* Problem-platform-Day02 ([a16fed1](https://github.com/506-FETL/one-question-per-day/commit/a16fed1efbdffcf61de95263fdba065c12fb3182))
+* vue-day-01 ([a5a2cc7](https://github.com/506-FETL/one-question-per-day/commit/a5a2cc7d04e74817905b7eebaff3e90136f8bcc3))
+
 # [2.2.0](https://github.com/506-FETL/one-question-per-day/compare/v2.1.0...v2.2.0) (2025-09-02)
 
 
