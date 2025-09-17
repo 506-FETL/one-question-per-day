@@ -90,7 +90,8 @@ pnpm install
 
 ### 3. 初次使用
 
-> [!WARNING] 初次使用请务必阅读此部分内容
+> [!WARNING]
+> **初次使用请务必阅读此部分内容**
 >
 > 1. 将项目拉取到本地后，直接在 `packages/core/react/solutions` 下按你的身份或路线新增一个 solver 文件夹（例如 `my`），然后复制官方题库（`packages/problems/react/problems/`）对应 Day 的题目，放到 `solutions/my/` 下进行实现与测试。
 > 2. React 端题库演练入口：`packages/problems/react`；个人/路线解法集中在：`packages/core/react/solutions/<solver>/<day>`。
