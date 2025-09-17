@@ -6,7 +6,10 @@
   "license": "MIT",
   "keywords": [],
   "scripts": {
-    "test": "vitest",
-    "test:run": "vitest run"
+    "test:run": "run-s test:run-base test:run-react",
+    "test:react": "cd react && pnpm run test",
+    "test:base": "cd base && pnpm run test",
+    "test:run-base": "cd base && pnpm run test:run",
+    "test:run-react": "cd react && pnpm run test:run"
   }
 }

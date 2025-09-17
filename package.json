@@ -20,7 +20,6 @@
     "lint": "eslint --config eslint.config.ts",
     "lint:fix": "eslint --fix",
     "release": "dotenv -f .env run -- release-it",
-    "test": "pnpm -F @one-question-per-day/team-core test",
     "test:run": "pnpm -F @one-question-per-day/team-core test:run",
     "docs:dev": "pnpm --filter @one-question-per-day/docs dev",
     "docs:build": "pnpm --filter @one-question-per-day/docs build",
