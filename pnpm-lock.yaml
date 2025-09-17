@@ -16,7 +16,7 @@ importers:
         version: 3.1.1(rollup@4.50.0)
       '@one-question-per-day/docs':
         specifier: workspace:*
-        version: link:packages/core/docs
+        version: link:packages/docs
       '@one-question-per-day/problem-react':
         specifier: workspace:*
         version: link:packages/problems/react
@@ -227,15 +227,15 @@ importers:
 
   packages/core/base: {}
 
-  packages/core/docs:
+  packages/core/react: {}
+
+  packages/core/vue: {}
+
+  packages/docs:
     dependencies:
       '@octokit/rest':
         specifier: ^22.0.0
         version: 22.0.0
-
-  packages/core/react: {}
-
-  packages/core/vue: {}
 
   packages/problems/react: {}
 
