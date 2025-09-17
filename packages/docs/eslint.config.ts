@@ -5,8 +5,6 @@ export default antfu(
     formatters: true,
     typescript: true,
     markdown: false,
-    rules: {
-      'style/no-tabs': 'off',
-    },
+    vue: true,
   },
 )

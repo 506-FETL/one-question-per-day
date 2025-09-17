@@ -6,9 +6,11 @@
   "author": "Seaming",
   "license": "MIT",
   "scripts": {
-    "dev": "vitepress dev .",
+    "dev": "vitepress dev . --open",
     "build": "vitepress build .",
-    "preview": "vitepress preview ."
+    "preview": "vitepress preview .",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "dependencies": {
     "@octokit/rest": "^22.0.0"

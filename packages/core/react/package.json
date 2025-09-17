@@ -1,12 +1,12 @@
 {
-  "name": "@one-question-per-day/team-core-react",
+  "name": "team-core-react",
   "type": "module",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open",
     "build": "vite build",
-    "lint": "eslint .",
+    "lint": "eslint",
     "preview": "vite preview",
     "test": "vitest",
     "test:run": "vitest run"

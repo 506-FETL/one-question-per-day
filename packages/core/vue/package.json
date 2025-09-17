@@ -1,11 +1,12 @@
 {
-  "name": "gcy-vue",
+  "name": "team-core-vue",
   "type": "module",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint"
   }
 }

@@ -6,10 +6,16 @@
   "license": "MIT",
   "keywords": [],
   "scripts": {
+    "dev:react": "cd react && pnpm dev",
+    "dev:vue": "cd vue && pnpm dev",
     "test:run": "run-s test:run-base test:run-react",
     "test:react": "cd react && pnpm run test",
     "test:base": "cd base && pnpm run test",
     "test:run-base": "cd base && pnpm run test:run",
-    "test:run-react": "cd react && pnpm run test:run"
+    "test:run-react": "cd react && pnpm run test:run",
+    "lint": "run-p lint:base lint:react lint:vue",
+    "lint:base": "cd base && pnpm run lint",
+    "lint:react": "cd react && pnpm run lint",
+    "lint:vue": "cd vue && pnpm run lint"
   }
 }

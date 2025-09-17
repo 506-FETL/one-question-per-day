@@ -8,6 +8,7 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "lint": "eslint"
   }
 }
