@@ -113,7 +113,7 @@ pnpm install
 
 <!-- readme: contributors -start -->
 <table>
-    <tbody>
+	<tbody>
 		<tr>
             <td align="center">
                 <a href="https://github.com/seaeam">
