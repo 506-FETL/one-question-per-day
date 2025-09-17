@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import LazyMan from './LazyMan'
+import LazyMan from './lazyMan'
 
 describe('day20-LazyMan', () => {
   it('应该支持基本的链式调用', async () => {
