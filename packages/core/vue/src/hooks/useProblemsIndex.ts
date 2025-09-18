@@ -56,5 +56,5 @@ export default function useProblemsIndex() {
     return { allSolvers, dirs }
   })
 
-  return result
+  return result.value
 }

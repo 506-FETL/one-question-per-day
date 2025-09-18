@@ -1,8 +1,8 @@
 <!-- eslint-disable ts/no-unused-vars -->
 <script setup lang="ts">
 import type { ButtonProps, ButtonSize, ButtonVariant } from './types'
-import { computed, defineExpose, ref, useAttrs, useSlots } from 'vue'
-import { cn } from '../../src/lib/utils'
+import { computed, ref, useAttrs, useSlots } from 'vue'
+import { cn } from '@/lib/utils'
 
 defineOptions({ name: 'UiButton' })
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ProblemAnswer, ProblemDescription, Problems } from '../../layout'
+import { ProblemAnswer, ProblemDescription, Problems } from '@layout/index'
 import Button from './Button.vue'
 import Description from './README.md'
 </script>
@@ -10,7 +10,9 @@ import Description from './README.md'
       <Description />
     </ProblemDescription>
     <ProblemAnswer>
-      <Button />
+      <Button variant="destructive">
+        click me
+      </Button>
     </ProblemAnswer>
   </Problems>
 </template>

@@ -13,7 +13,7 @@ export default defineConfig({
       include: [/\.vue$/, /\.md$/],
     }),
     tailwindcss(),
-    Pages({ dirs: 'problems', exclude: ['lib', 'layout'] }),
+    Pages({ dirs: 'solutions', exclude: ['lib', 'layout'] }),
     Markdown({
       markdownItSetup(md) {
         md.use(markdownItPrism)
@@ -23,6 +23,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@layout': path.resolve(__dirname, './layout'),
     },
   },
 })

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { RouterView, useRouter } from 'vue-router'
 import ModeToggle from '@/components/ModeToggle.vue'
 import {
@@ -9,27 +9,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import useProblemsIndex from '@/hooks/useProblemsIndex'
 import { SkeletonCard } from './layout'
 
-const router = useRouter()
 const urlDay = ref(localStorage.getItem('urlDay') || '/01')
+const urlSolver = ref(localStorage.getItem('urlSolver') || '/gcy')
+const router = useRouter()
 
-const allProblems = [
-  { day: '01', url: '/01' },
-  { day: '02', url: '/02' },
-]
+const { allSolvers, dirs } = useProblemsIndex()
+const allProblems = dirs.map(dir => ({ day: dir, url: `/${dir}` }))
 
-watch(urlDay, (val, oldVal) => {
-  if (val && val !== oldVal) {
-    localStorage.setItem('urlDay', val)
-    if (router.currentRoute.value.path !== val)
-      router.push(val)
-  }
+watch(urlDay, (newDay) => {
+  localStorage.setItem('urlDay', newDay)
+  router.replace(`${urlSolver.value}${newDay}`)
 })
 
-onMounted(() => {
-  if (router.currentRoute.value.path !== urlDay.value)
-    router.replace(urlDay.value)
+watch(urlSolver, (newSolver) => {
+  localStorage.setItem('urlSolver', newSolver)
+  router.replace(`${newSolver}${urlDay.value}`)
 })
 </script>
 
@@ -40,20 +37,40 @@ onMounted(() => {
     </div>
 
     <div class="fixed top-4 right-4 z-20">
-      <Select v-model="urlDay">
-        <SelectTrigger size="sm">
-          <SelectValue placeholder="select Day" />
-        </SelectTrigger>
-        <SelectContent align="center">
-          <SelectItem
-            v-for="problem in allProblems"
-            :key="problem.day"
-            :value="problem.url"
-          >
-            {{ problem.day }}
-          </SelectItem>
-        </SelectContent>
-      </Select>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <Select v-model="urlSolver">
+            <SelectTrigger size="sm">
+              <SelectValue placeholder="select Solver" />
+            </SelectTrigger>
+            <SelectContent align="center">
+              <SelectItem
+                v-for="solver in allSolvers"
+                :key="solver.name"
+                :value="`/${solver.name}`"
+              >
+                {{ solver.name }}
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <Select v-model="urlDay">
+            <SelectTrigger size="sm">
+              <SelectValue placeholder="select Day" />
+            </SelectTrigger>
+            <SelectContent align="center">
+              <SelectItem
+                v-for="problem in allProblems"
+                :key="problem.day"
+                :value="problem.url"
+              >
+                {{ problem.day }}
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
     </div>
 
     <Suspense>
