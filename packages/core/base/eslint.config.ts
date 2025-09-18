@@ -25,6 +25,7 @@ export default antfu(
       'prefer-rest-params': 'off',
       'eqeqeq': 'off',
       'no-sparse-arrays': 'off',
+      'prefer-promise-reject-errors': 'warn',
     },
   },
   {
