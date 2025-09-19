@@ -159,15 +159,6 @@ pnpm install
                 </a>
             </td>
 		</tr>
-		<tr>
-            <td align="center">
-                <a href="https://github.com/FATEHUI">
-                    <img src="https://avatars.githubusercontent.com/u/62430897?v=4" width="100;" alt="FATEHUI"/>
-                    <br />
-                    <sub><b>FATEHUI</b></sub>
-                </a>
-            </td>
-		</tr>
 	<tbody>
 </table>
 <!-- readme: contributors -end -->
