@@ -35,7 +35,6 @@ export default defineConfig({
       { text: '🧩 基础题目', link: '/base/index' },
       { text: '👾 框架题目', link: '/framework/index' },
       { text: '📖 复习', link: '/review/index' },
-      { text: '🚀 发布说明', link: 'https://github.com/506-FETL/one-question-per-day/blob/main/RELEASE_NOTES.md' },
       { text: '🧾 Changelog', link: 'https://github.com/506-FETL/one-question-per-day/blob/main/CHANGELOG.md' },
     ],
     sidebar: [
