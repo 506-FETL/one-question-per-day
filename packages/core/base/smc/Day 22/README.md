@@ -36,5 +36,3 @@
 1. 实现 `serialize(root)`：将二叉树转换为字符串。
 2. 实现 `deserialize(str)`：将字符串还原为二叉树。
 3. 需保证：`deserialize(serialize(root))` 等价于原始输入的二叉树。
-
-要不要我帮你把这个文档整理成 **Markdown 模板**（比如你可以每天替换题目放在知识库/博客里）？
