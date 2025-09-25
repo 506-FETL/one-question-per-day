@@ -9,11 +9,11 @@
  * @throws {TypeError} 如果提供的 `mapFn` 不是函数，抛出类型错误。
  */
 export default function myFrom(arrayLike, mapFn, thisArg) {
-  const isCallable = fn =>
-    typeof fn === 'function'
-    || Object.prototype.toString.call(fn) === '[object Function]'
+  const isCallable = fn => typeof fn === 'function' || Object.prototype.toString.call(fn) === '[object Function]'
+
   const toInteger = (v) => {
     const _v = Number(v)
+
     if (Number.isNaN(_v))
       return 0
     if (v === 0 || !Number.isFinite(_v))
@@ -38,7 +38,7 @@ export default function myFrom(arrayLike, mapFn, thisArg) {
   }
 
   const items
-    = arrayLike instanceof Set || arrayLike instanceof Map
+    = arrayLike instanceof Set || arrayLike instanceof Map || arrayLike instanceof WeakMap || arrayLike instanceof WeakSet
       ? [...arrayLike]
       : new Object(arrayLike)
 
