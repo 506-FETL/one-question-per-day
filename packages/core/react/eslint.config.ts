@@ -27,7 +27,6 @@ export default antfu(
       'prefer-rest-params': 'off',
       'eqeqeq': 'off',
       'no-sparse-arrays': 'off',
-      'vue/no-unused-refs': 'warn',
     },
   },
   {
