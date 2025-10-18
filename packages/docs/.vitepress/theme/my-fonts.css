@@ -2,7 +2,7 @@
   font-family: 'Dank Mono';
   src:
     local('dank-mono'),
-    url('/assets/dank-mono.woff2') format('woff2');
+    url('/dank-mono.woff2') format('woff2');
 }
 :root {
   --vp-font-family-base: Courier;
