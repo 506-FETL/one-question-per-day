@@ -25,6 +25,7 @@
     "lint:fix-core": "pnpm -F @one-question-per-day/team-core lint:fix",
     "release": "dotenv -f .env run -- release-it",
     "test:run": "pnpm -F @one-question-per-day/team-core test:run",
+    "test:base": "pnpm -F @one-question-per-day/team-core test:base",
     "docs:dev": "pnpm -F @one-question-per-day/docs dev",
     "docs:build": "pnpm -F @one-question-per-day/docs build",
     "docs:preview": "pnpm -F @one-question-per-day/docs preview"
