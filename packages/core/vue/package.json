@@ -10,5 +10,10 @@
     "lint": "eslint",
     "test": "vitest",
     "test:run": "vitest run"
+  },
+  "dependencies": {
+    "@one-question-per-day/shared": "workspace:*",
+    "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.7.1"
   }
 }

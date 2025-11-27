@@ -12,21 +12,22 @@ import {
 import useProblemsIndex from '@/hooks/useProblemsIndex'
 import { SkeletonCard } from './layout'
 
-const urlDay = ref(localStorage.getItem('urlDay') || '/01')
-const urlSolver = ref(localStorage.getItem('urlSolver') || '/gcy')
+import useSolver from './store/useSolver'
+
+const solverConfig = useSolver()
 const router = useRouter()
 
 const { allSolvers, dirs } = useProblemsIndex()
 const allProblems = dirs.map(dir => ({ day: dir, url: `/${dir}` }))
 
-watch(urlDay, (newDay) => {
+watch(() => solverConfig.getUrlDay, (newDay) => {
   localStorage.setItem('urlDay', newDay)
-  router.replace(`${urlSolver.value}${newDay}`)
+  router.replace(`${solverConfig.getUrlSolver}${newDay}`)
 })
 
-watch(urlSolver, (newSolver) => {
+watch(() => solverConfig.getUrlSolver, (newSolver) => {
   localStorage.setItem('urlSolver', newSolver)
-  router.replace(`${newSolver}${urlDay.value}`)
+  router.replace(`${newSolver}${solverConfig.getUrlDay}`)
 })
 </script>
 
@@ -39,7 +40,7 @@ watch(urlSolver, (newSolver) => {
     <div class="fixed top-4 right-4 z-20">
       <div class="grid grid-cols-2 gap-4">
         <div>
-          <Select v-model="urlSolver">
+          <Select v-model="solverConfig.urlSolver">
             <SelectTrigger size="sm">
               <SelectValue placeholder="select Solver" />
             </SelectTrigger>
@@ -55,7 +56,7 @@ watch(urlSolver, (newSolver) => {
           </Select>
         </div>
         <div>
-          <Select v-model="urlDay">
+          <Select v-model="solverConfig.urlDay">
             <SelectTrigger size="sm">
               <SelectValue placeholder="select Day" />
             </SelectTrigger>

@@ -10,5 +10,9 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:run": "vitest run"
+  },
+  "dependencies": {
+    "@one-question-per-day/shared": "workspace:*",
+    "zustand": "^5.0.8"
   }
 }

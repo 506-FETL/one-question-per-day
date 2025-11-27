@@ -1,8 +1,8 @@
 import { Navigate } from 'react-router-dom'
+import useSolver from '../useSolver'
 
 export default function RootRedirect() {
-  const urlSolver = localStorage.getItem('urlSolver') || '/seam'
-  const urlDay = localStorage.getItem('urlDay') || '/01'
+  const { urlDay, urlSolver } = useSolver()
 
   return <Navigate to={`${urlSolver}${urlDay}`} replace />
 }

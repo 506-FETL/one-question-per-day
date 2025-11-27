@@ -14,11 +14,11 @@ import {
 } from '@/components/ui/select'
 import { Skeleton } from '@/components/ui/skeleton'
 import useProblemsIndex from '@/hooks/useProblemsIndex'
+import useSolver from './useSolver'
 
 function App() {
   const navigate = useNavigate()
-  const urlDay = localStorage.getItem('urlDay') || '/01'
-  const urlSolver = localStorage.getItem('urlSolver') || '/seam'
+  const { urlDay, urlSolver, setUrlDay, setUrlSolver } = useSolver()
   const { allSolvers, dirs } = useProblemsIndex()
   const allProblems = dirs.map(dir => ({ day: dir, url: `/${dir}` }))
 
@@ -33,7 +33,7 @@ function App() {
           <div>
             <Select
               onValueChange={(solver) => {
-                localStorage.setItem('urlSolver', solver)
+                setUrlSolver(solver)
                 navigate(`${solver}${urlDay}`)
               }}
               defaultValue={urlSolver}
@@ -53,7 +53,7 @@ function App() {
           <div>
             <Select
               onValueChange={(day) => {
-                localStorage.setItem('urlDay', day)
+                setUrlDay(day)
                 navigate(`${urlSolver}${day}`)
               }}
               defaultValue={urlDay}
