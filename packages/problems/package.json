@@ -1,0 +1,19 @@
+{
+  "name": "@one-question-per-day/problems",
+  "version": "1.0.0",
+  "description": "",
+  "author": "seam",
+  "license": "ISC",
+  "scripts": {
+    "react-dev": "cd react && pnpm dev",
+    "vue-dev": "cd vue && pnpm dev",
+    "lint": "run-p lint:base lint:react lint:vue",
+    "lint:react": "cd react && pnpm lint",
+    "lint:vue": "cd vue && pnpm lint",
+    "lint:base": "cd base && pnpm lint",
+    "lint:fix": "run-p lint:base:fix lint:react:fix lint:vue:fix",
+    "lint:react:fix": "cd react && pnpm lint:fix",
+    "lint:vue:fix": "cd vue && pnpm lint:fix",
+    "lint:base:fix": "cd base && pnpm lint:fix"
+  }
+}

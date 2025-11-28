@@ -1,3 +1,4 @@
+import { defaultUrlDay } from '@one-question-per-day/shared'
 import { Suspense } from 'react'
 import {
   useNavigate,
@@ -22,10 +23,10 @@ const allProblems = dirs.map((dir) => {
 
 function App() {
   const navigate = useNavigate()
-  const urlDay = localStorage.getItem('urlDay') || '/01'
+  const urlDay = localStorage.getItem('urlDay') || defaultUrlDay
 
   return (
-    <div className="relative min-h-screen flex flex-col bg-gradient-to-br">
+    <div className="relative min-h-screen flex flex-col bg-linear-to-br">
       <div className="pt-4 pl-4 z-20 fixed">
         <ModeToggle />
       </div>

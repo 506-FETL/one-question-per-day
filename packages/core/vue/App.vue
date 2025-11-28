@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { watch } from 'vue'
 import { RouterView, useRouter } from 'vue-router'
 import ModeToggle from '@/components/ModeToggle.vue'
 import {

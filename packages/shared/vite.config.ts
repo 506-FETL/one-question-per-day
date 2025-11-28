@@ -7,13 +7,30 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'Shared',
-      formats: ['es', 'cjs'],
-      fileName: format => (format === 'es' ? 'index.mjs' : 'index.cjs'),
     },
     sourcemap: true,
     rollupOptions: {
       external: [],
+      output: [
+        {
+          format: 'es',
+          dir: 'dist/es',
+          preserveModules: true,
+          preserveModulesRoot: 'src',
+          entryFileNames: '[name].mjs',
+          chunkFileNames: 'chunks/[name]-[hash].mjs',
+          assetFileNames: 'assets/[name]-[hash][extname]',
+        },
+        {
+          format: 'cjs',
+          dir: 'dist/umd',
+          exports: 'auto',
+          inlineDynamicImports: true,
+          entryFileNames: 'index.cjs',
+        },
+      ],
     },
+    minify: true,
     outDir: 'dist',
     emptyOutDir: true,
   },
@@ -22,7 +39,6 @@ export default defineConfig({
       tsconfigPath: resolve(__dirname, 'tsconfig.json'),
       outDir: 'dist/types',
       insertTypesEntry: true,
-      rollupTypes: true,
     }),
   ],
 })

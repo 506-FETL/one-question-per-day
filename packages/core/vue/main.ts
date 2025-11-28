@@ -1,12 +1,10 @@
-import { createPinia } from 'pinia'
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import routes from '~pages'
 import App from './App.vue'
-import pinia from './store/init'
-import './index.css'
+import pinia from './store'
 import 'prismjs/themes/prism-tomorrow.css'
+import './index.css'
 
 const router = createRouter({
   history: createWebHistory(),

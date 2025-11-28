@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { defaultUrlDay } from '@one-question-per-day/shared'
 import { onMounted, ref, watch } from 'vue'
 import { RouterView, useRouter } from 'vue-router'
 import ModeToggle from '@/components/ModeToggle.vue'
@@ -12,7 +13,7 @@ import {
 import { SkeletonCard } from './layout'
 
 const router = useRouter()
-const urlDay = ref(localStorage.getItem('urlDay') || '/01')
+const urlDay = ref(localStorage.getItem('urlDay') || defaultUrlDay)
 
 const files = import.meta.glob('./problems/*/*')
 const dirs = Array.from(new Set(Object.keys(files).map(p => p.split('/')[2]))).sort()

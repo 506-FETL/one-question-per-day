@@ -1,1 +1,1 @@
-export * from './platform-problem'
+export * from './platform'

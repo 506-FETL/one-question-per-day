@@ -1,14 +1,18 @@
 {
-  "name": "@one-question-per-day/problem-react",
+  "name": "problem-react",
   "type": "module",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "dev": "vite --open",
     "build": "vite build",
-    "lint": "eslint .",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "preview": "vite preview",
     "test": "vitest",
     "test:run": "vitest run"
+  },
+  "dependencies": {
+    "@one-question-per-day/shared": "workspace:*"
   }
 }

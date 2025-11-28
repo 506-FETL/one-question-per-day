@@ -1,6 +1,5 @@
 {
   "name": "base",
-  "type": "module",
   "version": "1.0.0",
   "description": "",
   "author": "seaming",
@@ -8,8 +7,6 @@
   "keywords": ["algorithm", "javascript", "typescript"],
   "main": "index.js",
   "scripts": {
-    "test": "vitest",
-    "test:run": "vitest run",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
   }
