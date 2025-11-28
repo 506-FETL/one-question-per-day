@@ -1,5 +1,6 @@
 {
   "name": "@one-question-per-day/problems",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "author": "seam",
