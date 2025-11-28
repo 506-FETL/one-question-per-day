@@ -5,8 +5,8 @@
   "author": "seam",
   "license": "ISC",
   "scripts": {
-    "react-dev": "cd react && pnpm dev",
-    "vue-dev": "cd vue && pnpm dev",
+    "dev:react": "cd react && pnpm dev",
+    "dev:vue": "cd vue && pnpm dev",
     "lint": "run-p lint:base lint:react lint:vue",
     "lint:react": "cd react && pnpm lint",
     "lint:vue": "cd vue && pnpm lint",
@@ -14,6 +14,8 @@
     "lint:fix": "run-p lint:base:fix lint:react:fix lint:vue:fix",
     "lint:react:fix": "cd react && pnpm lint:fix",
     "lint:vue:fix": "cd vue && pnpm lint:fix",
-    "lint:base:fix": "cd base && pnpm lint:fix"
+    "lint:base:fix": "cd base && pnpm lint:fix",
+    "build:react": "cd react && pnpm build",
+    "build:vue": "cd vue && pnpm build"
   }
 }
