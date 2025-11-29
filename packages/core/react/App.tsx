@@ -20,7 +20,6 @@ function App() {
   const navigate = useNavigate()
   const { urlDay, urlSolver, setUrlDay, setUrlSolver } = useSolver()
   const { allSolvers, dirs } = useProblemsIndex()
-  const allProblems = dirs.map(dir => ({ day: dir, url: `/${dir}` }))
 
   return (
     <div className="relative min-h-screen flex flex-col bg-linear-to-br">
@@ -34,7 +33,7 @@ function App() {
             <Select
               onValueChange={(solver) => {
                 setUrlSolver(solver)
-                navigate(`${solver}${urlDay}`)
+                navigate(`/${solver}/${urlDay}`)
               }}
               defaultValue={urlSolver}
             >
@@ -54,7 +53,7 @@ function App() {
             <Select
               onValueChange={(day) => {
                 setUrlDay(day)
-                navigate(`${urlSolver}${day}`)
+                navigate(`/${urlSolver}/${day}`)
               }}
               defaultValue={urlDay}
             >
@@ -62,9 +61,9 @@ function App() {
                 <SelectValue placeholder="select Day" />
               </SelectTrigger>
               <SelectContent align="center">
-                {allProblems.map(problem => (
-                  <SelectItem key={problem.day} value={problem.url}>
-                    {problem.day}
+                {dirs.map(problem => (
+                  <SelectItem key={problem} value={problem}>
+                    {problem}
                   </SelectItem>
                 ))}
               </SelectContent>

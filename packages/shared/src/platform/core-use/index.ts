@@ -1,1 +1,1 @@
-export * from './default-date-info'
+export * from './default-resolve-info'
