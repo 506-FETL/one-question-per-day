@@ -12,13 +12,10 @@
   },
   "scripts": {
     "dev": "run-s lint:fix lint test:run",
-    "problem:vue": "pnpm -F @one-question-per-day/problems dev:vue",
-    "problem:react": "pnpm -F @one-question-per-day/problems dev:react",
-    "solve:vue": "pnpm -F @one-question-per-day/team-core dev:vue",
-    "solve:react": "pnpm -F @one-question-per-day/team-core dev:react",
-    "build:vue": "pnpm -F problem-vue build",
-    "build:react": "pnpm -F problem-react build",
-    "build:problems": "vite build && (cd dist && zip -rq -X problems.zip problems && rm -rf problems)",
+    "problem:vue": "pnpm build:shared && pnpm -F @one-question-per-day/problems dev:vue",
+    "problem:react": "pnpm build:shared && pnpm -F @one-question-per-day/problems dev:react",
+    "solve:vue": "pnpm build:shared && pnpm -F @one-question-per-day/team-core dev:vue",
+    "solve:react": "pnpm build:shared && pnpm -F @one-question-per-day/team-core dev:react",
     "lint": "run-p lint:core lint:docs lint:problems",
     "lint:fix": "run-p lint:fix-core lint:fix-docs lint:fix-problems",
     "lint:problems": "pnpm -F @one-question-per-day/problems lint",
@@ -32,7 +29,11 @@
     "test:base": "pnpm -F @one-question-per-day/team-core test:base",
     "docs:dev": "pnpm -F @one-question-per-day/docs dev",
     "docs:build": "pnpm -F @one-question-per-day/docs build",
-    "docs:preview": "pnpm -F @one-question-per-day/docs preview"
+    "docs:preview": "pnpm -F @one-question-per-day/docs preview",
+    "build:shared": "pnpm -F @one-question-per-day/shared build",
+    "build:vue": "pnpm build:shared && pnpm -F problem-vue build",
+    "build:react": "pnpm build:shared && pnpm -F @one-question-per-day/problems build:react",
+    "build:problems": "vite build && (cd dist && zip -rq -X problems.zip problems && rm -rf problems)"
   },
   "dependencies": {
     "@mdx-js/react": "^3.1.1",

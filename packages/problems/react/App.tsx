@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/select'
 import { Skeleton } from '@/components/ui/skeleton'
 
-const files = import.meta.glob('./problems/*/*')
+const files = import.meta.glob('./problems/*/index.tsx')
 const dirs = Array.from(new Set(Object.keys(files).map(p => p.split('/')[2]))).sort()
 const allProblems = dirs.map((dir) => {
   return { day: dir, url: `/${dir}` }

@@ -30,12 +30,34 @@ export default defineConfig({
     tailwindcss(),
     Pages({
       dirs: 'problems',
-      exclude: ['lib', 'layout'],
+      exclude: ['lib', 'layout', '**/*.spec.*', '**/*.test.*', '**/__tests__/**'],
     }),
   ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+    },
+  },
+  build: {
+    chunkSizeWarningLimit: 800,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (/[\\/](?:react|react-dom|react-router|react-router-dom)[\\/]/.test(id))
+              return 'react-vendor'
+
+            if (/[\\/]@radix-ui[\\/](?:react-select|react-dropdown-menu|react-scroll-area|react-slot)[\\/]/.test(id))
+              return 'radix-ui'
+
+            if (id.includes('/lucide-react/'))
+              return 'icons'
+          }
+
+          if (id.includes('/packages/shared/'))
+            return 'shared'
+        },
+      },
     },
   },
 })
