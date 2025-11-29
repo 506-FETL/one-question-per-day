@@ -23,7 +23,7 @@ function App() {
   const allProblems = dirs.map(dir => ({ day: dir, url: `/${dir}` }))
 
   return (
-    <div className="relative min-h-screen flex flex-col bg-gradient-to-br">
+    <div className="relative min-h-screen flex flex-col bg-linear-to-br">
       <div className="pt-4 pl-4 z-20 fixed">
         <ModeToggle />
       </div>

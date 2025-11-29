@@ -32,7 +32,7 @@ watch(() => solverConfig.getUrlSolver, (newSolver) => {
 </script>
 
 <template>
-  <div class="relative min-h-screen flex flex-col bg-gradient-to-br">
+  <div class="relative min-h-screen flex flex-col bg-linear-to-br">
     <div class="pt-4 pl-4 z-20 fixed">
       <ModeToggle />
     </div>

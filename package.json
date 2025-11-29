@@ -31,7 +31,7 @@
     "docs:build": "pnpm -F @one-question-per-day/docs build",
     "docs:preview": "pnpm -F @one-question-per-day/docs preview",
     "build:shared": "pnpm -F @one-question-per-day/shared build",
-    "build:vue": "pnpm build:shared && pnpm -F problem-vue build",
+    "build:vue": "pnpm build:shared && pnpm -F @one-question-per-day/problems build:vue",
     "build:react": "pnpm build:shared && pnpm -F @one-question-per-day/problems build:react",
     "build:problems": "vite build && (cd dist && zip -rq -X problems.zip problems && rm -rf problems)"
   },
