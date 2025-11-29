@@ -4,5 +4,5 @@ import useSolver from '../useSolver'
 export default function RootRedirect() {
   const { urlDay, urlSolver } = useSolver()
 
-  return <Navigate to={`${urlSolver}${urlDay}`} replace />
+  return <Navigate to={`/${urlSolver}/${urlDay}`} replace />
 }

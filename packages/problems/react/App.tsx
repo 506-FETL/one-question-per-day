@@ -27,7 +27,7 @@ function App() {
 
   return (
     <div className="relative min-h-screen flex flex-col bg-linear-to-br">
-      <div className="pt-4 pl-4 z-20 fixed">
+      <div className="pt-4 pl-4 z-20 fixed flex items-center gap-2">
         <ModeToggle />
       </div>
 

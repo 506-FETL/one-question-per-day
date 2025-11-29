@@ -3,7 +3,7 @@ import type { PropsWithChildren } from 'react'
 export function Problems({ children }: PropsWithChildren) {
   return (
     <main className="flex-1 flex flex-col md:flex-row overflow-hidden pt-2 md:pt-0">
-      { children }
+      {children}
     </main>
   )
 }

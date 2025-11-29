@@ -31,6 +31,7 @@ export default defineConfig({
     Pages({
       dirs: 'problems',
       exclude: ['lib', 'layout', '**/*.spec.*', '**/*.test.*', '**/__tests__/**'],
+      importMode: 'async',
     }),
   ],
   resolve: {
