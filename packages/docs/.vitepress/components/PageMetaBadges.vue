@@ -22,6 +22,17 @@ const difficultyBadge = computed(() => {
   return { type, text: raw }
 })
 
+const companyBadges = computed(() => {
+  const company = (frontmatter.value.company ?? frontmatter.value.Company) as unknown
+  if (!company)
+    return []
+  const list = Array.isArray(company) ? company : [company]
+  return list
+    .map((c: unknown) => String(c).trim())
+    .filter(Boolean)
+    .map(text => ({ type: 'tip' as const, text }))
+})
+
 const tagBadges = computed(() => {
   const tags = frontmatter.value.tags
   if (!tags)
@@ -43,6 +54,14 @@ const tagBadges = computed(() => {
   />
   <br>
   <Badge
+    v-for="company in companyBadges"
+    :key="company.text"
+    :type="company.type"
+    :text="company.text"
+    class="companyBadge"
+  />
+  <br v-if="companyBadges.length">
+  <Badge
     v-for="tag in tagBadges"
     :key="tag.text"
     :type="tag.type"
@@ -53,6 +72,10 @@ const tagBadges = computed(() => {
 
 <style scoped>
 .difficultyBadge {
+  margin-bottom: 1%;
+}
+
+.companyBadge {
   margin-bottom: 1%;
 }
 
