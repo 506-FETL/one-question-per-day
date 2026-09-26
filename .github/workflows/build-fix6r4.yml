@@ -37,7 +37,8 @@ jobs:
           ref: 54f0455ffcd755534539a7cf33a09a20bf71d29d
           path: px4
           submodules: recursive
-          fetch-depth: 1
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Apply FIX6R3 and FIX6R4 source changes
         shell: bash
