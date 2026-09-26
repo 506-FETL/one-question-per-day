@@ -23,7 +23,7 @@ jobs:
         shell: bash
         run: |
           set -euxo pipefail
-          cat carrier/fix6r4/blob.*.b64 | base64 -d > /tmp/payload.tar.xz
+          cp carrier/fix6r4/payload.tar.xz /tmp/payload.tar.xz
           echo "5e8bfa8aefa736f9ba342dbbf03dc971852db28b36926fe91d121e07797075d5  /tmp/payload.tar.xz" | sha256sum -c -
           mkdir -p /tmp/fix6r4_payload
           tar -xJf /tmp/payload.tar.xz -C /tmp/fix6r4_payload --strip-components=1
