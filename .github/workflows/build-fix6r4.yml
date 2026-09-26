@@ -1,0 +1,226 @@
+name: Build FIX6R4 PX4 firmware
+
+on:
+  push:
+    branches:
+      - tmp-fix6r4-build-20260926
+    paths:
+      - '.github/workflows/build-fix6r4.yml'
+      - 'fix6r4/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 90
+    steps:
+      - name: Checkout build payload
+        uses: actions/checkout@v4
+        with:
+          path: carrier
+
+      - name: Reconstruct FIX6R3 payload
+        shell: bash
+        run: |
+          set -euxo pipefail
+          cat carrier/fix6r4/blob.*.b64 | base64 -d > /tmp/payload.tar.xz
+          echo "5e8bfa8aefa736f9ba342dbbf03dc971852db28b36926fe91d121e07797075d5  /tmp/payload.tar.xz" | sha256sum -c -
+          mkdir -p /tmp/fix6r4_payload
+          tar -xJf /tmp/payload.tar.xz -C /tmp/fix6r4_payload --strip-components=1
+          echo "c181978b82cac0535d1a71ef1d8c9aa6d6e902afb3afded51e3401502131ce75  /tmp/fix6r4_payload/fix6r3.diff" | sha256sum -c -
+          echo "b7496116b89cbb19437e60368a252d32ba348ea3564e7cc27d9cf47d8e7b7edd  /tmp/fix6r4_payload/route2_residual_gru_v2_weights.hpp" | sha256sum -c -
+
+      - name: Checkout PX4 v1.16.2 exact commit
+        uses: actions/checkout@v4
+        with:
+          repository: PX4/PX4-Autopilot
+          ref: 54f0455ffcd755534539a7cf33a09a20bf71d29d
+          path: px4
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Apply FIX6R3 and FIX6R4 source changes
+        shell: bash
+        run: |
+          set -euxo pipefail
+          cd px4
+          git apply --check /tmp/fix6r4_payload/fix6r3.diff
+          git apply /tmp/fix6r4_payload/fix6r3.diff
+          cp /tmp/fix6r4_payload/route2_residual_gru_v2_weights.hpp src/modules/mc_rate_control/route2_residual_gru_v2_weights.hpp
+
+          cat > msg/BrtaRuntimeStatus.msg <<'EOF'
+          uint64 timestamp
+          uint64 last_inference_us
+          uint64 overrun_count
+          uint64 gru_inference_count
+          uint64 last_inference_interval_us
+          uint64 inference_min_us
+          uint64 inference_max_us
+          uint64 inference_p95_us
+          uint64 inference_p99_us
+          uint64 worker_run_count
+          uint64 snapshot_submit_count
+          uint64 snapshot_process_count
+          uint64 snapshot_drop_count
+          uint64 input_drop_count
+          uint64 prediction_drop_count
+          uint64 queue_wait_last_us
+          uint64 snapshot_to_finish_last_us
+          uint64 finish_to_read_last_us
+          uint64 prediction_age_last_us
+          uint64 prediction_age_p95_us
+          uint64 prediction_age_p99_us
+          uint64 shadow_prediction_count
+          uint64[7] shadow_age_pass_count
+          uint64 accepted_prediction_count
+          uint64 rejected_age_count
+          uint64 rejected_nonfinite_count
+          uint64 live_apply_count
+          uint64 fade_cycle_count
+          uint64 stale_zero_count
+          uint64 stale_count
+          uint64 warmup_sample_count
+          uint64 warmup_nonzero_residual_count
+          uint64 zoh_reuse_count
+          uint64 bound_clip_count
+          uint64 projection_count
+          uint64 rho_clip_count
+          uint64 physical_clip_count
+          uint32 accept_age_us
+          uint32 full_age_us
+          uint32 zero_age_us
+          uint32 ramp_us
+          uint32 hold_source_age_us
+          uint32 hold_age_us
+          float32 authority_scale
+          float32 warmup_max_residual_norm
+          float32[21] feature
+          float32[21] standardized_feature
+          float32[3] r_hat
+          float32[3] projected_residual
+          float32[3] residual_hold
+          float32[3] final_torque
+          float32 residual_norm
+          float32 physical_residual_norm_nm
+          float32 raw_residual_norm
+          float32 bounded_residual_norm
+          float32 prebound_physical_residual_norm_nm
+          float32 bounded_physical_residual_norm_nm
+          float32 max_raw_residual_norm
+          float32 max_prebound_physical_residual_norm_nm
+          uint16 async_target_hz
+          bool enabled
+          bool worker_started
+          bool synchronous_mode
+          bool armed_inhibit
+          bool prediction_valid
+          bool shadow_only
+          uint8 mode
+          bool armed_live_enabled
+          bool live_session_latched
+          bool live_applied
+          uint8 history_count
+          bool history_ready
+          uint8 first_inference_history_count
+          EOF
+
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p = Path('boards/px4/fmu-v3/nuttx-config/nsh/defconfig')
+          s = p.read_text()
+          def add_after(anchor, block):
+              global s
+              if block.splitlines()[0] in s:
+                  return
+              assert anchor in s, anchor
+              s = s.replace(anchor, anchor + '\n' + block, 1)
+
+          add_after('CONFIG_STM32_TIM9=y',
+          'CONFIG_STM32_UART4=y')
+          add_after('CONFIG_STM32_USART1=y',
+          'CONFIG_STM32_USART2=y')
+          add_after('CONFIG_TASK_NAME_SIZE=24',
+          'CONFIG_UART4_BAUD=57600\nCONFIG_UART4_RXBUFSIZE=300\nCONFIG_UART4_RXDMA=y\nCONFIG_UART4_TXBUFSIZE=300')
+          add_after('CONFIG_USART1_TXBUFSIZE=32',
+          'CONFIG_USART2_BAUD=57600\nCONFIG_USART2_IFLOWCONTROL=y\nCONFIG_USART2_OFLOWCONTROL=y\nCONFIG_USART2_RXBUFSIZE=600\nCONFIG_USART2_RXDMA=y\nCONFIG_USART2_TXBUFSIZE=1100')
+          p.write_text(s)
+
+          p = Path('boards/px4/fmu-v3/default.px4board')
+          s = p.read_text()
+          line = 'CONFIG_BOARD_PARAM_FILE="/fs/microsd/pf"'
+          if line not in s:
+              anchor = 'CONFIG_BOARD_CONSTRAINED_MEMORY=y'
+              assert anchor in s
+              s = s.replace(anchor, anchor + '\n' + line, 1)
+          p.write_text(s)
+
+          p = Path('boards/px4/fmu-v3/init/rc.board_defaults')
+          s = p.read_text()
+          assert 'param set-default GPS_1_CONFIG 0' in s
+          s = s.replace('param set-default GPS_1_CONFIG 0', 'param set-default GPS_1_CONFIG 201', 1)
+          s = s.replace('this no-GPS bench candidate defaults the', 'FIX6R4 restores UART4/GPS1 and defaults the')
+          s = s.replace('saved parameter to disabled.', 'saved parameter to GPS1 (201).')
+          p.write_text(s)
+          PY
+
+          grep -E 'CONFIG_STM32_UART4|CONFIG_UART4_|CONFIG_STM32_USART2|CONFIG_USART2_' boards/px4/fmu-v3/nuttx-config/nsh/defconfig
+          grep 'CONFIG_BOARD_PARAM_FILE' boards/px4/fmu-v3/default.px4board
+          grep 'GPS_1_CONFIG' boards/px4/fmu-v3/init/rc.board_defaults
+          sha256sum src/modules/mc_rate_control/route2_residual_gru_v2_weights.hpp
+          git diff --stat
+
+      - name: Build px4_fmu-v3_default
+        shell: bash
+        run: |
+          set -euxo pipefail
+          docker run --rm \
+            -v "$GITHUB_WORKSPACE/px4:/src" \
+            -w /src \
+            px4io/px4-dev-nuttx-focal:2022-08-12 \
+            bash -lc 'make px4_fmu-v3_default'
+
+      - name: Verify and package FIX6R4
+        shell: bash
+        run: |
+          set -euxo pipefail
+          cd px4
+          PX4FILE=$(find build/px4_fmu-v3_default -maxdepth 2 -name '*.px4' | head -1)
+          BINFILE=$(find build/px4_fmu-v3_default -maxdepth 2 -name '*.bin' | head -1)
+          ELFFILE=$(find build/px4_fmu-v3_default -maxdepth 2 -name '*.elf' | head -1)
+          test -n "$PX4FILE" -a -f "$PX4FILE"
+          test -n "$BINFILE" -a -f "$BINFILE"
+          test -n "$ELFFILE" -a -f "$ELFFILE"
+
+          mkdir -p "$GITHUB_WORKSPACE/out"
+          cp "$PX4FILE" "$GITHUB_WORKSPACE/out/px4_fmu-v3_default_BRTA_FIX6R4_GPS_TELEM1_SD_PARAMS.px4"
+          cp "$BINFILE" "$GITHUB_WORKSPACE/out/px4_fmu-v3_default_BRTA_FIX6R4_GPS_TELEM1_SD_PARAMS.bin"
+          cp "$ELFFILE" "$GITHUB_WORKSPACE/out/px4_fmu-v3-default_BRTA_FIX6R4.elf"
+
+          docker run --rm -v "$GITHUB_WORKSPACE/px4:/src" -w /src px4io/px4-dev-nuttx-focal:2022-08-12 \
+            bash -lc "arm-none-eabi-nm -C '$ELFFILE' | grep -E 'g_uart4priv|g_usart2priv'"
+
+          strings "$BINFILE" | grep -F '/fs/microsd/pf'
+          strings "$BINFILE" | grep -F '/dev/ttyS3'
+
+          {
+            echo "FIX6R4 build verification"
+            echo "base_commit=54f0455ffcd755534539a7cf33a09a20bf71d29d"
+            echo "target=px4_fmu-v3_default"
+            echo "restored=UART4/GPS1 + USART2/TELEM1"
+            echo "param_backend=/fs/microsd/pf"
+            echo "GPS_1_CONFIG_default=201"
+            echo "weights_sha256=$(sha256sum src/modules/mc_rate_control/route2_residual_gru_v2_weights.hpp | awk '{print $1}')"
+            sha256sum "$GITHUB_WORKSPACE/out/"*
+            echo
+            echo "firmware_sizes:"
+            ls -lh "$GITHUB_WORKSPACE/out/"*
+          } > "$GITHUB_WORKSPACE/out/FIX6R4_BUILD_REPORT.txt"
+
+      - name: Upload FIX6R4 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: BRTA_FIX6R4_FMUV3
+          path: out/*
+          if-no-files-found: error
+          retention-days: 7
